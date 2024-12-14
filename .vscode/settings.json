@@ -5,5 +5,6 @@
     "source.addMissingImports": "explicit",
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
-  }
+  },
+  "editor.tabSize": 2
 }

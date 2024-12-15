@@ -1,0 +1,15 @@
+{
+  "name": "DigiChat開発環境",
+  "dockerComposeFile": "compose.yml",
+  "service": "app",
+  "workspaceFolder": "/digichat",
+  "remoteUser": "node",
+  "updateRemoteUserUID": true,
+  "shutdownAction": "stopCompose",
+  "customizations": {
+      "vscode": {
+          "extensions": [
+          ]
+      }
+  }
+}

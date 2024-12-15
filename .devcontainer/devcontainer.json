@@ -7,9 +7,15 @@
   "updateRemoteUserUID": true,
   "shutdownAction": "stopCompose",
   "customizations": {
-      "vscode": {
-          "extensions": [
-          ]
-      }
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "stylelint.vscode-stylelint",
+        "prisma.prisma",
+        "eamodio.gitlens",
+        "oderwat.indent-rainbow"
+      ]
+    }
   }
 }

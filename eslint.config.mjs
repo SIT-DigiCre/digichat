@@ -34,13 +34,13 @@ const eslintConfig = [
           "pathGroups": [
             {
               "pattern": "{react,react-dom/**,react-router-dom,next,next/**}",
-              "group": "builtin",
+              "group": "bulitin",
               "position": "before"
             },
             {
               "pattern": "@mantine/**",
               "group": "builtin",
-              "position": "before"
+              "position": "after"
             }
           ],
           "pathGroupsExcludedImportTypes": ["builtin"],

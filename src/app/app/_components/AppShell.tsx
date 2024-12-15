@@ -1,14 +1,21 @@
 "use client";
 
-import { Burger, Group, AppShell as MantineAppShell, Skeleton, Text } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import React from 'react';
+import React from "react";
+
+import {
+  Burger,
+  Group,
+  AppShell as MantineAppShell,
+  Skeleton,
+  Text,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 type AppShellProps = {
   children: React.ReactNode;
-}
+};
 
-const AppShell: React.FC<AppShellProps> = ({children}) => {
+const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [opened, { toggle }] = useDisclosure();
 
   return (
@@ -16,8 +23,12 @@ const AppShell: React.FC<AppShellProps> = ({children}) => {
       layout="alt"
       header={{ height: 60 }}
       footer={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-      aside={{ width: 300, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
+      navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
+      aside={{
+        width: 300,
+        breakpoint: "md",
+        collapsed: { desktop: false, mobile: true },
+      }}
       padding="md"
     >
       <MantineAppShell.Header>
@@ -37,9 +48,7 @@ const AppShell: React.FC<AppShellProps> = ({children}) => {
             <Skeleton key={index} h={28} mt="sm" animate={false} />
           ))}
       </MantineAppShell.Navbar>
-      <MantineAppShell.Main>
-        {children}
-      </MantineAppShell.Main>
+      <MantineAppShell.Main>{children}</MantineAppShell.Main>
       <MantineAppShell.Aside p="md">Aside</MantineAppShell.Aside>
       <MantineAppShell.Footer p="md">Footer</MantineAppShell.Footer>
     </MantineAppShell>

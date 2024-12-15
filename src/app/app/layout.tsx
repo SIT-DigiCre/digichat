@@ -5,9 +5,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <AppShell>
-      {children}
-    </AppShell>
-  );
+  return <AppShell>{children}</AppShell>;
 }

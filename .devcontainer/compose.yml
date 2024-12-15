@@ -1,0 +1,30 @@
+services:
+  db:
+    build:
+      context: ../docker/db
+      dockerfile: Dockerfile.dev
+    ports:
+      - 5432:5432
+    env_file:
+      - ../.env
+    environment:
+      - TZ=Asia/Tokyo
+      - POSTGRES_INITDB_ARGS=--locale=ja_JP.utf8
+    volumes:
+      - digichat-db:/var/lib/postgresql/data
+    container_name: digichat-db-dev-container
+    restart: always
+  app:
+    build:
+      context: ../docker/app
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    env_file:
+      - ../.env
+    volumes:
+      - ../:/digichat
+    command: sleep infinity
+    container_name: digichat-app-dev-container
+volumes:
+  digichat-db:

@@ -6,13 +6,16 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
+    "lint": "next lint",
+    "stylelint": "stylelint \"./src/**/*.css\" --fix"
   },
   "dependencies": {
     "@mantine/core": "^7.15.1",
     "@mantine/hooks": "^7.15.1",
     "@mantine/modals": "^7.15.1",
     "@mantine/spotlight": "^7.15.1",
+    "@tabler/icons-react": "^3.24.0",
     "next": "15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -24,7 +27,11 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.0",
+    "eslint-plugin-import": "^2.31.0",
     "prettier": "^3.4.2",
+    "stylelint": "^16.11.0",
+    "stylelint-config-recess-order": "^5.1.1",
+    "stylelint-config-standard": "^36.0.1",
     "typescript": "^5"
   }
 }

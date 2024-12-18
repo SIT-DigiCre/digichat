@@ -2,7 +2,6 @@
 
 import React from "react";
 
-import TextEditor from "#/components/TextEditor";
 import {
   Burger,
   Group,
@@ -11,6 +10,8 @@ import {
   Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
+import TextEditor from "#/components/TextEditor";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -51,8 +52,13 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
       </MantineAppShell.Navbar>
       <MantineAppShell.Main>{children}</MantineAppShell.Main>
       <MantineAppShell.Aside p="md">Aside</MantineAppShell.Aside>
-      <MantineAppShell.Footer p="md">
-        <TextEditor />
+      <MantineAppShell.Footer p="xs" h="auto" withBorder={false}>
+        <TextEditor
+          value="aaa"
+          onChange={() => {
+            return 0;
+          }}
+        />
       </MantineAppShell.Footer>
     </MantineAppShell>
   );

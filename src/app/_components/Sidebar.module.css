@@ -1,0 +1,15 @@
+.AccordionLabel {
+  padding: 0;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.AccordionContent {
+  padding: 0;
+}
+
+.AccordionPanel {
+  border: none;
+}

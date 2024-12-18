@@ -1,10 +1,31 @@
-import { ActionIcon, AppShellNavbar, Flex, Menu, Title } from "@mantine/core";
+import {
+  Accordion,
+  ActionIcon,
+  AppShellNavbar,
+  Flex,
+  Menu,
+  Title,
+} from "@mantine/core";
 import { IconPlus, IconUser, IconWorld } from "@tabler/icons-react";
+import AccordionItem, { type AccordionItemProps } from "./AccordionItem";
+
+import styles from "./Sidebar.module.css";
+
+const categories: AccordionItemProps[] = [
+  {
+    categoryName: "General",
+    channels: [
+      { title: "announcements", id: "1" },
+      { title: "random", id: "2" },
+      { title: "welcome", id: "3" },
+    ],
+  },
+];
 
 const Sidebar: React.FC = () => {
   return (
-    <AppShellNavbar bg="blue" c="white" h="full" p="sm">
-      <Flex align="center" justify="space-between" w="full">
+    <AppShellNavbar bg="blue" c="blue.1" h="full">
+      <Flex align="center" justify="space-between" w="full" m="sm">
         <Title order={1} size="1.5rem">
           Digichat
         </Title>
@@ -27,6 +48,22 @@ const Sidebar: React.FC = () => {
           </Menu.Dropdown>
         </Menu>
       </Flex>
+      <Accordion
+        chevronPosition="left"
+        classNames={{
+          label: styles.AccordionLabel,
+          content: styles.AccordionContent,
+          panel: styles.AccordionPanel,
+        }}
+      >
+        {categories.map((category) => (
+          <AccordionItem
+            key={category.categoryName}
+            channels={category.channels}
+            categoryName={category.categoryName}
+          />
+        ))}
+      </Accordion>
     </AppShellNavbar>
   );
 };

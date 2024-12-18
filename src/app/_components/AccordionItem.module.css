@@ -1,0 +1,30 @@
+.AccordionItem {
+  border: none;
+}
+
+.AccordionControl {
+  color: var(--mantine-primary-color-1);
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.List {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.Channel {
+  width: 100%;
+  color: var(--mantine-primary-color-1);
+
+  &:hover {
+    background-color: var(--mantine-primary-color-5);
+  }
+
+  span {
+    justify-content: flex-start;
+  }
+}

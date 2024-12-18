@@ -1,26 +1,6 @@
-import {
-  Accordion,
-  ActionIcon,
-  AppShellNavbar,
-  Flex,
-  Menu,
-  Title,
-} from "@mantine/core";
+import { ActionIcon, AppShellNavbar, Flex, Menu, Title } from "@mantine/core";
 import { IconPlus, IconUser, IconWorld } from "@tabler/icons-react";
-import AccordionItem, { type AccordionItemProps } from "./AccordionItem";
-
-import styles from "./Sidebar.module.css";
-
-const categories: AccordionItemProps[] = [
-  {
-    categoryName: "General",
-    channels: [
-      { title: "announcements", id: "1" },
-      { title: "random", id: "2" },
-      { title: "welcome", id: "3" },
-    ],
-  },
-];
+import Accordion from "./Accordion";
 
 const Sidebar: React.FC = () => {
   return (
@@ -48,22 +28,7 @@ const Sidebar: React.FC = () => {
           </Menu.Dropdown>
         </Menu>
       </Flex>
-      <Accordion
-        chevronPosition="left"
-        classNames={{
-          label: styles.AccordionLabel,
-          content: styles.AccordionContent,
-          panel: styles.AccordionPanel,
-        }}
-      >
-        {categories.map((category) => (
-          <AccordionItem
-            key={category.categoryName}
-            channels={category.channels}
-            categoryName={category.categoryName}
-          />
-        ))}
-      </Accordion>
+      <Accordion />
     </AppShellNavbar>
   );
 };

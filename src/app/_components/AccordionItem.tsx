@@ -24,11 +24,9 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   channels,
 }) => {
   return (
-    <MantineAccordionItem value={categoryName} className={styles.AccordionItem}>
-      <AccordionControl className={styles.AccordionControl}>
-        {categoryName}
-      </AccordionControl>
-      <AccordionPanel className={styles.AccordionPanel}>
+    <MantineAccordionItem value={categoryName}>
+      <AccordionControl>{categoryName}</AccordionControl>
+      <AccordionPanel>
         <ul className={styles.List}>
           {channels.map((item) => (
             <li key={item.id}>
@@ -37,7 +35,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
                 className={styles.Channel}
                 component={Link}
                 href={`/channels/${item.id}`}
-                leftSection={<IconWorld />}
+                leftSection={<IconWorld size={20} />}
               >
                 {item.title}
               </Button>

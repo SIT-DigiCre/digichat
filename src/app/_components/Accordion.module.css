@@ -1,0 +1,41 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.Item {
+  border: none;
+}
+
+.Control {
+  color: var(--mantine-primary-color-1);
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.Label {
+  padding: 0;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.Chevron {
+  margin-inline-end: 0.5rem;
+
+  &[data-rotate] {
+    transform: rotate(90deg);
+  }
+}
+
+.Content {
+  padding: 0;
+}
+
+.Panel {
+  border: none;
+}

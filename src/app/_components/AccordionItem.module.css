@@ -1,15 +1,3 @@
-.AccordionItem {
-  border: none;
-}
-
-.AccordionControl {
-  color: var(--mantine-primary-color-1);
-
-  &:hover {
-    background-color: transparent;
-  }
-}
-
 .List {
   padding: 0;
   margin: 0;
@@ -18,6 +6,7 @@
 
 .Channel {
   width: 100%;
+  padding-left: 1.5rem;
   color: var(--mantine-primary-color-1);
 
   &:hover {

@@ -15,7 +15,12 @@
     "@mantine/hooks": "^7.15.1",
     "@mantine/modals": "^7.15.1",
     "@mantine/spotlight": "^7.15.1",
+    "@mantine/tiptap": "^7.15.1",
     "@tabler/icons-react": "^3.24.0",
+    "@tiptap/extension-link": "^2.10.3",
+    "@tiptap/pm": "^2.10.3",
+    "@tiptap/react": "^2.10.3",
+    "@tiptap/starter-kit": "^2.10.3",
     "next": "15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

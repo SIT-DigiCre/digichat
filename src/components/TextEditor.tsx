@@ -1,9 +1,13 @@
 "use client";
 
-import { RichTextEditor as MantineRichTextEditor } from "@mantine/tiptap";
+import React from "react";
+
+import { ActionIcon } from "@mantine/core";
+import { RichTextEditor } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React from "react";
+
+import { IconSend2 } from "@tabler/icons-react";
 
 import "@mantine/tiptap/styles.css";
 import "./TextEditor.css";
@@ -24,15 +28,18 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
   });
 
   return (
-    <MantineRichTextEditor editor={editor}>
-      <MantineRichTextEditor.Content className={styles.Content} />
-      <MantineRichTextEditor.Toolbar className={styles.Toolbar}>
-        <MantineRichTextEditor.ControlsGroup>
-          <MantineRichTextEditor.Bold />
-          <MantineRichTextEditor.Italic />
-        </MantineRichTextEditor.ControlsGroup>
-      </MantineRichTextEditor.Toolbar>
-    </MantineRichTextEditor>
+    <RichTextEditor editor={editor} className={styles.Editor}>
+      <RichTextEditor.Content className={styles.Content} />
+      <RichTextEditor.Toolbar className={styles.Toolbar}>
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.Bold />
+          <RichTextEditor.Italic />
+        </RichTextEditor.ControlsGroup>
+        <ActionIcon w="3rem">
+          <IconSend2 />
+        </ActionIcon>
+      </RichTextEditor.Toolbar>
+    </RichTextEditor>
   );
 };
 

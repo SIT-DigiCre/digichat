@@ -1,3 +1,16 @@
+.Editor {
+  margin-top: 0;
+  border: 2px solid var(--mantine-color-gray-3);
+
+  &:hover {
+    border-color: var(--mantine-color-gray-4);
+  }
+
+  &:focus-within {
+    border-color: var(--mantine-color-gray-5);
+  }
+}
+
 .Content {
   max-height: 50vh;
   padding: 0.5rem;
@@ -6,6 +19,8 @@
 }
 
 .Toolbar {
+  display: flex;
+  justify-content: space-between;
   padding: 0.5rem;
   border: none;
 }

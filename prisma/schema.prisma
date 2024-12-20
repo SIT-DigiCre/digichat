@@ -12,3 +12,226 @@ datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_URL")
 }
+
+model User {
+  id              String            @id @default(uuid(7))
+  slug            String            @unique
+  name            String
+  email           String            @unique
+  password        String
+  iconUrl         String?
+  status          UserStatus
+  description     String?
+  role            UserRole          @relation(fields: [roleId], references: [id])
+  roleId          String
+  workspaces      WorkspaceMember[]
+  createdChannels Channel[]
+  createdThreads  Thread[]
+  threads         ThreadMember[]
+  channels        ChannelMember[]
+  messages        Message[]
+  reactions       Reaction[]
+  pinnedMessages  PinnedMessage[]
+  bookmarks       Bookmark[]
+  mentions        Mention[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model UserRole {
+  id          String   @id @default(uuid(7))
+  name        String
+  permissions Json
+  users       User[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Workspace {
+  id           String            @id @default(uuid(7))
+  name         String
+  description  String?
+  users        WorkspaceMember[]
+  channels     Channel[]
+  customEmojis CustomEmoji[]
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+}
+
+model WorkspaceMember {
+  id          String    @id @default(uuid(7))
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  role        String
+  joinDate    DateTime  @default(now())
+  leaveDate   DateTime
+}
+
+model Channel {
+  id             String          @id @default(uuid(7))
+  slug           String          @unique
+  name           String
+  workspaceId    String
+  workspace      Workspace       @relation(fields: [workspaceId], references: [id])
+  creatorId      String?
+  creator        User?           @relation(fields: [creatorId], references: [id])
+  description    String?
+  type           ChannelType
+  threads        Thread[]
+  members        ChannelMember[]
+  messages       Message[]
+  pinnedMessages PinnedMessage[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model Thread {
+  id              String         @id @default(uuid(7))
+  parentChannelId String
+  parentChannel   Channel        @relation(fields: [parentChannelId], references: [id])
+  creatorId       String
+  creator         User           @relation(fields: [creatorId], references: [id])
+  messageId       String
+  message         Message        @relation(name: "startWith", fields: [messageId], references: [id])
+  title           String
+  description     String
+  members         ThreadMember[]
+  messages        Message[]      @relation(name: "contains")
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model ThreadMember {
+  threadId  String
+  thread    Thread   @relation(fields: [threadId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([threadId, userId])
+}
+
+model ChannelMember {
+  userId         String
+  user           User              @relation(fields: [userId], references: [id])
+  channelId      String
+  channel        Channel           @relation(fields: [channelId], references: [id])
+  role           ChannelMemberRole
+  joinDate       DateTime          @default(now())
+  lastAccessedAt DateTime
+
+  @@id([channelId, userId])
+}
+
+model Message {
+  id             String          @id @default(uuid(7))
+  channelId      String
+  channel        Channel         @relation(fields: [channelId], references: [id])
+  threadId       String?
+  thread         Thread?         @relation(name: "contains", fields: [threadId], references: [id])
+  threads        Thread[]        @relation(name: "startWith")
+  userId         String
+  user           User            @relation(fields: [userId], references: [id])
+  content        String
+  type           MessageType
+  assets         Asset[]
+  reactions      Reaction[]
+  pinnedMessages PinnedMessage[]
+  bookmarks      Bookmark[]
+  mentions       Mention[]
+  createdAt      DateTime        @default(now())
+}
+
+model Asset {
+  id        String    @id @default(uuid(7))
+  messageId String
+  message   Message   @relation(fields: [messageId], references: [id])
+  type      AssetType
+  url       String
+  createdAt DateTime  @default(now())
+}
+
+model Reaction {
+  messageId String
+  message   Message  @relation(fields: [messageId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  emoji     String
+  createdAt DateTime @default(now())
+
+  @@id([messageId, userId])
+}
+
+model PinnedMessage {
+  channelId    String
+  channel      Channel  @relation(fields: [channelId], references: [id])
+  messageId    String
+  message      Message  @relation(fields: [messageId], references: [id])
+  pinnedBy     String
+  pinnedByUser User     @relation(fields: [pinnedBy], references: [id])
+  pinnedAt     DateTime @default(now())
+
+  @@id([channelId, messageId, pinnedBy])
+}
+
+model Bookmark {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  messageId String
+  message   Message  @relation(fields: [messageId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@id([messageId, userId])
+}
+
+model Mention {
+  messageId       String
+  message         Message  @relation(fields: [messageId], references: [id])
+  mentionedUserId String
+  mentionedUser   User     @relation(fields: [mentionedUserId], references: [id])
+  createdAt       DateTime @default(now())
+
+  @@id([messageId, mentionedUserId])
+}
+
+model CustomEmoji {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  name        String
+  url         String
+  createdAt   DateTime  @default(now())
+}
+
+enum UserStatus {
+  ONLINE
+  AWAY
+  BUSY
+  OFFLINE
+}
+
+enum ChannelType {
+  PUBLIC
+  PRIVATE
+  DM
+}
+
+enum ChannelMemberRole {
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+enum MessageType {
+  NORMAL
+  IMPORTANT
+  PROJECT
+}
+
+enum AssetType {
+  IMAGE
+  VIDEO
+}

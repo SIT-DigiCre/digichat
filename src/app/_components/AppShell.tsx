@@ -43,6 +43,9 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
           onChange={() => {
             return 0;
           }}
+          onSend={() => {
+            return 0;
+          }}
         />
       </MantineAppShell.Footer>
     </MantineAppShell>

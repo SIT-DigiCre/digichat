@@ -18,6 +18,7 @@ import styles from "./TextEditor.module.css";
 type TextEditorProps = {
   value: string;
   onChange: (value: string) => void;
+  onSend: () => void;
 };
 
 const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {

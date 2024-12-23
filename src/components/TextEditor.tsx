@@ -7,7 +7,7 @@ import { RichTextEditor } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
-import { IconSend2 } from "@tabler/icons-react";
+import { IconPlus, IconSend2 } from "@tabler/icons-react";
 
 import "@mantine/tiptap/styles.css";
 import EmojiPickerControl from "./EmojiPickerControl";
@@ -30,12 +30,19 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
 
   return (
     <RichTextEditor editor={editor} className={styles.Editor}>
-      <RichTextEditor.Content className={styles.Content} />
       <RichTextEditor.Toolbar className={styles.Toolbar}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />
           <EmojiPickerControl />
+        </RichTextEditor.ControlsGroup>
+      </RichTextEditor.Toolbar>
+      <RichTextEditor.Content className={styles.Content} />
+      <RichTextEditor.Toolbar className={styles.Toolbar}>
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.Control>
+            <IconPlus stroke={1.5} size="1rem" />
+          </RichTextEditor.Control>
         </RichTextEditor.ControlsGroup>
         <ActionIcon w="3rem">
           <IconSend2 />

@@ -22,6 +22,7 @@ const EmojiPickerControl = () => {
       </Popover.Target>
       <Popover.Dropdown className={styles.PopoverDropdown}>
         <Picker
+          theme="light"
           data={data}
           onEmojiSelect={(emoji: EmojiData) => {
             editor?.chain().focus().insertContent(emoji.native).run();

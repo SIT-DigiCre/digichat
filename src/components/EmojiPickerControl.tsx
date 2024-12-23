@@ -1,3 +1,4 @@
+import { EmojiData } from "#/types/emoji";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import {
@@ -29,7 +30,7 @@ const EmojiPickerControl = () => {
             zIndex: 1000,
           }}
           data={data}
-          onEmojiSelect={(emoji) => {
+          onEmojiSelect={(emoji: EmojiData) => {
             editor?.chain().focus().insertContent(emoji.native).run();
           }}
         />

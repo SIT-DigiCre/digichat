@@ -3,7 +3,7 @@
 import React from "react";
 
 import { ActionIcon } from "@mantine/core";
-import { RichTextEditor } from "@mantine/tiptap";
+import { Link, RichTextEditor } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
@@ -21,7 +21,7 @@ type TextEditorProps = {
 
 const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Link],
     content: value,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
@@ -34,6 +34,13 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />
+          <RichTextEditor.H1 />
+          <RichTextEditor.H2 />
+          <RichTextEditor.H3 />
+          <RichTextEditor.BulletList />
+          <RichTextEditor.OrderedList />
+          <RichTextEditor.Strikethrough />
+          <RichTextEditor.Code />
           <EmojiPickerControl />
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>

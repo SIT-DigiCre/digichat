@@ -10,6 +10,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { IconSend2 } from "@tabler/icons-react";
 
 import "@mantine/tiptap/styles.css";
+import EmojiPickerControl from "./EmojiPickerControl";
 import "./TextEditor.css";
 import styles from "./TextEditor.module.css";
 
@@ -34,6 +35,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />
+          <EmojiPickerControl />
         </RichTextEditor.ControlsGroup>
         <ActionIcon w="3rem">
           <IconSend2 />

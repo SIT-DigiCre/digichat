@@ -2,14 +2,9 @@
 
 import React from "react";
 
-import {
-  Burger,
-  Group,
-  AppShell as MantineAppShell,
-  Skeleton,
-  Text,
-} from "@mantine/core";
+import { Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import Sidebar from "./Sidebar";
 
 import TextEditor from "#/components/TextEditor";
 
@@ -39,17 +34,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
           digichat
         </Group>
       </MantineAppShell.Header>
-      <MantineAppShell.Navbar p="md">
-        <Group>
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <Text>Navbar</Text>
-        </Group>
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
-      </MantineAppShell.Navbar>
+      <Sidebar />
       <MantineAppShell.Main>{children}</MantineAppShell.Main>
       <MantineAppShell.Aside p="md">Aside</MantineAppShell.Aside>
       <MantineAppShell.Footer p="xs" h="auto" withBorder={false}>

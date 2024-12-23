@@ -27,6 +27,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
+    immediatelyRender: false,
   });
 
   return (
@@ -50,7 +51,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
         <RichTextEditor.ControlsGroup>
           <FileUploadControl />
         </RichTextEditor.ControlsGroup>
-        <ActionIcon w="3rem">
+        <ActionIcon w="3rem" disabled={value.trim() === ""}>
           <IconSend2 />
         </ActionIcon>
       </RichTextEditor.Toolbar>

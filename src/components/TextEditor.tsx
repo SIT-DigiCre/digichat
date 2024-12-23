@@ -10,7 +10,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { IconSend2 } from "@tabler/icons-react";
 
 import "@mantine/tiptap/styles.css";
-import EmojiPickerControlForDesktop from "./EmojiPickerControl";
+import EmojiPickerControl from "./EmojiPickerControl";
 import FileUploadControl from "./FileUploadControl";
 import "./TextEditor.css";
 import styles from "./TextEditor.module.css";
@@ -44,7 +44,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
           <RichTextEditor.OrderedList />
           <RichTextEditor.Strikethrough />
           <RichTextEditor.Code />
-          <EmojiPickerControlForDesktop />
+          <EmojiPickerControl />
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
       <RichTextEditor.Content className={styles.Content} />

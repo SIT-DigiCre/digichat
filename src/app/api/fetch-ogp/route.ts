@@ -16,6 +16,9 @@ export async function GET(request: Request) {
   }
 
   try {
+    // ref: https://github.com/traPtitech/traQ/blob/a8035bd3fac0fa4ae531d3b11c1ccbddc76822d2/service/ogp/parser/domain.go#L15
+    // X(Twitter)のOGPを取得するのにuserAgentの中にbotという文字列が入っている必要がある
+    // Spotifyの新しいOGPを取得するのにuserAgentの中にcurl-botという文字列が入っている必要がある
     const userAgent =
       "digichat-ogp-fetcher-curl-bot; contact: github.com/SIT-DigiCre/digichat";
     const response = await fetch(url, {

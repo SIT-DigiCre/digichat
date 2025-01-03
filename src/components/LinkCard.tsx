@@ -17,7 +17,7 @@ type ApiResponse =
   | { status: "error"; message: string };
 
 const LinkCard = ({ href }: { href: string }) => {
-  const [ogpData, setOgpData] = useState<OGPData | null>(null);
+  const [ogpData, setOGPData] = useState<OGPData | null>(null);
 
   useEffect(() => {
     const fetchOgpData = async () => {
@@ -28,7 +28,6 @@ const LinkCard = ({ href }: { href: string }) => {
         const data: ApiResponse = await response.json();
 
         if (data.status === "success") {
-          // クライアントサイドでDOMParserを使用してOGPデータを解析
           const parser = new DOMParser();
           const doc = parser.parseFromString(data.data.html, "text/html");
           const ogTitle =
@@ -43,8 +42,7 @@ const LinkCard = ({ href }: { href: string }) => {
           const ogImage =
             (doc.querySelector('meta[property="og:image"]') as HTMLMetaElement)
               ?.content || "";
-          console.log(doc.querySelector('meta[property="og:image"]'));
-          setOgpData({
+          setOGPData({
             title: ogTitle,
             description: ogDescription,
             image: ogImage,
@@ -85,14 +83,12 @@ const LinkCard = ({ href }: { href: string }) => {
       </Card.Section>
       <Card.Section className={styles["card-content-section"]}>
         {ogpData ? (
-          <Text fw={500} size="lg">
-            {ogpData.title}
-          </Text>
+          <Text className={styles["card-title"]}>{ogpData.title}</Text>
         ) : (
           <Skeleton height={30} />
         )}
         {ogpData ? (
-          <Text mt="xs" c="dimmed" size="sm">
+          <Text className={styles["card-description"]}>
             {ogpData.description}
           </Text>
         ) : (

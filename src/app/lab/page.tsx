@@ -1,10 +1,16 @@
 import LinkCard from "#/components/LinkCard";
+import { Stack, Title } from "@mantine/core";
 
 const LabPage = () => {
   return (
     <div>
-      <h1>コンポーネントのプレビュー用</h1>
-      <LinkCard href="https://open.spotify.com/intl-ja/track/5XsPjGw1ADBcVU0i7mwNb1?si=5fc3326b08014a1c" />
+      <Title order={2}>コンポーネントのプレビュー用</Title>
+      <Stack gap="md">
+        <LinkCard href="https://github.com/SIT-DigiCre/digichat" />
+        <LinkCard href="https://x.com/sitdigicre" />
+        <LinkCard href="https://x.com/sitdigicre/status/1874380689183052086" />
+        <LinkCard href="" />
+      </Stack>
     </div>
   );
 };

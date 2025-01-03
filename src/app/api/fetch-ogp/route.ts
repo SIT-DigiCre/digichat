@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const url = searchParams.get("url");
-  console.log(url);
 
   if (!url) {
     return NextResponse.json(
@@ -27,7 +26,6 @@ export async function GET(request: Request) {
       },
     });
     const html = await response.text();
-    console.log(html);
 
     return NextResponse.json({
       status: "success",

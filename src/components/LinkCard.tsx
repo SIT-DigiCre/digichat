@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Image, Text } from "@mantine/core";
+import { Card, Image, Skeleton, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 import styles from "./LinkCard.module.css";
@@ -18,8 +18,6 @@ type ApiResponse =
 
 const LinkCard = ({ href }: { href: string }) => {
   const [ogpData, setOgpData] = useState<OGPData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchOgpData = async () => {
@@ -53,52 +51,53 @@ const LinkCard = ({ href }: { href: string }) => {
             url: href,
           });
         } else {
-          setError(data.message);
+          console.log(data.message);
         }
       } catch (error) {
-        setError("Failed to fetch OGP data");
-      } finally {
-        setLoading(false);
+        console.error(error);
       }
     };
 
     fetchOgpData();
   }, [href]);
 
-  if (loading) return <p>Loading...</p>;
-
-  if (error) return <p>{error}</p>;
-
-  if (!ogpData) return <p>Failed to load OGP data.</p>;
-
   return (
     <Card
       shadow="sm"
       padding={0}
       component="a"
-      href={ogpData.url}
+      href={ogpData?.url}
       target="_blank"
       rel="noopener noreferrer"
       className={styles.card}
     >
       <Card.Section className={styles["card-image-section"]}>
-        {ogpData.image && (
+        {ogpData ? (
           <Image
-            src={ogpData.image}
-            alt={ogpData.title}
+            src={ogpData?.image}
+            alt={ogpData?.title}
             className={styles["card-image"]}
             fit="cover"
           />
+        ) : (
+          <Skeleton height={200} radius={0} />
         )}
       </Card.Section>
       <Card.Section className={styles["card-content-section"]}>
-        <Text fw={500} size="lg">
-          {ogpData.title}
-        </Text>
-
-        <Text mt="xs" c="dimmed" size="sm">
-          {ogpData.description}
-        </Text>
+        {ogpData ? (
+          <Text fw={500} size="lg">
+            {ogpData.title}
+          </Text>
+        ) : (
+          <Skeleton height={30} />
+        )}
+        {ogpData ? (
+          <Text mt="xs" c="dimmed" size="sm">
+            {ogpData.description}
+          </Text>
+        ) : (
+          <Skeleton height={64} mt="sm" />
+        )}
       </Card.Section>
     </Card>
   );

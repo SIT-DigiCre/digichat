@@ -91,8 +91,8 @@ const LinkCard = ({ href }: { href: string }) => {
           />
         )}
       </Card.Section>
-      <Card.Section>
-        <Text fw={500} size="lg" mt="md">
+      <Card.Section className={styles["card-content-section"]}>
+        <Text fw={500} size="lg">
           {ogpData.title}
         </Text>
 

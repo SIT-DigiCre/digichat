@@ -1,8 +1,7 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React from "react";
 
-import LinkCard from "#/components/LinkCard";
 import { Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Sidebar from "./Sidebar";
@@ -36,11 +35,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
       <Sidebar />
       <MantineAppShell.Main>{children}</MantineAppShell.Main>
       <MantineAppShell.Aside p="md">Aside</MantineAppShell.Aside>
-      <MantineAppShell.Footer p="md" h="100%">
-        <Suspense fallback={<div>Loading...</div>}>
-          <LinkCard href="https://newt239.dev/" />
-        </Suspense>
-      </MantineAppShell.Footer>
+      <MantineAppShell.Footer p="md">Footer</MantineAppShell.Footer>
     </MantineAppShell>
   );
 };

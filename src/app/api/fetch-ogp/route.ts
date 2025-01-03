@@ -16,7 +16,13 @@ export async function GET(request: Request) {
   }
 
   try {
-    const response = await fetch(url);
+    const userAgent =
+      "digichat-ogp-fetcher-curl-bot; contact: github.com/SIT-DigiCre/digichat";
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": userAgent,
+      },
+    });
     const html = await response.text();
     console.log(html);
 

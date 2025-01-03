@@ -20,6 +20,9 @@ importers:
       '@mantine/spotlight':
         specifier: ^7.15.1
         version: 7.15.1(@mantine/core@7.15.1(@mantine/hooks@7.15.1(react@19.0.0))(@types/react@19.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@mantine/hooks@7.15.1(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@prisma/client':
+        specifier: ^6.1.0
+        version: 6.1.0
       '@tabler/icons-react':
         specifier: ^3.24.0
         version: 3.24.0(react@19.0.0)
@@ -395,6 +398,15 @@ packages:
   '@nolyfill/is-core-module@1.0.39':
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
+
+  '@prisma/client@6.1.0':
+    resolution: {integrity: sha512-AbQYc5+EJKm1Ydfq3KxwcGiy7wIbm4/QbjCKWWoNROtvy7d6a3gmAGkKjK0iUCzh+rHV8xDhD5Cge8ke/kiy5Q==}
+    engines: {node: '>=18.18'}
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -2169,6 +2181,8 @@ snapshots:
       fastq: 1.17.1
 
   '@nolyfill/is-core-module@1.0.39': {}
+
+  '@prisma/client@6.1.0': {}
 
   '@rtsao/scc@1.1.0': {}
 

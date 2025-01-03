@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-type ResponseProps =
+export type FetchOGPResponse =
   | {
       status: "success";
       data: {
@@ -16,13 +16,13 @@ type ResponseProps =
 
 export async function GET(
   request: NextRequest
-): Promise<NextResponse<ResponseProps>> {
+): Promise<NextResponse<FetchOGPResponse>> {
   const { searchParams } = request.nextUrl;
   const url = searchParams.get("url");
 
   if (!url) {
     return NextResponse.json(
-      { status: "error", message: "Missing 'url' query parameter" },
+      { status: "error", message: "Missing 'url' query parameter" } as const,
       { status: 400 }
     );
   }
@@ -54,7 +54,7 @@ export async function GET(
   } catch (error) {
     console.error("Error fetching OGP data:", error);
     return NextResponse.json(
-      { status: "error", message: "Error fetching OGP data" },
+      { status: "error", message: "Error fetching OGP data" } as const,
       { status: 500 }
     );
   }

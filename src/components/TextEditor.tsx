@@ -4,10 +4,9 @@ import React from "react";
 
 import { ActionIcon } from "@mantine/core";
 import { Link, RichTextEditor } from "@mantine/tiptap";
+import { IconSend2 } from "@tabler/icons-react";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-
-import { IconSend2 } from "@tabler/icons-react";
 
 import "@mantine/tiptap/styles.css";
 import EmojiPickerControl from "./EmojiPickerControl";

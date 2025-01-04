@@ -1,17 +1,18 @@
-import { EmojiData } from "#/types/emoji";
+import { useState } from "react";
+
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { Drawer, Popover } from "@mantine/core";
-
+import { useMediaQuery } from "@mantine/hooks";
 import {
   RichTextEditorControl,
   useRichTextEditorContext,
 } from "@mantine/tiptap";
 import { IconMoodSmile } from "@tabler/icons-react";
-import { useState } from "react";
 
-import { useMediaQuery } from "@mantine/hooks";
 import styles from "./EmojiPicker.module.css";
+
+import { EmojiData } from "#/types/emoji";
 
 const EmojiPickerControl = () => {
   const { editor } = useRichTextEditorContext();

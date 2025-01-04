@@ -3,7 +3,7 @@
 import { Button, Card, Image, Skeleton, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
-import { fetchOGPData } from "#/app/libs/fetch-ogp";
+import { fetchOGPData } from "#/libs/fetch-ogp";
 import styles from "./LinkCard.module.css";
 
 type OGPData = {

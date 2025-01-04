@@ -2,6 +2,7 @@ type APIResponse =
   | { status: "success"; html: string }
   | { status: "error"; message: string };
 
+// DOMParserはクライアント側でしか利用できないため、HTML取得後の処理はクライアント側で行う
 export const fetchOGPData = async (href: string) => {
   try {
     const response = await fetch(
@@ -14,7 +15,7 @@ export const fetchOGPData = async (href: string) => {
       const doc = parser.parseFromString(data.html, "text/html");
       const ogTitle =
         (doc.querySelector('meta[property="og:title"]') as HTMLMetaElement)
-          ?.content || "No title";
+          .content || "No title";
       const ogDescription =
         (
           doc.querySelector(
@@ -31,6 +32,7 @@ export const fetchOGPData = async (href: string) => {
         url: href,
       };
     } else {
+      // サーバーサイドで取得に際し何らかのエラーが発生した場合、またはタイムアウトした場合
       return {
         title: href,
         description: data.message,
@@ -39,6 +41,7 @@ export const fetchOGPData = async (href: string) => {
       };
     }
   } catch (error) {
+    // サーバーサイドへのリクエストに失敗した場合
     console.error(error);
     return {
       title: href,

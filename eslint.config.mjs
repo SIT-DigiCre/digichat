@@ -1,23 +1,18 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { FlatCompat } from '@eslint/eslintrc';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+  // import.meta.dirname is available after Node.js v20.11.0
+  baseDirectory: import.meta.dirname,
+})
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  importPlugin.flatConfigs.recommended,
   {
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-    },
+    ignores: ["node_modules/", ".next/"],
+  },
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  eslintConfigPrettier,
+  {
     rules: {
       "import/order": [
         "error",
@@ -34,14 +29,9 @@ const eslintConfig = [
           "pathGroups": [
             {
               "pattern": "{react,react-dom/**,react-router-dom,next,next/**}",
-              "group": "bulitin",
+              "group": "builtin",
               "position": "before"
             },
-            {
-              "pattern": "@mantine/**",
-              "group": "builtin",
-              "position": "after"
-            }
           ],
           "pathGroupsExcludedImportTypes": ["builtin"],
           "alphabetize": {

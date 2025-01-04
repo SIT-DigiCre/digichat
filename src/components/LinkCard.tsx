@@ -28,18 +28,14 @@ const LinkCard = ({ href }: { href: string }) => {
       padding={0}
       className={styles.card}
       data-noimage={OGPData?.image ? "false" : "true"}
+      component="a"
+      href={OGPData?.url}
+      target="_blank"
+      rel="noopener noreferrer"
     >
       <Card.Section className={styles["card-content-section"]}>
         {OGPData ? (
-          <Text
-            className={styles["card-title"]}
-            component="a"
-            href={OGPData?.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {OGPData.title}
-          </Text>
+          <Text className={styles["card-title"]}>{OGPData.title}</Text>
         ) : (
           <Skeleton height={30} />
         )}

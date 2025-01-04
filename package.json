@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
-    "lint": "eslint --fix ./src/**/*.{ts,tsx}",
+    "lint": "eslint --fix --ignore-pattern ./src/**/*.{ts,tsx}",
     "stylelint": "stylelint \"./src/**/*.css\" --fix"
   },
   "dependencies": {

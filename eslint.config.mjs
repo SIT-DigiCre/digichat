@@ -1,4 +1,5 @@
 import { FlatCompat } from '@eslint/eslintrc';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 const compat = new FlatCompat({
   // import.meta.dirname is available after Node.js v20.11.0
@@ -6,13 +7,12 @@ const compat = new FlatCompat({
 })
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-    },
+    ignores: ["node_modules/", ".next/"],
+  },
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  eslintConfigPrettier,
+  {
     rules: {
       "import/order": [
         "error",

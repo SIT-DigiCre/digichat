@@ -1,12 +1,13 @@
+import Link from "next/link";
+
 import {
   AccordionControl,
   AccordionPanel,
   Button,
   AccordionItem as MantineAccordionItem,
 } from "@mantine/core";
-
 import { IconWorld } from "@tabler/icons-react";
-import Link from "next/link";
+
 import styles from "./AccordionItem.module.css";
 
 export type AccordionItemType = {

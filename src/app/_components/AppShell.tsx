@@ -4,6 +4,7 @@ import React from "react";
 
 import { Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
 import Sidebar from "./Sidebar";
 
 type AppShellProps = {

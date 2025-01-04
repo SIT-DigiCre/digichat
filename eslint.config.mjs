@@ -1,57 +1,43 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { FlatCompat } from '@eslint/eslintrc';
+import eslint from '@eslint/js';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import tseslint from 'typescript-eslint';
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+  // import.meta.dirname is available after Node.js v20.11.0
+  baseDirectory: import.meta.dirname,
+})
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  importPlugin.flatConfigs.recommended,
-  {
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-    },
+export default tseslint.config(
+  ...compat.config({
+    extends: ['next'],
     rules: {
-      "import/order": [
-        "error",
-        {
-          "groups": [
-            "builtin",
-            "external",
-            "parent",
-            "sibling",
-            "index",
-            "object",
-            "type"
-          ],
-          "pathGroups": [
-            {
-              "pattern": "{react,react-dom/**,react-router-dom,next,next/**}",
-              "group": "bulitin",
-              "position": "before"
-            },
-            {
-              "pattern": "@mantine/**",
-              "group": "builtin",
-              "position": "after"
-            }
-          ],
-          "pathGroupsExcludedImportTypes": ["builtin"],
-          "alphabetize": {
-            "order": "asc"
-          },
-          "newlines-between": "always"
-        }
-      ]
+      'react/no-unescaped-entities': 'off',
+      '@next/next/no-page-custom-font': 'off',
+    },
+  }),
+  {
+    ignores: [
+      'dist/**/*.ts',
+      'dist/**',
+      "**/*.mjs",
+      "eslint.config.mjs",
+      "**/*.js"
+    ],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
   },
-];
-
-export default eslintConfig;
+  eslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
+  tseslint.configs.stylisticTypeChecked,
+  eslintConfigPrettier,
+  {
+    rules: {
+      "@typescript-eslint/no-misused-promises": "off",
+    }
+  },
+);

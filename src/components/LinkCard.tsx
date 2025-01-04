@@ -1,98 +1,74 @@
 "use client";
 
-import { Card, Image, Skeleton, Text } from "@mantine/core";
+import { Button, Card, Image, Skeleton, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
+import { fetchOGPData } from "#/app/libs/fetch-ogp";
 import styles from "./LinkCard.module.css";
 
 type OGPData = {
   title: string;
   description: string;
-  image: string;
+  image: string | null;
   url: string;
 };
 
-type ApiResponse =
-  | { status: "success"; data: { html: string } }
-  | { status: "error"; message: string };
-
 const LinkCard = ({ href }: { href: string }) => {
-  const [ogpData, setOGPData] = useState<OGPData | null>(null);
+  const [OGPData, setOGPData] = useState<OGPData | null>(null);
 
   useEffect(() => {
-    const fetchOgpData = async () => {
-      try {
-        const response = await fetch(
-          `/api/fetch-ogp?url=${encodeURIComponent(href)}`
-        );
-        const data: ApiResponse = await response.json();
-
-        if (data.status === "success") {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(data.data.html, "text/html");
-          const ogTitle =
-            (doc.querySelector('meta[property="og:title"]') as HTMLMetaElement)
-              ?.content || "No title";
-          const ogDescription =
-            (
-              doc.querySelector(
-                'meta[property="og:description"]'
-              ) as HTMLMetaElement
-            )?.content || "No description";
-          const ogImage =
-            (doc.querySelector('meta[property="og:image"]') as HTMLMetaElement)
-              ?.content || "";
-          setOGPData({
-            title: ogTitle,
-            description: ogDescription,
-            image: ogImage,
-            url: href,
-          });
-        } else {
-          console.log(data.message);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchOgpData();
+    fetchOGPData(href).then((data) => {
+      setOGPData(data);
+    });
   }, [href]);
 
   return (
-    <Card
-      shadow="sm"
-      padding={0}
-      component="a"
-      href={ogpData?.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={styles.card}
-    >
-      <Card.Section className={styles["card-image-section"]}>
-        {ogpData ? (
-          <Image
-            src={ogpData?.image}
-            alt={ogpData?.title}
-            className={styles["card-image"]}
-            fit="cover"
-          />
-        ) : (
-          <Skeleton height={200} radius={0} />
-        )}
-      </Card.Section>
+    <Card shadow="sm" padding={0} className={styles.card}>
       <Card.Section className={styles["card-content-section"]}>
-        {ogpData ? (
-          <Text className={styles["card-title"]}>{ogpData.title}</Text>
+        {OGPData ? (
+          <Text
+            className={styles["card-title"]}
+            component="a"
+            href={OGPData?.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {OGPData.title}
+          </Text>
         ) : (
           <Skeleton height={30} />
         )}
-        {ogpData ? (
+        {OGPData ? (
           <Text className={styles["card-description"]}>
-            {ogpData.description}
+            {OGPData.description}
           </Text>
         ) : (
           <Skeleton height={64} mt="sm" />
+        )}
+      </Card.Section>
+      <Card.Section className={styles["card-image-section"]}>
+        {OGPData ? (
+          OGPData.image ? (
+            <Image
+              src={OGPData?.image}
+              alt={OGPData?.title}
+              className={styles["card-image"]}
+              fit="cover"
+            />
+          ) : (
+            <Button
+              onClick={() => {
+                setOGPData(null);
+                fetchOGPData(href).then((data) => {
+                  setOGPData(data);
+                });
+              }}
+            >
+              再取得
+            </Button>
+          )
+        ) : (
+          <Skeleton height={200} radius={0} />
         )}
       </Card.Section>
     </Card>

@@ -14,6 +14,12 @@ export async function GET(request: Request) {
     );
   }
 
+  const controller = new AbortController();
+  const signal = controller.signal;
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, 5000);
+
   try {
     // ref: https://github.com/traPtitech/traQ/blob/a8035bd3fac0fa4ae531d3b11c1ccbddc76822d2/service/ogp/parser/domain.go#L15
     // X(Twitter)のOGPを取得するのにuserAgentの中にbotという文字列が入っている必要がある
@@ -24,21 +30,34 @@ export async function GET(request: Request) {
       headers: {
         "User-Agent": userAgent,
       },
+      signal,
     });
     const html = await response.text();
 
     return NextResponse.json({
       status: "success",
-      data: { html },
+      html,
     });
   } catch (error) {
     console.log(error);
-    return NextResponse.json(
-      {
-        status: "error",
-        message: "Failed to fetch HTML",
-      },
-      { status: 500 }
-    );
+    if (signal.aborted) {
+      return NextResponse.json(
+        {
+          status: "error",
+          message: "リクエストがタイムアウトしました",
+        },
+        { status: 504 }
+      );
+    } else {
+      return NextResponse.json(
+        {
+          status: "error",
+          message: "ページ情報を取得できませんでした",
+        },
+        { status: 500 }
+      );
+    }
+  } finally {
+    clearTimeout(timeoutId);
   }
 }

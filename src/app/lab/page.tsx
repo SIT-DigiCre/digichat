@@ -9,7 +9,7 @@ const LabPage = () => {
         <LinkCard href="https://github.com/SIT-DigiCre/digichat" />
         <LinkCard href="https://x.com/sitdigicre" />
         <LinkCard href="https://x.com/sitdigicre/status/1874380689183052086" />
-        <LinkCard href="" />
+        <LinkCard href="a" />
       </Stack>
     </div>
   );

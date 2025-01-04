@@ -8,7 +8,19 @@ export async function GET(request: Request) {
     return NextResponse.json(
       {
         status: "error",
-        message: "URL is required",
+        message: "URLパラメータは必須です",
+      },
+      { status: 400 }
+    );
+  }
+
+  try {
+    new URL(url);
+  } catch (e) {
+    return NextResponse.json(
+      {
+        status: "error",
+        message: "URLが不正です",
       },
       { status: 400 }
     );

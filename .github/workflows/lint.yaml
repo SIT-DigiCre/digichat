@@ -5,7 +5,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main branch
+      - name: Checkout target branch
         uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v4

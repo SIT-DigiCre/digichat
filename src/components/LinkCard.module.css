@@ -11,6 +11,16 @@
   @media (width < 768px) {
     height: 90px;
   }
+
+  &[data-no-image="true"] {
+    .card-image-section {
+      display: none;
+    }
+
+    .card-content-section {
+      width: 100%;
+    }
+  }
 }
 
 .card-image-section {

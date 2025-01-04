@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, Image, Skeleton, Text } from "@mantine/core";
+import { Card, Image, Skeleton, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 import { fetchOGPData } from "#/libs/fetch-ogp";
@@ -23,7 +23,12 @@ const LinkCard = ({ href }: { href: string }) => {
   }, [href]);
 
   return (
-    <Card shadow="sm" padding={0} className={styles.card}>
+    <Card
+      shadow="sm"
+      padding={0}
+      className={styles.card}
+      data-noimage={OGPData?.image ? "false" : "true"}
+    >
       <Card.Section className={styles["card-content-section"]}>
         {OGPData ? (
           <Text
@@ -48,24 +53,13 @@ const LinkCard = ({ href }: { href: string }) => {
       </Card.Section>
       <Card.Section className={styles["card-image-section"]}>
         {OGPData ? (
-          OGPData.image ? (
+          OGPData.image && (
             <Image
-              src={OGPData?.image}
-              alt={OGPData?.title}
+              src={OGPData.image}
+              alt={OGPData.title}
               className={styles["card-image"]}
               fit="cover"
             />
-          ) : (
-            <Button
-              onClick={() => {
-                setOGPData(null);
-                fetchOGPData(href).then((data) => {
-                  setOGPData(data);
-                });
-              }}
-            >
-              再取得
-            </Button>
           )
         ) : (
           <Skeleton height={200} radius={0} />

@@ -1,6 +1,7 @@
-import { MantineProvider } from "@mantine/core";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import { MantineProvider } from "@mantine/core";
 
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";

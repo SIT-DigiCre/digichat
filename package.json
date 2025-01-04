@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
-    "lint": "next lint",
+    "lint": "eslint",
     "stylelint": "stylelint \"./src/**/*.css\" --fix"
   },
   "dependencies": {
@@ -22,14 +22,16 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "eslint": "^9.16.0",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-config-next": "15.1.0",
     "eslint-plugin-import": "^2.31.0",
     "prettier": "^3.4.2",
+    "typescript-eslint": "^8.19.0",
     "stylelint": "^16.11.0",
     "stylelint-config-recess-order": "^5.1.1",
     "stylelint-config-standard": "^36.0.1",

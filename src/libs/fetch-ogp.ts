@@ -13,22 +13,36 @@ export const fetchOGPData = async (href: string) => {
     if (data.status === "success") {
       const parser = new DOMParser();
       const doc = parser.parseFromString(data.html, "text/html");
-      const ogTitle =
-        (doc.querySelector('meta[property="og:title"]') as HTMLMetaElement)
-          .content || "No title";
-      const ogDescription =
-        (
-          doc.querySelector(
-            'meta[property="og:description"]'
-          ) as HTMLMetaElement
-        )?.content || "No description";
-      const ogImage =
-        (doc.querySelector('meta[property="og:image"]') as HTMLMetaElement)
-          ?.content || "";
+
+      // タイトル: og:title > title > URL
+      const ogTitleElement = doc.querySelector(
+        'meta[property="og:title"]'
+      ) as HTMLMetaElement | null;
+      const title = ogTitleElement?.content || doc.title || href;
+
+      // 説明文: og:description > description > body.textContent
+      const ogDescriptionElement = doc.querySelector(
+        'meta[property="og:description"]'
+      ) as HTMLMetaElement | null;
+      const descriptionElement = doc.querySelector(
+        'meta[name="description"]'
+      ) as HTMLMetaElement | null;
+      const textContent = doc.body.textContent;
+      const description =
+        ogDescriptionElement?.content ||
+        descriptionElement?.content ||
+        textContent?.slice(0, 100) ||
+        "No Content";
+
+      const ogImageElement = doc.querySelector(
+        'meta[property="og:image"]'
+      ) as HTMLMetaElement | null;
+      const image = ogImageElement?.content || null;
+
       return {
-        title: ogTitle,
-        description: ogDescription,
-        image: ogImage,
+        title,
+        description,
+        image,
         url: href,
       };
     } else {

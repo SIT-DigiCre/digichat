@@ -1,5 +1,6 @@
 import { ActionIcon, AppShellNavbar, Flex, Menu, Title } from "@mantine/core";
 import { IconPlus, IconUser, IconWorld } from "@tabler/icons-react";
+
 import Accordion from "./Accordion";
 
 const Sidebar: React.FC = () => {

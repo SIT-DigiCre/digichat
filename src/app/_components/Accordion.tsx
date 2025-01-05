@@ -1,8 +1,8 @@
 import { Accordion as MantineAccordion } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
-import AccordionItem, { AccordionItemProps } from "./AccordionItem";
 
 import styles from "./Accordion.module.css";
+import AccordionItem, { AccordionItemProps } from "./AccordionItem";
 
 const categories: AccordionItemProps[] = [
   {

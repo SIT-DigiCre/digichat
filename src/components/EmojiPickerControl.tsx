@@ -28,6 +28,22 @@ const EmojiPickerControl = () => {
 
   if (isDesktop) {
     return (
+      <Popover position="bottom">
+        <Popover.Target>
+          <RichTextEditorControl
+            title="絵文字を入力する"
+            aria-label="絵文字を入力する"
+          >
+            <IconMoodSmile stroke={1.5} size="1rem" />
+          </RichTextEditorControl>
+        </Popover.Target>
+        <Popover.Dropdown className={styles.PopoverDropdown}>
+          <Picker theme="light" data={data} onEmojiSelect={handleEmojiSelect} />
+        </Popover.Dropdown>
+      </Popover>
+    );
+  } else {
+    return (
       <>
         <RichTextEditorControl
           title="Insert emoji"
@@ -57,22 +73,6 @@ const EmojiPickerControl = () => {
           />
         </Drawer>
       </>
-    );
-  } else {
-    return (
-      <Popover position="bottom">
-        <Popover.Target>
-          <RichTextEditorControl
-            title="絵文字を入力する"
-            aria-label="絵文字を入力する"
-          >
-            <IconMoodSmile stroke={1.5} size="1rem" />
-          </RichTextEditorControl>
-        </Popover.Target>
-        <Popover.Dropdown className={styles.PopoverDropdown}>
-          <Picker theme="light" data={data} onEmojiSelect={handleEmojiSelect} />
-        </Popover.Dropdown>
-      </Popover>
     );
   }
 };

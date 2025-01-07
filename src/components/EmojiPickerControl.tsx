@@ -62,7 +62,10 @@ const EmojiPickerControl = () => {
     return (
       <Popover position="bottom">
         <Popover.Target>
-          <RichTextEditorControl title="Insert emoji" aria-label="Insert emoji">
+          <RichTextEditorControl
+            title="絵文字を入力する"
+            aria-label="絵文字を入力する"
+          >
             <IconMoodSmile stroke={1.5} size="1rem" />
           </RichTextEditorControl>
         </Popover.Target>

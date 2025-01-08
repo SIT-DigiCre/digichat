@@ -17,6 +17,7 @@ export async function GET(request: Request) {
   try {
     new URL(url);
   } catch (e) {
+    console.log(e);
     return NextResponse.json(
       {
         status: "error",

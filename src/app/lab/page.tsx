@@ -1,5 +1,6 @@
-import LinkCard from "#/components/LinkCard";
 import { Stack, Title } from "@mantine/core";
+
+import LinkCard from "#/components/LinkCard";
 
 const LabPage = () => {
   return (

@@ -1,10 +1,12 @@
 "use client";
 
-import { Card, Image, Skeleton, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
-import { fetchOGPData } from "#/libs/fetch-ogp";
+import { Card, Image, Skeleton, Text } from "@mantine/core";
+
 import styles from "./LinkCard.module.css";
+
+import { fetchOGPData } from "#/libs/fetch-ogp";
 
 type OGPData = {
   title: string;

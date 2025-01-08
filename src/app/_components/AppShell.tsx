@@ -7,6 +7,8 @@ import { useDisclosure } from "@mantine/hooks";
 
 import Sidebar from "./Sidebar";
 
+import TextEditor from "#/components/TextEditor";
+
 type AppShellProps = {
   children: React.ReactNode;
 };
@@ -36,7 +38,17 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
       <Sidebar />
       <MantineAppShell.Main>{children}</MantineAppShell.Main>
       <MantineAppShell.Aside p="md">Aside</MantineAppShell.Aside>
-      <MantineAppShell.Footer p="md">Footer</MantineAppShell.Footer>
+      <MantineAppShell.Footer p="xs" h="auto" withBorder={false}>
+        <TextEditor
+          value="aaa"
+          onChange={() => {
+            return 0;
+          }}
+          onSend={() => {
+            return 0;
+          }}
+        />
+      </MantineAppShell.Footer>
     </MantineAppShell>
   );
 };

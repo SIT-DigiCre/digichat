@@ -1,0 +1,28 @@
+.PopoverDropdown {
+  --popover-shadow: none;
+
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.DrawerContent {
+  height: 435px;
+  padding: 0;
+  background: none;
+
+  em-emoji-picker {
+    --border-radius: 0;
+
+    width: 100%;
+    border-radius: 0;
+  }
+
+  section {
+    border-radius: 0;
+  }
+}
+
+.DrawerBody {
+  padding: 0;
+}

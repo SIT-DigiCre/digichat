@@ -1,3 +1,5 @@
+import styles from "./Message.module.css";
+
 export type MessageProps = {
   channel_id: string;
   message_id: string;
@@ -10,7 +12,7 @@ export type MessageProps = {
 };
 
 const Message: React.FC<MessageProps> = (props) => {
-  return <div>{props.content}</div>;
+  return <div className={styles.message}>{props.content}</div>;
 };
 
 export default Message;

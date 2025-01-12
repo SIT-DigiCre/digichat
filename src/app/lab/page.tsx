@@ -1,10 +1,21 @@
 import { Stack, Title } from "@mantine/core";
 
 import LinkCard from "#/components/LinkCard";
+import Message from "#/components/Message";
 
 const LabPage = () => {
   return (
     <div>
+      <Message
+        content="Hello, World!"
+        user={{
+          id: "1",
+          name: "John Doe",
+          avatar_url: "https://example.com/avatar.jpg",
+        }}
+        channel_id="1"
+        message_id="1"
+      />
       <Title order={2}>コンポーネントのプレビュー用</Title>
       <Stack gap="md">
         <LinkCard href="https://github.com/SIT-DigiCre/digichat" />

@@ -1,0 +1,7 @@
+.message {
+  padding: 1rem;
+
+  &:hover {
+    background-color: var(--mantine-color-gray-1);
+  }
+}

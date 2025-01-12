@@ -15,6 +15,7 @@ const LabPage = () => {
         }}
         channel_id="1"
         message_id="1"
+        created_at="2021-10-01T00:00:00Z"
       />
       <Title order={2}>コンポーネントのプレビュー用</Title>
       <Stack gap="md">

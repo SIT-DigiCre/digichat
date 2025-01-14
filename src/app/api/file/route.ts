@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { v4 as uuidv4 } from "uuid";
 
+import { convertToWebP } from "#/libs/image";
 import { uploadFileToWasabi } from "#/libs/wasabi";
 
 export async function POST(request: NextRequest) {
@@ -27,9 +28,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    let buffer = Buffer.from(await file.arrayBuffer());
+    let mimeType = file.type;
+    let fileExtension = "webp";
 
-    const fileExtension = file.name.split(".").pop();
+    // 画像ファイルの場合はWebPに変換
+    if (file.type.startsWith("image/")) {
+      buffer = await convertToWebP(buffer);
+      mimeType = "image/webp";
+    } else {
+      fileExtension = file.name.split(".").pop() || "";
+    }
+
     const fileName = `${uuidv4()}.${fileExtension}`;
 
     const fileUrl = await uploadFileToWasabi(
@@ -38,7 +48,13 @@ export async function POST(request: NextRequest) {
       fileName
     );
 
-    return NextResponse.json({ url: fileUrl }, { status: 200 });
+    return NextResponse.json(
+      {
+        url: fileUrl,
+        mimeType: mimeType,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("ファイルアップロードエラー:", error);
     return NextResponse.json(

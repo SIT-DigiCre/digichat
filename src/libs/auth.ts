@@ -6,7 +6,8 @@ import NextAuth, {
 } from "next-auth";
 import Google from "next-auth/providers/google";
 
-import { prismaAdapter } from "./prisma-adapter";
+import { prisma } from "./prisma";
+import { PrismaAdapter } from "./prisma-adapter";
 
 import { createAccount } from "#/repositories/account";
 import { getUserByEmailWithAccounts } from "#/repositories/user";
@@ -17,20 +18,20 @@ export const authConfig = {
     signIn: "/login",
   },
   callbacks: {
-    async session({ session, token }) {
-      if (session.user && token.sub) {
-        session.user.id = token.sub;
+    async jwt({ token, user }) {
+      if (user) {
+        token.verified = !!user.verifiedAt;
+        token.picture = user.image;
       }
-      if (session.user.image && token.picture) {
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        if (token.sub) session.user.id = token.sub;
+        session.user.verified = token.verified;
         session.user.image = token.picture;
       }
       return session;
-    },
-    async jwt({ token, trigger, session }) {
-      if (trigger === "update" && session?.image) {
-        token.picture = session.image;
-      }
-      return token;
     },
     async signIn({ account, profile }) {
       if (account?.provider === "google") {
@@ -61,7 +62,7 @@ export const { handlers, signIn, signOut, unstable_update, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
-  adapter: prismaAdapter,
+  adapter: PrismaAdapter(prisma),
   ...authConfig,
 });
 

@@ -3,6 +3,10 @@ import { Account as NextAuthAccount } from "next-auth";
 
 import { prisma } from "#/libs/prisma";
 
+/**
+ * `User` と紐付いた `Account` レコードを作成する
+ * @param data **NextAuthのAccount型**データ (`userId` 必須)
+ */
 export const createAccount = async (
   data: NextAuthAccount & {
     userId: string;

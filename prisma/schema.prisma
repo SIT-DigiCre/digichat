@@ -62,6 +62,7 @@ model User {
   description     String?
   role            UserRole          @relation(fields: [roleId], references: [id])
   roleId          String            @db.Uuid
+  verifiedAt      DateTime?
   workspaces      WorkspaceMember[]
   createdChannels Channel[]
   createdThreads  Thread[]

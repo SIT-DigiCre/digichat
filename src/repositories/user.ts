@@ -95,3 +95,21 @@ export const createUser = (
     })
   );
 };
+
+/**
+ * 指定したユーザーを本登録済みにする
+ * @param id
+ * @returns ユーザー
+ */
+export const verifyUser = (id: string): PrismaPromise<User> => {
+  return prisma.user.update(
+    Prisma.validator<Prisma.UserUpdateArgs>()({
+      where: {
+        id,
+      },
+      data: {
+        verifiedAt: new Date(),
+      },
+    })
+  );
+};

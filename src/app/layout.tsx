@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { MantineProvider } from "@mantine/core";
+import { SessionProvider } from "next-auth/react";
 
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";
@@ -30,9 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <MantineProvider>
-          <AppShell>{children}</AppShell>
-        </MantineProvider>
+        <SessionProvider>
+          <MantineProvider>
+            <AppShell>{children}</AppShell>
+          </MantineProvider>
+        </SessionProvider>
       </body>
     </html>
   );

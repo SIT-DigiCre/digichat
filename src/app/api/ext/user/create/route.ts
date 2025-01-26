@@ -10,7 +10,9 @@ type ExtCreateUserRequestParams = {
   slug?: string;
 };
 
-// 仮登録状態のユーザーを作成する デジコアからのアクセスを想定
+/**
+ * 仮登録状態のユーザーを作成する デジコアからのアクセスを想定
+ */
 export async function POST(request: NextRequest) {
   const authToken = request.headers.get("Authorization");
   if (authToken !== process.env.EXT_API_SECRET) {

@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 import { Account } from "@prisma/client";
 import NextAuth, {
   Account as NextAuthAccount,
@@ -18,10 +20,13 @@ export const authConfig = {
     signIn: "/login",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.verified = !!user.verifiedAt;
         token.picture = user.image;
+      }
+      if (trigger === "update" && session?.verified) {
+        token.verified = session.verified;
       }
       return token;
     },
@@ -53,6 +58,16 @@ export const authConfig = {
           await createAccount({ ...account, userId: user.id });
         }
       }
+      return true;
+    },
+    async authorized({ auth }) {
+      // 未ログインの場合はログイン画面を表示する
+      if (!auth) return false;
+
+      // 仮登録の場合は初期設定画面に転送
+      if (!auth.user.verified)
+        return NextResponse.redirect("http://localhost:3000/joined");
+
       return true;
     },
   },

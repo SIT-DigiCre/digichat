@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import LinkCard from "#/components/LinkCard";
 import Message from "#/components/Message";
 
-export async function LabPage() {
+async function LabPage() {
   const client = new PrismaClient();
   const messages = await client.message.findMany({
     include: {

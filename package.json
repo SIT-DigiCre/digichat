@@ -18,7 +18,7 @@
     "@mantine/modals": "^7.15.1",
     "@mantine/spotlight": "^7.15.1",
     "@mantine/tiptap": "^7.15.1",
-    "@prisma/client": "^6.1.0",
+    "@prisma/client": "^6.2.1",
     "@tabler/icons-react": "^3.24.0",
     "@tiptap/extension-link": "^2.10.3",
     "@tiptap/pm": "^2.10.3",

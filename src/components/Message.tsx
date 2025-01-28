@@ -27,7 +27,10 @@ const Message: React.FC<MessageProps> = (props) => {
             {props.user.name}
           </Title>
           <Text size="xs" c="dimmed">
-            {dayjs(props.message.created_at).format("HH:mm")}
+            {dayjs
+              .utc(props.message.created_at)
+              .tz("Asia/Tokyo")
+              .format("HH:mm")}
           </Text>
         </Flex>
         <Box>{props.message.content}</Box>

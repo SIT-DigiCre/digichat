@@ -5,7 +5,6 @@ import LinkCard from "#/components/LinkCard";
 import Message from "#/components/Message";
 
 export async function LabPage() {
-  console.log(process.env.POSTGRES_URL);
   const client = new PrismaClient();
   const messages = await client.message.findMany({
     include: {

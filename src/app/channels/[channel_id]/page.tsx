@@ -9,7 +9,7 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
   const { channel_id } = await params;
   const messages = await prisma.message.findMany({
     where: {
-      id: channel_id,
+      channelId: channel_id,
     },
     include: {
       user: true,

@@ -7,15 +7,17 @@ const LabPage = () => {
   return (
     <div>
       <Message
-        content="Hello, World!"
+        message={{
+          channel_id: "1",
+          message_id: "1",
+          created_at: "2021-10-01T00:00:00Z",
+          content: "Hello, World!",
+        }}
         user={{
           id: "1",
           name: "John Doe",
           avatar_url: "https://example.com/avatar.jpg",
         }}
-        channel_id="1"
-        message_id="1"
-        created_at="2021-10-01T00:00:00Z"
       />
       <Title order={2}>コンポーネントのプレビュー用</Title>
       <Stack gap="md">

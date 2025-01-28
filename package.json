@@ -24,25 +24,26 @@
     "@tiptap/pm": "^2.10.3",
     "@tiptap/react": "^2.10.3",
     "@tiptap/starter-kit": "^2.10.3",
+    "dayjs": "^1.11.13",
     "emoji-mart": "^5.6.0",
     "next": "15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "eslint": "^9.16.0",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint": "^9.16.0",
     "eslint-config-next": "15.1.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "prettier": "^3.4.2",
-    "typescript-eslint": "^8.19.0",
     "stylelint": "^16.11.0",
     "stylelint-config-recess-order": "^5.1.1",
     "stylelint-config-standard": "^36.0.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.19.0"
   }
 }

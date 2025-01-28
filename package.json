@@ -8,7 +8,8 @@
     "start": "next start",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
     "lint": "eslint",
-    "stylelint": "stylelint \"./src/**/*.css\" --fix"
+    "stylelint": "stylelint \"./src/**/*.css\" --fix",
+    "seed": "node prisma/seed/init.mjs"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.2.1",

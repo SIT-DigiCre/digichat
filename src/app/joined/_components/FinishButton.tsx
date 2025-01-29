@@ -17,11 +17,14 @@ const FinishButton = () => {
     try {
       const res = await fetch("/api/user/verify", { method: "POST" });
 
-      if (!res.ok) {
-        throw new Error("本登録処理に失敗しました");
-      }
+      // 既に本登録済みならスキップ
+      if (res.status !== 409) {
+        if (!res.ok) {
+          throw new Error("本登録処理に失敗しました");
+        }
 
-      await update({ verified: true } satisfies JWT);
+        await update({ verified: true } satisfies JWT);
+      }
       router.push("/");
       router.refresh();
     } catch (e) {

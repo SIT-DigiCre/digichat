@@ -60,13 +60,14 @@ export const authConfig = {
       }
       return true;
     },
-    async authorized({ auth }) {
+    async authorized({ auth, request }) {
       // 未ログインの場合はログイン画面を表示する
       if (!auth) return false;
 
       // 仮登録の場合は初期設定画面に転送
-      if (!auth.user.verified)
+      if (request.nextUrl.pathname !== "/joined" && !auth.user.verified) {
         return NextResponse.redirect("http://localhost:3000/joined");
+      }
 
       return true;
     },

@@ -38,5 +38,5 @@ export const getCurrentUser = async (): Promise<User | null> => {
   const session = await auth();
   if (!session || !session.user.id) return null;
 
-  return getUserById(session.user.id);
+  return await getUserById(session.user.id);
 };

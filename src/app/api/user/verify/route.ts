@@ -16,9 +16,12 @@ export async function POST() {
     );
   }
 
-  // 本登録済みの場合は登録処理をせず、リダイレクトだけ行う
+  // 本登録済みの場合は登録処理(verifiedAtの上書き)をしない
   if (isVerifiedUser(user)) {
-    return NextResponse.redirect("http://localhost:3000/");
+    return NextResponse.json(
+      { message: "すでに本登録済みです" },
+      { status: 409 }
+    );
   }
 
   try {

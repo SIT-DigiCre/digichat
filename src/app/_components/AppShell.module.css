@@ -1,0 +1,6 @@
+.AppShellMain {
+  padding-inline: var(--app-shell-navbar-offset, 0)
+    var(--app-shell-aside-offset, 0);
+  padding-top: var(--app-shell-header-offset, 0);
+  padding-bottom: var(--app-shell-footer-offset, 0);
+}

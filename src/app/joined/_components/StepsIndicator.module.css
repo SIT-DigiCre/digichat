@@ -1,0 +1,5 @@
+.mobile-stepper {
+  height: 3.75rem;
+  padding-inline: 1rem;
+  border-bottom: 1px solid var(--app-shell-border-color);
+}

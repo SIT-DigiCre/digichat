@@ -5,5 +5,5 @@ import { authConfig } from "./libs/auth";
 export const { auth: middleware } = NextAuth(authConfig);
 
 export const config = {
-  matcher: ["/", "/channels/:path*"],
+  matcher: ["/", "/joined", "/channels/:path*"],
 };

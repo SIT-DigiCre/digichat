@@ -3,24 +3,20 @@ import dayjs from "dayjs";
 
 import styles from "./Message.module.css";
 
+import type {
+  Message as MessageModel,
+  User as UserModel,
+} from "@prisma/client";
+
 export type MessageProps = {
-  message: {
-    id: string;
-    channel_id: string;
-    created_at: Date;
-    content: string;
-  };
-  user: {
-    id: string;
-    name: string;
-    icon_url: string | null;
-  };
+  message: Pick<MessageModel, "id" | "createdAt" | "content">;
+  user: Pick<UserModel, "id" | "name" | "iconUrl">;
 };
 
 const Message: React.FC<MessageProps> = (props) => {
   return (
     <Flex className={styles.message} gap="sm">
-      <Avatar src={props.user.icon_url} alt={props.user.name} radius="xl" />
+      <Avatar src={props.user.iconUrl} alt={props.user.name} radius="xl" />
       <Stack gap={0}>
         <Flex align="center" gap="xs">
           <Title order={4} size="sm">
@@ -28,7 +24,7 @@ const Message: React.FC<MessageProps> = (props) => {
           </Title>
           <Text size="xs" c="dimmed">
             {dayjs
-              .utc(props.message.created_at)
+              .utc(props.message.createdAt)
               .tz("Asia/Tokyo")
               .format("HH:mm")}
           </Text>

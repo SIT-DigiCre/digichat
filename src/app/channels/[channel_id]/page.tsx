@@ -19,20 +19,7 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
   return (
     <div>
       {messages.map((message) => (
-        <Message
-          key={message.id}
-          message={{
-            id: message.id,
-            channel_id: message.channelId,
-            created_at: message.createdAt,
-            content: message.content,
-          }}
-          user={{
-            id: message.user.id,
-            name: message.user.name,
-            icon_url: message.user.iconUrl,
-          }}
-        />
+        <Message key={message.id} message={message} user={message.user} />
       ))}
     </div>
   );

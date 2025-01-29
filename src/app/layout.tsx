@@ -1,22 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 
 import { MantineProvider } from "@mantine/core";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { SessionProvider } from "next-auth/react";
 
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -30,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         <SessionProvider>
           <MantineProvider>
             <AppShell>{children}</AppShell>

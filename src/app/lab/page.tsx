@@ -2,7 +2,7 @@ import { Stack, Title } from "@mantine/core";
 
 import LinkCard from "#/components/LinkCard";
 
-const LabPage = () => {
+async function LabPage() {
   return (
     <div>
       <Title order={2}>コンポーネントのプレビュー用</Title>
@@ -14,6 +14,6 @@ const LabPage = () => {
       </Stack>
     </div>
   );
-};
+}
 
 export default LabPage;

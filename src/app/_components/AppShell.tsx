@@ -5,6 +5,7 @@ import React from "react";
 import { Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
+import styles from "./AppShell.module.css";
 import Sidebar from "./Sidebar";
 
 import TextEditor from "#/components/TextEditor";
@@ -36,7 +37,9 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
         </Group>
       </MantineAppShell.Header>
       <Sidebar />
-      <MantineAppShell.Main>{children}</MantineAppShell.Main>
+      <MantineAppShell.Main className={styles.AppShellMain}>
+        {children}
+      </MantineAppShell.Main>
       <MantineAppShell.Aside p="md">Aside</MantineAppShell.Aside>
       <MantineAppShell.Footer p="xs" h="auto" withBorder={false}>
         <TextEditor

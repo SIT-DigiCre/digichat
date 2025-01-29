@@ -8,7 +8,8 @@
     "start": "next start",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
     "lint": "eslint",
-    "stylelint": "stylelint \"./src/**/*.css\" --fix"
+    "stylelint": "stylelint \"./src/**/*.css\" --fix",
+    "seed": "node prisma/seed/init.mjs"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.2.1",
@@ -18,12 +19,14 @@
     "@mantine/modals": "^7.15.1",
     "@mantine/spotlight": "^7.15.1",
     "@mantine/tiptap": "^7.15.1",
-    "@prisma/client": "^6.1.0",
+    "@prisma/client": "^6.2.1",
     "@tabler/icons-react": "^3.24.0",
     "@tiptap/extension-link": "^2.10.3",
     "@tiptap/pm": "^2.10.3",
     "@tiptap/react": "^2.10.3",
     "@tiptap/starter-kit": "^2.10.3",
+    "dayjs": "^1.11.13",
+    "dayjs-plugin-utc": "^0.1.2",
     "emoji-mart": "^5.6.0",
     "next": "15.1.0",
     "react": "^19.0.0",

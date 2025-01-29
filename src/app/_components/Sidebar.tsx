@@ -1,14 +1,11 @@
+import Link from "next/link";
+
 import { ActionIcon, AppShellNavbar, Flex, Menu, Title } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { IconPlus, IconUser, IconWorld } from "@tabler/icons-react";
 
 import Accordion from "./Accordion";
 
-import ViewChannelsModal from "#/components/ViewChannelsModal/ViewChannelsModal";
-
 const Sidebar: React.FC = () => {
-  const [opened, { open, close }] = useDisclosure();
-
   return (
     <>
       <AppShellNavbar bg="blue" c="blue.1" h="full">
@@ -26,7 +23,11 @@ const Sidebar: React.FC = () => {
               <Menu.Item leftSection={<IconPlus />}>
                 新しいチャンネルを作成する
               </Menu.Item>
-              <Menu.Item leftSection={<IconWorld />} onClick={open}>
+              <Menu.Item
+                leftSection={<IconWorld />}
+                component={Link}
+                href="/view-channels"
+              >
                 チャンネルを閲覧する
               </Menu.Item>
               <Menu.Item leftSection={<IconUser />}>
@@ -37,7 +38,6 @@ const Sidebar: React.FC = () => {
         </Flex>
         <Accordion />
       </AppShellNavbar>
-      <ViewChannelsModal opened={opened} close={close} />
     </>
   );
 };

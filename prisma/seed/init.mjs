@@ -1,4 +1,3 @@
-
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -26,8 +25,7 @@ async function main() {
       name: "テスト管理者",
       slug: "admin",
       email: "admin@exmaple.com",
-      password: "password",
-      iconUrl: "https://with.koeni.dev/identicon/admin",
+      image: "https://with.koeni.dev/identicon/admin",
       status: "ONLINE",
       roleId: adminRole.id,
     },

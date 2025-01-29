@@ -10,13 +10,13 @@ import type {
 
 export type MessageProps = {
   message: Pick<MessageModel, "id" | "createdAt" | "content">;
-  user: Pick<UserModel, "id" | "name" | "iconUrl">;
+  user: Pick<UserModel, "id" | "name" | "image">;
 };
 
 const Message: React.FC<MessageProps> = (props) => {
   return (
     <Flex className={styles.message} gap="sm">
-      <Avatar src={props.user.iconUrl} alt={props.user.name} radius="xl" />
+      <Avatar src={props.user.image} alt={props.user.name} radius="xl" />
       <Stack gap={0}>
         <Flex align="center" gap="xs">
           <Title order={4} size="sm">

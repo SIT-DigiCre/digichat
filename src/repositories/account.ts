@@ -8,23 +8,23 @@ import { prisma } from "#/libs/prisma";
  * @param data **NextAuthのAccount型**データ (`userId` 必須)
  */
 export const createAccount = async (
-  data: NextAuthAccount & {
+  data: Pick<
+    NextAuthAccount,
+    | "access_token"
+    | "scope"
+    | "token_type"
+    | "id_token"
+    | "expires_at"
+    | "provider"
+    | "type"
+    | "providerAccountId"
+  > & {
     userId: string;
   }
 ) => {
   await prisma.account.create(
     Prisma.validator<Prisma.AccountCreateArgs>()({
-      data: {
-        access_token: data.access_token,
-        scope: data.scope,
-        token_type: data.token_type,
-        id_token: data.id_token,
-        expires_at: data.expires_at,
-        provider: data.provider,
-        type: data.type,
-        providerAccountId: data.providerAccountId,
-        userId: data.userId,
-      },
+      data: data,
     })
   );
 };

@@ -4,7 +4,7 @@ import { IconPlus, IconUser, IconWorld } from "@tabler/icons-react";
 
 import Accordion from "./Accordion";
 
-import ViewChannelsModal from "#/components/ViewChannelsModal/ViewChannelsModal";
+import ViewChannelsModal from "#/components/ViewChannelsModal";
 
 const Sidebar: React.FC = () => {
   const [opened, { open, close }] = useDisclosure();

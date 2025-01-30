@@ -87,7 +87,7 @@ const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({
       {channels.map((channel) => (
         <NavLink
           component={Link}
-          href={`channels/${channel.id}`}
+          href={`/channels/${channel.id}`}
           key={channel.id}
           label={channel.slug}
           description={channel.name}

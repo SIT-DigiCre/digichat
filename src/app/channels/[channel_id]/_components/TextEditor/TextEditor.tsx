@@ -19,9 +19,14 @@ type TextEditorProps = {
   value: string;
   onChange: (value: string) => void;
   onSend: () => void;
+  user_id: string;
 };
 
-const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
+const TextEditor: React.FC<TextEditorProps> = ({
+  value,
+  onChange,
+  user_id,
+}) => {
   const editor = useEditor({
     extensions: [StarterKit, Link],
     content: value,
@@ -30,6 +35,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
     },
     immediatelyRender: false,
   });
+  console.log(user_id);
 
   return (
     <RichTextEditor editor={editor} className={styles.Editor}>

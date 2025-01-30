@@ -26,7 +26,7 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
       {messages.map((message) => (
         <Message key={message.id} message={message} user={message.user} />
       ))}
-      <ChannelFooter />
+      <ChannelFooter user_id="test" is_joined={false} />
     </Stack>
   );
 }

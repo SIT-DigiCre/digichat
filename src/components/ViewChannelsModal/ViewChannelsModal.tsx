@@ -3,13 +3,22 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
-import { ActionIcon, Box, Flex, Modal, TextInput } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Flex,
+  Modal,
+  NavLink,
+  TextInput,
+} from "@mantine/core";
 import { IconLoader2, IconSearch, IconX } from "@tabler/icons-react";
+
+import type { Channel as ChannelModel } from "@prisma/client";
 
 import { searchChannels } from "#/libs/actions";
 
 type ViewChannelsModalProps = {
-  channels: string[];
+  channels: ChannelModel[];
 };
 
 const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({ channels }) => {
@@ -51,7 +60,9 @@ const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({ channels }) => {
         <Box>{isPending && <IconLoader2 />}</Box>
       </Flex>
       {channels.map((channel) => (
-        <div key={channel}>{channel}</div>
+        <NavLink href={`channels/${channel.id}`} key={channel.id}>
+          {channel.name}
+        </NavLink>
       ))}
     </Modal>
   );

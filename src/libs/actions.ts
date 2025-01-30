@@ -3,7 +3,7 @@
 import { prisma } from "./prisma";
 
 type SearchChannelsProps = {
-  keyword?: string;
+  keyword: string;
 };
 
 /**
@@ -11,11 +11,11 @@ type SearchChannelsProps = {
  * @param [props.keyword] チャンネル名に含まれるキーワード
  * @returns チャンネルのリスト
  */
-export async function searchChannels({ keyword }: SearchChannelsProps) {
-  const args = keyword ? { where: { name: { contains: keyword } } } : undefined;
+export async function searchChannels(props?: SearchChannelsProps) {
+  const args = props
+    ? { where: { name: { contains: props.keyword } } }
+    : undefined;
   const channels = await prisma.channel.findMany(args);
-
-  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return channels;
 }

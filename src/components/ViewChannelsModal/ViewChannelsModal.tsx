@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import Link from "next/link";
+import { useEffect, useState, useTransition } from "react";
 
 import {
   ActionIcon,
@@ -23,15 +23,26 @@ import type { Channel as ChannelModel } from "@prisma/client";
 import { searchChannels } from "#/libs/actions";
 
 type ViewChannelsModalProps = {
-  channels: ChannelModel[];
+  opened: boolean;
+  onClose: () => void;
 };
 
-const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({ channels }) => {
-  const router = useRouter();
+const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({
+  opened,
+  onClose,
+}) => {
   const [keyword, setKeyword] = useState("");
   const [isPending, startTransition] = useTransition();
-  const [searchedChannels, setSearchedChannels] =
-    useState<ChannelModel[]>(channels);
+  const [channels, setChannels] = useState<ChannelModel[]>([]);
+
+  useEffect(() => {
+    if (opened) {
+      startTransition(async () => {
+        const channels = await searchChannels();
+        setChannels(channels);
+      });
+    }
+  }, [opened]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.currentTarget.value);
@@ -39,13 +50,12 @@ const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({ channels }) => {
       const updatedChannels = await searchChannels({
         keyword: event.currentTarget.value,
       });
-      setSearchedChannels(updatedChannels);
-      console.log(channels);
+      setChannels(updatedChannels);
     });
   };
 
   return (
-    <Modal opened={true} onClose={() => router.back()} title="チャンネル一覧">
+    <Modal opened={opened} onClose={onClose} title="チャンネル一覧">
       <TextInput
         placeholder="チャンネル名で検索"
         leftSection={<IconSearch stroke={1.5} size={20} />}
@@ -64,9 +74,9 @@ const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({ channels }) => {
         }
       />
       <Flex align="center" justify="space-between" my="sm">
-        <Box>{searchedChannels.length}件の結果</Box>
+        <Box>{channels.length}件の結果</Box>
         <Box>
-          {!isPending && (
+          {isPending && (
             <Flex c="gray" gap="xs" align="center" justify="center" fz="xs">
               <IconLoader stroke={1.5} size={16} className="spin" />
               読み込み中
@@ -74,8 +84,9 @@ const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({ channels }) => {
           )}
         </Box>
       </Flex>
-      {searchedChannels.map((channel) => (
+      {channels.map((channel) => (
         <NavLink
+          component={Link}
           href={`channels/${channel.id}`}
           key={channel.id}
           label={channel.slug}
@@ -83,6 +94,7 @@ const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({ channels }) => {
           rightSection={
             <IconChevronRight stroke={1.5} className="mantine-rotate-rtl" />
           }
+          onClick={onClose}
         />
       ))}
     </Modal>

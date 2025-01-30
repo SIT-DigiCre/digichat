@@ -9,8 +9,9 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
 import "@mantine/tiptap/styles.css";
-import EmojiPickerControl from "./EmojiPickerControl";
-import FileUploadControl from "./FileUploadControl";
+import EmojiPickerControl from "../EmojiPicker/EmojiPickerControl";
+import FileUploadControl from "../FileUploadControl";
+
 import "./TextEditor.css";
 import styles from "./TextEditor.module.css";
 

@@ -1,3 +1,8 @@
+import { Stack } from "@mantine/core";
+
+import styles from "./ChannelIDPage.module.css";
+import ChannelFooter from "./_components/ChannelFooter/ChannelFooter";
+
 import Message from "#/components/Message";
 import { prisma } from "#/libs/prisma";
 
@@ -17,11 +22,12 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
   });
 
   return (
-    <div>
+    <Stack className={styles["root"]} justify="space-between">
       {messages.map((message) => (
         <Message key={message.id} message={message} user={message.user} />
       ))}
-    </div>
+      <ChannelFooter />
+    </Stack>
   );
 }
 

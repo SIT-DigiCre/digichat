@@ -11,6 +11,7 @@ const FileUploadControl = () => {
   const setFile = (payload: File[]) => {
     console.log(payload);
   };
+
   return (
     <FileButton
       onChange={setFile}

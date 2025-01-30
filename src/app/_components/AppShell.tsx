@@ -8,7 +8,7 @@ import { useDisclosure } from "@mantine/hooks";
 import styles from "./AppShell.module.css";
 import Sidebar from "./Sidebar";
 
-import TextEditor from "#/components/TextEditor";
+import TextEditor from "#/app/channels/[channel_id]/_components/TextEditor";
 
 type AppShellProps = {
   children: React.ReactNode;

@@ -15,7 +15,7 @@ type SearchChannelsProps = {
  */
 export async function searchChannels(props?: SearchChannelsProps) {
   const args = props
-    ? { where: { name: { contains: props.keyword } } }
+    ? { where: { slug: { contains: props.keyword } } }
     : undefined;
   const channels = await prisma.channel.findMany(args);
 

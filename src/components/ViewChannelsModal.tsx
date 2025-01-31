@@ -18,7 +18,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 
-import type { Channel as ChannelModel } from "@prisma/client";
+import type { Channel } from "@prisma/client";
 
 import { searchChannels } from "#/libs/actions";
 
@@ -33,7 +33,7 @@ const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({
 }) => {
   const [keyword, setKeyword] = useState("");
   const [isPending, startTransition] = useTransition();
-  const [channels, setChannels] = useState<ChannelModel[]>([]);
+  const [channels, setChannels] = useState<Channel[]>([]);
 
   useEffect(() => {
     if (opened) {

@@ -3,14 +3,11 @@ import dayjs from "dayjs";
 
 import styles from "./Message.module.css";
 
-import type {
-  Message as MessageModel,
-  User as UserModel,
-} from "@prisma/client";
+import type { Message as MessageModel, User } from "@prisma/client";
 
 export type MessageProps = {
   message: Pick<MessageModel, "id" | "createdAt" | "content">;
-  user: Pick<UserModel, "id" | "name" | "iconUrl">;
+  user: Pick<User, "id" | "name" | "iconUrl">;
 };
 
 const Message: React.FC<MessageProps> = (props) => {

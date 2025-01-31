@@ -29,7 +29,6 @@ const FinishButton = () => {
       router.refresh();
     } catch (e) {
       console.error(e);
-    } finally {
       setIsDisabled(false);
     }
   };

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "#/libs/prisma";
 import { isValidEmail } from "#/libs/user";
 import { createUser, getUserByEmail, getUserBySlug } from "#/repositories/user";
+import { Permissions } from "#/types/permissions";
 
 type ExtCreateUserRequestParams = {
   name?: string;
@@ -71,7 +72,12 @@ export async function POST(request: NextRequest) {
     role = await prisma.userRole.create({
       data: {
         name: "TEST",
-        permissions: {},
+        permissions: {
+          read: true,
+          write: false,
+          share: false,
+          delete: false,
+        } satisfies Permissions,
       },
     });
   }

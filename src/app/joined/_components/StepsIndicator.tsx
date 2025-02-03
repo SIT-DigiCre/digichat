@@ -27,7 +27,10 @@ const StepsIndicator = (props: { active: number; contents: Contents }) => {
         >
           {contents.steps[active]?.title ?? contents.completed}
         </Flex>
-        <Container visibleFrom="sm">
+        <Container
+          visibleFrom="sm"
+          className={styles["normal-stepper-container"]}
+        >
           <Stepper active={active} allowNextStepsSelect={false}>
             {contents.steps.map((step, index) => (
               <Stepper.Step

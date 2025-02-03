@@ -29,7 +29,7 @@ const JoinedPage = async ({
           completed: "準備完了！",
         }}
       />
-      <Container>
+      <Container size="sm">
         <JoinedSteps step={progress} />
       </Container>
     </>

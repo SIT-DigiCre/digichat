@@ -13,7 +13,7 @@ const JoinedSteps = (props: { step: number }) => {
         <>
           <Text>Digichatへようこそ！</Text>
           <Space h="sm" />
-          <Text>Digichatで交流するための準備を始めましょう！(仮)</Text>
+          <Text>Digichatで交流するための準備を始めましょう！</Text>
           <Space h="xl" />
           <Button component={Link} href="?p=1">
             次へ
@@ -21,11 +21,21 @@ const JoinedSteps = (props: { step: number }) => {
         </>
       );
     case 1:
+      return (
+        <>
+          <Text>仮置き</Text>
+          <Space h="xl" />
+          <Button component={Link} href={"?p=2"}>
+            次へ
+          </Button>
+        </>
+      );
     case 2:
       return (
         <>
           <Text>仮置き</Text>
-          <Button component={Link} href={`?p=${step + 1}`}>
+          <Space h="xl" />
+          <Button component={Link} href={"?p=2"}>
             次へ
           </Button>
         </>

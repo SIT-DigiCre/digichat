@@ -74,7 +74,7 @@ export const authConfig = {
   },
 } satisfies NextAuthConfig;
 
-export const { handlers, signIn, signOut, unstable_update, auth } = NextAuth({
+export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },

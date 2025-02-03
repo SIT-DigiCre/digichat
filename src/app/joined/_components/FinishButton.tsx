@@ -15,7 +15,7 @@ const FinishButton = () => {
   const handleVerify = async () => {
     setIsDisabled(true);
     try {
-      const res = await fetch("/api/user/verify", { method: "POST" });
+      const res = await fetch("/api/users/me/verify", { method: "POST" });
 
       // 既に本登録済みならスキップ
       if (res.status !== 409) {

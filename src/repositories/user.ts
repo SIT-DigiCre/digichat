@@ -113,3 +113,34 @@ export const verifyUser = (id: string): PrismaPromise<User> => {
     })
   );
 };
+
+/**
+ * ユーザーのプロフィール項目に限定し更新する
+ * @param id 更新対象ユーザーのID
+ * @param name 表示名
+ * @param slug スラッグ
+ * @param image アバター画像のURL
+ * @param description 自己紹介
+ * @returns 更新後のユーザー
+ */
+export const updateUserProfile = (
+  id: string,
+  name: string,
+  slug: string,
+  image: string | null,
+  description: string | null
+): PrismaPromise<User> => {
+  return prisma.user.update(
+    Prisma.validator<Prisma.UserUpdateArgs>()({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        slug,
+        image,
+        description,
+      },
+    })
+  );
+};

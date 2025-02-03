@@ -25,8 +25,16 @@ export const authConfig = {
         token.verified = !!user.verifiedAt;
         token.picture = user.image;
       }
-      if (trigger === "update" && session?.verified) {
-        token.verified = session.verified;
+      if (trigger === "update") {
+        if (typeof session?.verified === "boolean") {
+          token.verified = session.verified;
+        }
+        if (typeof session?.name === "string") {
+          token.name = session.name;
+        }
+        if (typeof session?.picture === "string") {
+          token.picture = session.picture;
+        }
       }
       return token;
     },

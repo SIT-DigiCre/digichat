@@ -20,7 +20,7 @@ const JoinedPage = async ({
               title: "ようこそ",
             },
             {
-              title: "プロフィールを編集",
+              title: "プロフィールを設定",
             },
             {
               title: "ワークスペースに参加",

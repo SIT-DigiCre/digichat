@@ -1,4 +1,4 @@
-import { Button, Text } from "@mantine/core";
+import { Button, Space, Text } from "@mantine/core";
 
 import LoginButton from "../_components/LoginButton";
 
@@ -9,6 +9,7 @@ const SignInPage = async () => {
 
   return (
     <>
+      <Space h="3rem" />
       <Text>Digichat</Text>
       {session ? (
         <>

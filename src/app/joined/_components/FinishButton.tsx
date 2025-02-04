@@ -25,7 +25,7 @@ const FinishButton = () => {
 
         await update({ verified: true } satisfies JWT);
       }
-      router.push("/");
+      router.push("/login");
       router.refresh();
     } catch (e) {
       console.error(e);

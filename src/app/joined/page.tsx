@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { Container, Group, Loader } from "@mantine/core";
+import { Container, Group, Loader, Space } from "@mantine/core";
 
 import JoinedSteps from "./_components/JoinedSteps";
 import StepsIndicator from "./_components/StepsIndicator";
@@ -14,6 +14,7 @@ const JoinedPage = async ({
 
   return (
     <>
+      <Space h="3rem" />
       <StepsIndicator
         active={progress}
         contents={{

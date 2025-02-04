@@ -13,17 +13,56 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
+model Account {
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @map("user_id") @db.Uuid
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid()) @db.Uuid
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id") @db.Uuid
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
 model User {
   id              String            @id @default(uuid()) @db.Uuid
   slug            String            @unique
   name            String
   email           String            @unique
-  password        String
-  iconUrl         String?
+  emailVerified   DateTime?         @map("email_verified")
+  accounts        Account[]
+  sessions        Session[]
+  image           String?
   status          UserStatus
   description     String?
   role            UserRole          @relation(fields: [roleId], references: [id])
   roleId          String            @db.Uuid
+  verifiedAt      DateTime?
   workspaces      WorkspaceMember[]
   createdChannels Channel[]
   createdThreads  Thread[]

@@ -5,7 +5,7 @@ import { prisma } from "#/libs/prisma";
 
 /**
  * `User` と紐付いた `Account` レコードを作成する
- * @param data **NextAuthのAccount型**データ (`userId` 必須)
+ * @param data **NextAuthのAccount型**データと `userId` の合成
  */
 export const createAccount = async (
   data: Pick<

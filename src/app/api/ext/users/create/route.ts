@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
   }
 
   // 初期ロールのIDを取得(仮)
-  // TODO: ロールの仕様をちゃんと詰め次第置き換える
+  // TODO: ロールのスキーマを更新し次第 "USER" に変更
   let role = await prisma.userRole.findFirst({
     where: {
       name: "TEST",

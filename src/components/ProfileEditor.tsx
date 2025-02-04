@@ -161,8 +161,8 @@ const ProfileEditor = (props: UserProfileEditorProps) => {
           <TextInput
             name="slug"
             defaultValue={formState?.payload?.slug}
-            label="ユーザー名"
-            description="他の部員と同じユーザー名は使用できません"
+            label="スラッグ"
+            description="他の部員と同じスラッグは使用できません"
             leftSection={<IconAt size="1rem" />}
             withAsterisk
             error={formState?.fieldErrors?.slug}

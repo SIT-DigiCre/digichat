@@ -1,23 +1,27 @@
 import Link from "next/link";
-import { use } from "react";
+import { Suspense } from "react";
 
-import { Button, Space, Text } from "@mantine/core";
+import { Button, Group, Loader, Space, Text } from "@mantine/core";
 
 import FinishButton from "./FinishButton";
+import WorkspaceSelector from "./WorkspaceSelector";
 
 import ProfileEditor from "#/components/ProfileEditor";
 import { getCurrentUser } from "#/libs/user";
 import { EditableUserParams } from "#/types/prisma";
 
-const JoinedSteps = (props: { step: number }) => {
+const JoinedSteps = async (props: { step: number }) => {
   const { step } = props;
+
+  const user = await getCurrentUser();
+  if (!user) return <>ユーザーの取得に失敗しました</>;
 
   switch (step) {
     case 0:
       return (
         <>
           <Text>Digichatへようこそ！</Text>
-          <Space h="sm" />
+          <Space h="xs" />
           <Text>Digichatで交流するための準備を始めましょう！</Text>
           <Space h="xl" />
           <Button component={Link} href="?p=1">
@@ -26,15 +30,14 @@ const JoinedSteps = (props: { step: number }) => {
         </>
       );
     case 1:
-      const user = use(getCurrentUser());
-      if (!user) return <>ユーザーの取得に失敗しました</>;
       const { name, slug, description, image }: EditableUserParams = user;
 
       return (
         <>
           <Text>自分のプロフィールを設定しましょう！</Text>
+          <Space h="xs" />
           <Text>これらの項目は後から変更することも可能です。</Text>
-          <Space h="sm" />
+          <Space h="xl" />
           <ProfileEditor
             initialUser={{ name, slug, description, image }}
             variant="joined"
@@ -45,17 +48,26 @@ const JoinedSteps = (props: { step: number }) => {
     case 2:
       return (
         <>
-          <Text>仮置き</Text>
+          <Text>参加するワークスペースを選択しましょう！</Text>
+          <Space h="xs" />
+          <Text>これらのワークスペースには後から参加することも可能です。</Text>
           <Space h="xl" />
-          <Button component={Link} href={"?p=3"}>
-            次へ
-          </Button>
+          <Suspense
+            fallback={
+              <Group justify="center">
+                <Loader />
+              </Group>
+            }
+          >
+            <WorkspaceSelector userId={user.id} />
+          </Suspense>
         </>
       );
     case 3:
       return (
         <>
-          <Text>Digichatを利用する準備ができました！(仮)</Text>
+          <Text>Digichatを利用する準備ができました！</Text>
+          <Space h="xl" />
           <FinishButton />
         </>
       );

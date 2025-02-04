@@ -108,6 +108,7 @@ const ProfileEditor = (props: UserProfileEditorProps) => {
   const onSaved = useCallback(() => {
     if (variant === "joined" && onSavedHref) {
       router.push(onSavedHref);
+      router.refresh();
     }
   }, [onSavedHref, router, variant]);
 
@@ -140,9 +141,7 @@ const ProfileEditor = (props: UserProfileEditorProps) => {
       )}
       <form action={action}>
         <Fieldset legend="プロフィール">
-          <Text component="label" size="sm">
-            アバター
-          </Text>
+          <Text size="sm">アバター</Text>
           <Avatar size="xl" src={formState?.payload?.image} />
           <input
             type="hidden"

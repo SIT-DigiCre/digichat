@@ -2,3 +2,17 @@ body {
   padding: 0;
   margin: 0;
 }
+
+.spin {
+  animation: rotation 1s infinite linear;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

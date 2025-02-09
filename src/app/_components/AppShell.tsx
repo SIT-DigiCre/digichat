@@ -5,9 +5,8 @@ import React from "react";
 import { Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
+import styles from "./AppShell.module.css";
 import Sidebar from "./Sidebar";
-
-import TextEditor from "#/components/TextEditor";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -19,8 +18,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
   return (
     <MantineAppShell
       layout="alt"
-      header={{ height: 60 }}
-      footer={{ height: 60 }}
+      header={{ height: "3rem" }}
       navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
       aside={{
         width: 300,
@@ -36,19 +34,10 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
         </Group>
       </MantineAppShell.Header>
       <Sidebar />
-      <MantineAppShell.Main>{children}</MantineAppShell.Main>
+      <MantineAppShell.Main className={styles.AppShellMain}>
+        {children}
+      </MantineAppShell.Main>
       <MantineAppShell.Aside p="md">Aside</MantineAppShell.Aside>
-      <MantineAppShell.Footer p="xs" h="auto" withBorder={false}>
-        <TextEditor
-          value="aaa"
-          onChange={() => {
-            return 0;
-          }}
-          onSend={() => {
-            return 0;
-          }}
-        />
-      </MantineAppShell.Footer>
     </MantineAppShell>
   );
 };

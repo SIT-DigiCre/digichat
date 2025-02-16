@@ -49,6 +49,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Generate Prisma Client
+        run: pnpm prisma generate
+
+      - name: テスト用DBのマイグレーション
+        run: make migrate-test
+
       - name: リポジトリテストの実行
         run: make t-repo
 

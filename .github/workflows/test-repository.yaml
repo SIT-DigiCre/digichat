@@ -38,6 +38,17 @@ jobs:
           echo "Postgres did not become ready in time." >&2
           exit 1
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
       - name: リポジトリテストの実行
         run: make t-repo
 

@@ -11,7 +11,7 @@
     "stylelint": "stylelint \"./src/**/*.css\" --fix",
     "seed": "node prisma/seed/init.mjs",
     "migrate-test": "dotenv -e .env.test -- prisma migrate dev",
-    "jest-repository": "jest --config jest.config.repo.js $file --detectOpenHandles"
+    "jest-repository": "dotenv -e .env.test -- jest --config jest.config.repo.js $file --detectOpenHandles"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.2.1",

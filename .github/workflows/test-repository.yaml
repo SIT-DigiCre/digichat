@@ -53,9 +53,13 @@ jobs:
         run: pnpm prisma generate
 
       - name: テスト用DBのマイグレーション
+        env:
+          POSTGRES_HOST: localhost
         run: make migrate-test
 
       - name: リポジトリテストの実行
+        env:
+          POSTGRES_HOST: localhost
         run: make t-repo
 
       - name: Docker Compose の停止

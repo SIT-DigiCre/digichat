@@ -60,7 +60,7 @@ jobs:
       - name: リポジトリテストの実行
         env:
           POSTGRES_HOST: localhost
-        run: pnpm dotenv -e .env.test -- make t-repo
+        run: make t-repo
 
       - name: Docker Compose の停止
         if: always()

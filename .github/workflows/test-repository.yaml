@@ -60,6 +60,8 @@ jobs:
       - name: リポジトリテストの実行
         env:
           POSTGRES_HOST: localhost
+        env-file:
+          - .env.test
         run: make t-repo
 
       - name: Docker Compose の停止

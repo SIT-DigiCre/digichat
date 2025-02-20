@@ -1,6 +1,6 @@
 # digichat
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+芝浦工業大学デジクリのサークル内SNS「digichat」
 
 ## 環境設定の手順
 
@@ -34,9 +34,9 @@ pnpm install
 ```bash
 pnpm prisma migrate dev
 ```
-### シートデータの生成
+### seedデータの適用
 
-マイグレーションが終わったらシードデータを生成する
+マイグレーションが終わったらseedデータを適用する
 
 ```bash
 pnpm seed
@@ -44,7 +44,7 @@ pnpm seed
 
 ### 開発サーバーの起動
 
-最後にdevを実行することでサイトが表示される。
+devを実行することでサイトが表示される。
 
 ```bash
 pnpm dev

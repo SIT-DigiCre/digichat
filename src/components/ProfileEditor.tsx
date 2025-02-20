@@ -21,9 +21,9 @@ import { UpdateSession, useSession } from "next-auth/react";
 import { EditableUserParams } from "#/types/prisma";
 
 export type UserProfileEditorProps = {
-  initialUser?: EditableUserParams;
-  variant?: "default" | "joined";
-  onSavedHref?: string;
+  initialUser: EditableUserParams;
+  variant: "default" | "joined";
+  onSavedHref: string;
 };
 
 type ProfileEditorFormState = {
@@ -35,11 +35,11 @@ type ProfileEditorFormState = {
 const updateProfile = async (
   updateSession: UpdateSession,
   onSaved: () => void,
-  prevState: ProfileEditorFormState,
+  _: ProfileEditorFormState,
   formData: FormData
 ): Promise<ProfileEditorFormState> => {
-  const name = formData.get("name")?.toString();
-  const slug = formData.get("slug")?.toString();
+  const name = formData.get("name")?.toString() ?? "";
+  const slug = formData.get("slug")?.toString() ?? "";
   const image = formData.get("image")?.toString() ?? "";
   const description = formData.get("description")?.toString() ?? "";
 
@@ -103,10 +103,10 @@ const updateProfile = async (
 const ProfileEditor = (props: UserProfileEditorProps) => {
   const { update } = useSession();
   const router = useRouter();
-  const { initialUser, variant = "default", onSavedHref } = props;
+  const { initialUser, variant, onSavedHref } = props;
 
   const onSaved = useCallback(() => {
-    if (variant === "joined" && onSavedHref) {
+    if (variant === "joined") {
       router.push(onSavedHref);
       router.refresh();
     }
@@ -119,10 +119,10 @@ const ProfileEditor = (props: UserProfileEditorProps) => {
   const [formState, action, isPending] = useActionState(updateProfileAction, {
     message: "",
     payload: {
-      name: initialUser?.name,
-      slug: initialUser?.slug,
-      description: initialUser?.description ?? undefined,
-      image: initialUser?.image ?? undefined,
+      name: initialUser.name,
+      slug: initialUser.slug,
+      description: initialUser.description ?? undefined,
+      image: initialUser.image ?? undefined,
     },
   });
 

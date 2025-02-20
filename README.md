@@ -2,9 +2,9 @@
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# 環境設定の手順
+## 環境設定の手順
 
-## .envの用意
+### .envの用意
 
 `.env.example`をベースに`.env`を用意する。
 
@@ -12,12 +12,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 cp .env.sample .env
 ```
 
-## VSCodeでDevContainerを使用する場合
+### VSCodeでDevContainerを使用する場合
 
 画面左下の青いところをクリック。
 ![](docs/images/readme-1.png)
 
-そこから「コンテナーで開く」を選択。しばらく待てばVSCodeが自動で立ち上がってくれる。
+その後、`コンテナーで開く`を選択。しばらく待つとDevContainerが自動で立ち上がる。
 
 ### 依存関係のインストール
 
@@ -29,7 +29,7 @@ pnpm install
 
 ### マイグレーション
 
-インストールが完了したらデータベースのマイグレーションを行う
+データベースのマイグレーションを行う
 
 ```bash
 pnpm prisma migrate dev

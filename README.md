@@ -52,7 +52,7 @@ pnpm dev
 
 実行後、`localhost:3000`で開発サーバーが起動する
 
-## frontend dependencies
+## 使用しているライブラリ
 
 - TypeScript
 - Next.js App Router

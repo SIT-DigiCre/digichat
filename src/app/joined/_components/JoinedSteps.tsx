@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 
-import { Button, Group, Loader, Space, Text } from "@mantine/core";
+import { Button, Group, Loader, Text } from "@mantine/core";
 
 import FinishButton from "./FinishButton";
 import WorkspaceSelector from "./WorkspaceSelector";
@@ -20,10 +20,8 @@ const JoinedSteps = async (props: { step: number }) => {
     case 0:
       return (
         <>
-          <Text>Digichatへようこそ！</Text>
-          <Space h="xs" />
-          <Text>Digichatで交流するための準備を始めましょう！</Text>
-          <Space h="xl" />
+          <Text mb="xs">Digichatへようこそ！</Text>
+          <Text mb="lg">Digichatで交流するための準備を始めましょう！</Text>
           <Button component={Link} href="?p=1">
             次へ
           </Button>
@@ -34,10 +32,8 @@ const JoinedSteps = async (props: { step: number }) => {
 
       return (
         <>
-          <Text>自分のプロフィールを設定しましょう！</Text>
-          <Space h="xs" />
-          <Text>これらの項目は後から変更することも可能です。</Text>
-          <Space h="xl" />
+          <Text mb="xs">自分のプロフィールを設定しましょう！</Text>
+          <Text mb="lg">これらの項目は後から変更することも可能です。</Text>
           <ProfileEditor
             initialUser={{ name, slug, description, image }}
             variant="joined"
@@ -48,10 +44,10 @@ const JoinedSteps = async (props: { step: number }) => {
     case 2:
       return (
         <>
-          <Text>参加するワークスペースを選択しましょう！</Text>
-          <Space h="xs" />
-          <Text>これらのワークスペースには後から参加することも可能です。</Text>
-          <Space h="xl" />
+          <Text mb="xs">参加するワークスペースを選択しましょう！</Text>
+          <Text mb="lg">
+            これらのワークスペースには後から参加することも可能です。
+          </Text>
           <Suspense
             fallback={
               <Group justify="center">
@@ -66,8 +62,7 @@ const JoinedSteps = async (props: { step: number }) => {
     case 3:
       return (
         <>
-          <Text>Digichatを利用する準備ができました！</Text>
-          <Space h="xl" />
+          <Text mb="lg">Digichatを利用する準備ができました！</Text>
           <FinishButton />
         </>
       );

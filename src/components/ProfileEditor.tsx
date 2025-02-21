@@ -9,7 +9,6 @@ import {
   Button,
   Fieldset,
   Group,
-  Space,
   Text,
   Textarea,
   TextInput,
@@ -142,22 +141,21 @@ const ProfileEditor = (props: UserProfileEditorProps) => {
       <form action={action}>
         <Fieldset legend="プロフィール">
           <Text size="sm">アバター</Text>
-          <Avatar size="xl" src={formState?.payload?.image} />
+          <Avatar size="xl" src={formState?.payload?.image} mb="sm" />
           <input
             type="hidden"
             name="image"
             defaultValue={formState?.payload?.image}
           />
           {/* TODO: アバターのアップロード機能を作成 */}
-          <Space h="sm" />
           <TextInput
             name="name"
             defaultValue={formState?.payload?.name}
             label="表示名"
             withAsterisk
             error={formState?.fieldErrors?.name}
+            mb="sm"
           />
-          <Space h="sm" />
           <TextInput
             name="slug"
             defaultValue={formState?.payload?.slug}
@@ -166,8 +164,8 @@ const ProfileEditor = (props: UserProfileEditorProps) => {
             leftSection={<IconAt size="1rem" />}
             withAsterisk
             error={formState?.fieldErrors?.slug}
+            mb="sm"
           />
-          <Space h="sm" />
           <Textarea
             name="description"
             defaultValue={formState?.payload?.description}

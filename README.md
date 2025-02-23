@@ -1,20 +1,58 @@
 # digichat
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+芝浦工業大学デジクリのサークル内SNS「digichat」
 
-## Getting Started
+## 環境設定の手順
 
-First, run the development server:
+### .envの用意
+
+`.env.example`をベースに`.env`を用意する。
+
+```bash
+cp .env.sample .env
+```
+
+### VSCodeでDevContainerを使用する場合
+
+画面左下の青いところをクリック。
+![](docs/images/readme-1.png)
+
+その後、`コンテナーで開く`を選択。しばらく待つとDevContainerが自動で立ち上がる。
+
+### 依存関係のインストール
+
+pnpmでインストールをする
+
+```bash
+pnpm install
+```
+
+### マイグレーション
+
+データベースのマイグレーションを行う
+
+```bash
+pnpm prisma migrate dev
+```
+### seedデータの適用
+
+マイグレーションが終わったらseedデータを適用する
+
+```bash
+pnpm seed
+```
+
+### 開発サーバーの起動
+
+devを実行することでサイトが表示される。
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+実行後、`localhost:3000`で開発サーバーが起動する
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-## frontend dependencies
+## 使用しているライブラリ
 
 - TypeScript
 - Next.js App Router

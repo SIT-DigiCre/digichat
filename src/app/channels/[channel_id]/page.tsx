@@ -5,6 +5,7 @@ import ChannelFooter from "./_components/ChannelFooter/ChannelFooter";
 
 import Message from "#/components/Message";
 import { prisma } from "#/libs/prisma";
+import ChannelHeader from "./_components/ChannelHeader/ChannelHeader";
 
 type ChannelIDPageProps = {
   params: Promise<{ channel_id: string }>;
@@ -20,9 +21,15 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
       user: true,
     },
   });
+  const channel = await prisma.channel.findFirst({
+    where: {
+      id: channel_id,
+    },
+  });
 
   return (
     <Stack className={styles["root"]} justify="space-between">
+      <ChannelHeader channelName={channel?.name || "digichat"} />
       {messages.map((message) => (
         <Message key={message.id} message={message} user={message.user} />
       ))}

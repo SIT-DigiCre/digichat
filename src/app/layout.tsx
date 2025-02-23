@@ -4,6 +4,7 @@ import { MantineProvider } from "@mantine/core";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { SessionProvider } from "next-auth/react";
 
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";
@@ -25,9 +26,11 @@ export default function RootLayout({ children }: RootRayoutProps) {
   return (
     <html lang="en">
       <body>
-        <MantineProvider>
-          <AppShell>{children}</AppShell>
-        </MantineProvider>
+        <SessionProvider>
+          <MantineProvider>
+            <AppShell>{children}</AppShell>
+          </MantineProvider>
+        </SessionProvider>
       </body>
     </html>
   );

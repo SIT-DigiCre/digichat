@@ -1,5 +1,7 @@
 # Prisma
 
+TODO: 他のPRで`ts-node`が追加されるので、マージされ次第`package.json`の`seed`scriptコマンドを`node`から`ts-node`に変更し、`seed/init.mjs`を`seed/init.ts`にリネームする
+
 ## スキーマに変更を加えるとき
 
 1. `schema.prisma`を変更する

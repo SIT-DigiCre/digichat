@@ -5,7 +5,13 @@ TODO: 他のPRで`ts-node`が追加されるので、マージされ次第`packa
 ## スキーマに変更を加えるとき
 
 1. `schema.prisma`を変更する
-2. `npx prisma migrate dev --name what_is_this_change`を実行する
+2. `npx prisma migrate dev`を実行する
+3. 以下のようなメッセージが表示されるので、適切な名前を入力する
+
+```bash
+✔ Enter a name for the new migration:
+# 例: add_user_table
+```
 
 ## データベースをリセットするとき
 

@@ -3,7 +3,11 @@
 import React from "react";
 
 import { Box, Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import {
+  readLocalStorageValue,
+  useDisclosure,
+  useDocumentTitle,
+} from "@mantine/hooks";
 
 import styles from "./AppShell.module.css";
 import Sidebar from "./Sidebar";
@@ -14,6 +18,23 @@ type AppShellProps = {
 
 const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [opened, { toggle }] = useDisclosure();
+
+  const defaultTitle = document.title;
+
+  /**
+   * channelName を取得し，タイトルに表示する
+   *
+   * @see {@link src/app/channels/[channel_id]/_components/ChannelHeader/ChannelHeader.tsx}
+   */
+  const title = readLocalStorageValue({
+    key: location.pathname,
+    defaultValue: defaultTitle,
+  });
+
+  // ページタイトルを更新する
+  if (title !== defaultTitle) {
+    useDocumentTitle(`${defaultTitle} > ${title}`);
+  }
 
   return (
     <MantineAppShell
@@ -30,7 +51,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
       <MantineAppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <Box>digichat</Box>
+          <Box>{title}</Box>
         </Group>
       </MantineAppShell.Header>
       <Sidebar />

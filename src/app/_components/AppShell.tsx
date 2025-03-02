@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
+import { Box, Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 import styles from "./AppShell.module.css";
@@ -30,7 +30,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
       <MantineAppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          digichat
+          <Box>digichat</Box>
         </Group>
       </MantineAppShell.Header>
       <Sidebar />

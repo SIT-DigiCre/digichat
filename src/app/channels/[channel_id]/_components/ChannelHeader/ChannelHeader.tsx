@@ -1,9 +1,9 @@
 "use client";
 
 import { useLocalStorage } from "@mantine/hooks";
-import { useEffect } from "react";
 
 type ChannelHeaderProps = {
+  channelId: string;
   channelName: string;
 };
 
@@ -12,11 +12,14 @@ type ChannelHeaderProps = {
  *
  * @see {@link src/app/_components/AppShell.tsx}
  */
-const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channelName }) => {
-  const [headerTitle, setHeaderTitle] = useLocalStorage({
-    key: location.pathname,
+const ChannelHeader: React.FC<ChannelHeaderProps> = ({
+  channelId,
+  channelName,
+}) => {
+  useLocalStorage({
+    key: `/channels/${channelId}`,
+    defaultValue: channelName,
   });
-  useEffect(() => setHeaderTitle(channelName));
 
   // channelName に書き換える処理だけを実行したいので，空の JSX を返す
   return <></>;

@@ -9,6 +9,7 @@ import {
   useDocumentTitle,
 } from "@mantine/hooks";
 
+import { usePathname } from "next/navigation";
 import styles from "./AppShell.module.css";
 import Sidebar from "./Sidebar";
 
@@ -19,7 +20,7 @@ type AppShellProps = {
 const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [opened, { toggle }] = useDisclosure();
 
-  const defaultTitle = document.title;
+  const defaultTitle = "Digichat";
 
   /**
    * channelName を取得し，タイトルに表示する
@@ -27,7 +28,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
    * @see {@link src/app/channels/[channel_id]/_components/ChannelHeader/ChannelHeader.tsx}
    */
   const title = readLocalStorageValue({
-    key: location.pathname,
+    key: usePathname(),
     defaultValue: defaultTitle,
   });
 

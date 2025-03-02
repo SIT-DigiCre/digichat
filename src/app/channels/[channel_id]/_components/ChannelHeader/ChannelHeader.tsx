@@ -1,9 +1,9 @@
 "use client";
 
 import { useLocalStorage } from "@mantine/hooks";
+import { usePathname } from "next/navigation";
 
 type ChannelHeaderProps = {
-  channelId: string;
   channelName: string;
 };
 
@@ -12,12 +12,9 @@ type ChannelHeaderProps = {
  *
  * @see {@link src/app/_components/AppShell.tsx}
  */
-const ChannelHeader: React.FC<ChannelHeaderProps> = ({
-  channelId,
-  channelName,
-}) => {
+const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channelName }) => {
   useLocalStorage({
-    key: `/channels/${channelId}`,
+    key: usePathname(),
     defaultValue: channelName,
   });
 

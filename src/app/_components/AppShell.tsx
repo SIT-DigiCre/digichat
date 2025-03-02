@@ -20,20 +20,19 @@ type AppShellProps = {
 const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [opened, { toggle }] = useDisclosure();
 
-  const defaultTitle = "Digichat";
-
   /**
    * channelName を取得し，タイトルに表示する
    *
    * @see {@link src/app/channels/[channel_id]/_components/ChannelHeader/ChannelHeader.tsx}
    */
-  const title = readLocalStorageValue({
+  const subtitle = readLocalStorageValue({
     key: usePathname(),
-    defaultValue: defaultTitle,
+    defaultValue: "",
   });
+  const title = subtitle !== "" ? `Digichat > ${subtitle}` : "Digichat";
 
   // ページタイトルを更新する
-  title !== defaultTitle && useDocumentTitle(`${defaultTitle} > ${title}`);
+  useDocumentTitle(title);
 
   return (
     <MantineAppShell
@@ -50,7 +49,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
       <MantineAppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <Box>{title}</Box>
+          <Box>{subtitle}</Box>
         </Group>
       </MantineAppShell.Header>
       <Sidebar />

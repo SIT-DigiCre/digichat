@@ -2,10 +2,10 @@ import { Stack } from "@mantine/core";
 
 import styles from "./ChannelIDPage.module.css";
 import ChannelFooter from "./_components/ChannelFooter/ChannelFooter";
+import ChannelHeader from "./_components/ChannelHeader/ChannelHeader";
 
 import Message from "#/components/Message";
 import { prisma } from "#/libs/prisma";
-import ChannelHeader from "./_components/ChannelHeader/ChannelHeader";
 
 type ChannelIDPageProps = {
   params: Promise<{ channel_id: string }>;

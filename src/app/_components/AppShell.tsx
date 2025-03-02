@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import React from "react";
 
 import { Box, Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
@@ -9,7 +10,6 @@ import {
   useDocumentTitle,
 } from "@mantine/hooks";
 
-import { usePathname } from "next/navigation";
 import styles from "./AppShell.module.css";
 import Sidebar from "./Sidebar";
 
@@ -33,9 +33,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
   });
 
   // ページタイトルを更新する
-  if (title !== defaultTitle) {
-    useDocumentTitle(`${defaultTitle} > ${title}`);
-  }
+  title !== defaultTitle && useDocumentTitle(`${defaultTitle} > ${title}`);
 
   return (
     <MantineAppShell

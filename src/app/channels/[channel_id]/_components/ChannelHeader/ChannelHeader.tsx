@@ -1,7 +1,8 @@
 "use client";
 
-import { useLocalStorage } from "@mantine/hooks";
 import { usePathname } from "next/navigation";
+
+import { useLocalStorage } from "@mantine/hooks";
 
 type ChannelHeaderProps = {
   channelName: string;

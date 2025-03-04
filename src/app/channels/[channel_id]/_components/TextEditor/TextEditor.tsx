@@ -50,6 +50,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
         type: "NORMAL",
         content: value,
       });
+      editor?.commands.clearContent();
       if (onSend) onSend();
     });
   };

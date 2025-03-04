@@ -39,6 +39,7 @@ const ChannelFooter: React.FC<ChannelFooterProps> = ({
           value={value}
           onChange={setValue}
           onSend={() => {
+            console.log("aaa");
             setValue("");
           }}
           user_id={user_id}

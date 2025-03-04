@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { prisma } from "./prisma";
 
-import type { MessageType } from "@prisma/client";
+import type { Asset, MessageType } from "@prisma/client";
 
 type SearchChannelsProps = {
   keyword: string;
@@ -63,6 +63,7 @@ type SendMessageProps = {
   userId: string;
   type: MessageType;
   content: string;
+  assets?: Pick<Asset, "url" | "type">[];
 };
 
 /**
@@ -73,6 +74,7 @@ type SendMessageProps = {
  * @param props.content メッセージ内容
  */
 export async function sendMessage(props: SendMessageProps) {
+  const { assets, ...messageProps } = props;
   const channel = await prisma.channel.findUnique({
     where: { id: props.channelId },
   });
@@ -90,7 +92,14 @@ export async function sendMessage(props: SendMessageProps) {
   }
 
   await prisma.message.create({
-    data: props,
+    data: {
+      ...messageProps,
+      channelId: channel.id,
+      userId: user.id,
+      assets: {
+        create: assets,
+      },
+    },
   });
 
   revalidatePath(`/channels/${channel.id}`);

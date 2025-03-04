@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React, { useState, useTransition } from "react";
 
 import { ActionIcon } from "@mantine/core";
 import { Link, RichTextEditor } from "@mantine/tiptap";
+import { Asset } from "@prisma/client";
 import { IconSend2 } from "@tabler/icons-react";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -41,6 +42,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
     immediatelyRender: false,
   });
   const [isPending, startTransition] = useTransition();
+  const [assets, setAssets] = useState<Pick<Asset, "url" | "type">[]>([]);
 
   const handleClick = () => {
     startTransition(async () => {
@@ -52,6 +54,22 @@ const TextEditor: React.FC<TextEditorProps> = ({
       });
       editor?.commands.clearContent();
       if (onSend) onSend();
+    });
+  };
+
+  const handleUpload = (file: File[]) => {
+    startTransition(async () => {
+      // TODO: 複数ファイルのアップロードをサポートする
+      const formData = new FormData();
+      formData.append("file", file[0]);
+      const res = await fetch("/api/file", {
+        method: "POST",
+        body: formData,
+      });
+      if (res.status === 200) {
+        const { url, mimeType } = await res.json();
+        setAssets([...assets, { url, type: mimeType }]);
+      }
     });
   };
 
@@ -74,7 +92,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
       <RichTextEditor.Content className={styles.Content} />
       <RichTextEditor.Toolbar className={styles.Toolbar}>
         <RichTextEditor.ControlsGroup>
-          <FileUploadControl />
+          <FileUploadControl onUpload={handleUpload} disabled={isPending} />
         </RichTextEditor.ControlsGroup>
         <ActionIcon
           w="3rem"

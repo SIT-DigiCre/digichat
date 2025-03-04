@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useTransition } from "react";
 
 import { Box, Button, Flex } from "@mantine/core";
 
@@ -21,7 +21,6 @@ const ChannelFooter: React.FC<ChannelFooterProps> = ({
   user_id,
   is_joined,
 }) => {
-  const [value, setValue] = useState("");
   const [isPending, startTransition] = useTransition();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,16 +33,7 @@ const ChannelFooter: React.FC<ChannelFooterProps> = ({
   return (
     <Box className={styles["channel-footer"]}>
       {is_joined ? (
-        <TextEditor
-          channel_id={channel_id}
-          value={value}
-          onChange={setValue}
-          onSend={() => {
-            console.log("aaa");
-            setValue("");
-          }}
-          user_id={user_id}
-        />
+        <TextEditor channel_id={channel_id} user_id={user_id} />
       ) : (
         <Flex
           align="center"

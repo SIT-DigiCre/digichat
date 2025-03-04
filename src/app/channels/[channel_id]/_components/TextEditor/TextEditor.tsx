@@ -19,25 +19,17 @@ import styles from "./TextEditor.module.css";
 import { sendMessage } from "#/libs/actions";
 
 type TextEditorProps = {
-  value: string;
-  onChange: (value: string) => void;
-  onSend?: () => void;
   user_id: string;
   channel_id: string;
 };
 
-const TextEditor: React.FC<TextEditorProps> = ({
-  value,
-  onChange,
-  onSend,
-  user_id,
-  channel_id,
-}) => {
+const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
+  const [value, setValue] = useState("");
   const editor = useEditor({
     extensions: [StarterKit, Link],
     content: value,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+      setValue(editor.getHTML());
     },
     immediatelyRender: false,
   });
@@ -51,9 +43,9 @@ const TextEditor: React.FC<TextEditorProps> = ({
         userId: user_id,
         type: "NORMAL",
         content: value,
+        assets,
       });
       editor?.commands.clearContent();
-      if (onSend) onSend();
     });
   };
 
@@ -66,9 +58,11 @@ const TextEditor: React.FC<TextEditorProps> = ({
         method: "POST",
         body: formData,
       });
+      console.log(res);
       if (res.status === 200) {
-        const { url, mimeType } = await res.json();
-        setAssets([...assets, { url, type: mimeType }]);
+        const body = await res.json();
+        setAssets([...assets, { url: body.url, type: "IMAGE" }]);
+        setValue(body.url);
       }
     });
   };

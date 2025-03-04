@@ -31,7 +31,7 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
     },
   });
 
-  if (!channel) return null;
+  if (!session || !channel) return null;
 
   const is_joined = channel.members.some(
     (member) => member.userId === session?.user.id
@@ -42,7 +42,11 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
       {messages.map((message) => (
         <Message key={message.id} message={message} user={message.user} />
       ))}
-      <ChannelFooter user_id="test" is_joined={is_joined} />
+      <ChannelFooter
+        user_id={session.user.id!}
+        channel_id={channel_id}
+        is_joined={is_joined}
+      />
     </Stack>
   );
 }

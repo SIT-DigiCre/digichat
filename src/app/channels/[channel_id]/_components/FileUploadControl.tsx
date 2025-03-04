@@ -1,12 +1,9 @@
 import { ActionIcon, FileButton } from "@mantine/core";
 import { IconCloudUpload } from "@tabler/icons-react";
 
-/*
-- アップロード可能なフォーマットはDiscordを参考にした
-  - https://www.reddit.com/r/discordapp/comments/f2kt5r/guide_file_formats_discord_can_embed/
-- これに`image/webp`, `image/avif`を追加
-*/
-
+/**
+ * @description アップロード可能なフォーマットは[Discord](https://www.reddit.com/r/discordapp/comments/f2kt5r/guide_file_formats_discord_can_embed/)を参考にした。これに`image/webp`, `image/avif`を追加
+ **/
 const FileUploadControl = () => {
   const setFile = (payload: File[]) => {
     console.log(payload);

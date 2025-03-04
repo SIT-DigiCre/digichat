@@ -9,6 +9,11 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.WASABI_SECRET_ACCESS_KEY,
 });
 
+/**
+ * @description アセットをWasabiにアップロードし、成功時にURLを返します。この関数は基本的に直接呼び出さず、`POST /api/file`を使用してください。
+ * @param buffer アップロードするファイルのバッファ
+ * @param bucketName アップロード先のバケット名
+ **/
 export async function uploadFileToWasabi(
   buffer: Buffer,
   bucketName: string,

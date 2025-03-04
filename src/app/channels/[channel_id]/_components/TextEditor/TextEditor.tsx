@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useTransition } from "react";
 
 import { ActionIcon } from "@mantine/core";
 import { Link, RichTextEditor } from "@mantine/tiptap";
@@ -15,17 +15,22 @@ import FileUploadControl from "../FileUploadControl";
 import "./TextEditor.css";
 import styles from "./TextEditor.module.css";
 
+import { sendMessage } from "#/libs/actions";
+
 type TextEditorProps = {
   value: string;
   onChange: (value: string) => void;
-  onSend: () => void;
+  onSend?: () => void;
   user_id: string;
+  channel_id: string;
 };
 
 const TextEditor: React.FC<TextEditorProps> = ({
   value,
   onChange,
+  onSend,
   user_id,
+  channel_id,
 }) => {
   const editor = useEditor({
     extensions: [StarterKit, Link],
@@ -35,7 +40,19 @@ const TextEditor: React.FC<TextEditorProps> = ({
     },
     immediatelyRender: false,
   });
-  console.log(user_id);
+  const [isPending, startTransition] = useTransition();
+
+  const handleClick = () => {
+    startTransition(async () => {
+      await sendMessage({
+        channelId: channel_id,
+        userId: user_id,
+        type: "NORMAL",
+        content: value,
+      });
+      if (onSend) onSend();
+    });
+  };
 
   return (
     <RichTextEditor editor={editor} className={styles.Editor}>
@@ -58,7 +75,11 @@ const TextEditor: React.FC<TextEditorProps> = ({
         <RichTextEditor.ControlsGroup>
           <FileUploadControl />
         </RichTextEditor.ControlsGroup>
-        <ActionIcon w="3rem" disabled={value.trim() === ""}>
+        <ActionIcon
+          w="3rem"
+          disabled={value.trim() === "" || isPending}
+          onClick={handleClick}
+        >
           <IconSend2 />
         </ActionIcon>
       </RichTextEditor.Toolbar>

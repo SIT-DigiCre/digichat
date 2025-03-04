@@ -6,6 +6,7 @@ import { ActionIcon } from "@mantine/core";
 import { Link, RichTextEditor } from "@mantine/tiptap";
 import { Asset } from "@prisma/client";
 import { IconSend2 } from "@tabler/icons-react";
+import Image from "@tiptap/extension-image";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
@@ -26,7 +27,7 @@ type TextEditorProps = {
 const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
   const [value, setValue] = useState("");
   const editor = useEditor({
-    extensions: [StarterKit, Link],
+    extensions: [StarterKit, Link, Image],
     content: value,
     onUpdate: ({ editor }) => {
       setValue(editor.getHTML());
@@ -62,7 +63,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
       if (res.status === 200) {
         const body = await res.json();
         setAssets([...assets, { url: body.url, type: "IMAGE" }]);
-        setValue(body.url);
+        editor?.commands.setImage({ src: body.url });
       }
     });
   };

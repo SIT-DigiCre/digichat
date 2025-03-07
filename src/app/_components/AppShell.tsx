@@ -29,7 +29,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
     key: usePathname(),
     defaultValue: "",
   });
-  const title = subtitle !== "" ? `Digichat > ${subtitle}` : "Digichat";
+  const title = subtitle !== "" ? `${subtitle} | Digichat` : "Digichat";
 
   // ページタイトルを更新する
   useDocumentTitle(title);

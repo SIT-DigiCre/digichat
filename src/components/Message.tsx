@@ -1,6 +1,7 @@
 import { Avatar, Box, Flex, Stack, Text, Title } from "@mantine/core";
 import dayjs from "dayjs";
 
+import Markdown from "./Markdown";
 import styles from "./Message.module.css";
 
 import type { Message as MessageModel, User } from "@prisma/client";
@@ -26,7 +27,9 @@ const Message: React.FC<MessageProps> = (props) => {
               .format("HH:mm")}
           </Text>
         </Flex>
-        <Box>{props.message.content}</Box>
+        <Box>
+          <Markdown content={props.message.content} />
+        </Box>
         <Flex></Flex>
       </Stack>
     </Flex>

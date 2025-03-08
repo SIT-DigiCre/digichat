@@ -6,6 +6,7 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { SessionProvider } from "next-auth/react";
 
+import "@mantine/code-highlight/styles.css";
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";
 import "./globals.css";

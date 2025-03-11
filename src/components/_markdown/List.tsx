@@ -28,6 +28,7 @@ export const ListItem = (props: React.HTMLAttributes<HTMLLIElement>) => {
         <MantineListItem
           style={{
             position: "relative",
+            paddingRight: "1.5rem",
           }}
           {...others}
         >
@@ -44,5 +45,14 @@ export const ListItem = (props: React.HTMLAttributes<HTMLLIElement>) => {
     }
   }
 
-  return <MantineListItem {...others}>{children}</MantineListItem>;
+  return (
+    <MantineListItem
+      style={{
+        paddingRight: "1.5rem",
+      }}
+      {...others}
+    >
+      {children}
+    </MantineListItem>
+  );
 };

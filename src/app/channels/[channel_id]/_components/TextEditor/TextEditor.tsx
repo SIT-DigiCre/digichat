@@ -69,8 +69,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
   };
 
   return (
-    <RichTextEditor editor={editor} className={styles.Editor}>
-      <RichTextEditor.Toolbar className={styles.Toolbar}>
+    <RichTextEditor editor={editor} className={styles["editor"]}>
+      <RichTextEditor.Toolbar className={styles["toolbar"]}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />
@@ -84,8 +84,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
           <EmojiPickerControl />
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
-      <RichTextEditor.Content className={styles.Content} />
-      <RichTextEditor.Toolbar className={styles.Toolbar}>
+      <RichTextEditor.Content className={styles["content"]} />
+      <RichTextEditor.Toolbar className={styles["toolbar"]}>
         <RichTextEditor.ControlsGroup>
           <FileUploadControl onUpload={handleUpload} disabled={isPending} />
         </RichTextEditor.ControlsGroup>

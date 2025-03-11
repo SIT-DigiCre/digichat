@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mantine/core";
+import { Box } from "@mantine/core";
 
 import styles from "./ChannelIDPage.module.css";
 import ChannelFooter from "./_components/ChannelFooter/ChannelFooter";
@@ -38,8 +38,8 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
   );
 
   return (
-    <Stack className={styles["root"]} justify="space-between">
-      <Box>
+    <Box className={styles["root"]}>
+      <Box className={styles["message-area"]}>
         {messages.map((message) => (
           <Message key={message.id} message={message} user={message.user} />
         ))}
@@ -49,7 +49,7 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
         channel_id={channel_id}
         is_joined={is_joined}
       />
-    </Stack>
+    </Box>
   );
 }
 

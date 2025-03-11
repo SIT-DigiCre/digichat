@@ -1,5 +1,6 @@
-.Editor {
+.editor {
   margin-top: 0;
+  background-color: var(--mantine-color-white);
   border: 2px solid var(--mantine-color-gray-3);
 
   &:hover {
@@ -11,14 +12,14 @@
   }
 }
 
-.Content {
+.content {
   max-height: 50vh;
   padding: 0.5rem;
   padding-bottom: 0;
   overflow-y: scroll;
 }
 
-.Toolbar {
+.toolbar {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem;

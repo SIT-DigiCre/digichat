@@ -4,19 +4,18 @@ import { Checkbox, List, ListItem as MantineListItem } from "@mantine/core";
 
 import styles from "./List.module.css";
 
-export const UnorderedList = ({ children }: React.ComponentProps<"ul">) => {
-  return <List withPadding>{children}</List>;
+export const UnorderedList = (props: React.ComponentProps<"ul">) => {
+  return <List withPadding {...props} />;
 };
 
-export const OrderedList = ({ children }: React.ComponentProps<"ol">) => {
-  return (
-    <List withPadding type="ordered">
-      {children}
-    </List>
-  );
+export const OrderedList = (
+  props: Omit<React.ComponentProps<"ol">, "type">
+) => {
+  return <List withPadding type="ordered" {...props} />;
 };
 
-export const ListItem = ({ children }: React.ComponentProps<"li">) => {
+export const ListItem = (props: React.ComponentProps<"li">) => {
+  const { children, style, ...others } = props;
   const listedChildren = Children.toArray(children);
   if (isValidElement(listedChildren[0]) && listedChildren[0].type === "input") {
     const [inputElementRaw, ...contents] = listedChildren;
@@ -30,7 +29,9 @@ export const ListItem = ({ children }: React.ComponentProps<"li">) => {
           style={{
             position: "relative",
             paddingRight: "1.5rem",
+            ...style,
           }}
+          {...others}
         >
           <Checkbox
             readOnly
@@ -50,7 +51,9 @@ export const ListItem = ({ children }: React.ComponentProps<"li">) => {
     <MantineListItem
       style={{
         paddingRight: "1.5rem",
+        ...style,
       }}
+      {...others}
     >
       {children}
     </MantineListItem>

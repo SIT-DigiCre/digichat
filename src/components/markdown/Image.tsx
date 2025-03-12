@@ -2,7 +2,8 @@ import NextImage from "next/image";
 
 import { Image as MantineImage } from "@mantine/core";
 
-const Image = ({ width, height, alt, src }: React.ComponentProps<"img">) => {
+const Image = (props: React.ComponentProps<"img">) => {
+  const { width, height, alt, src, ...others } = props;
   if (width && height && alt && src) {
     return (
       <MantineImage
@@ -14,6 +15,7 @@ const Image = ({ width, height, alt, src }: React.ComponentProps<"img">) => {
         maw="100%"
         w="auto"
         mah={360}
+        {...others}
       />
     );
   } else {
@@ -25,6 +27,7 @@ const Image = ({ width, height, alt, src }: React.ComponentProps<"img">) => {
         maw="100%"
         w="auto"
         mah={360}
+        {...others}
       />
     );
   }

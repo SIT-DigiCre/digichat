@@ -2,14 +2,11 @@ import Link from "next/link";
 
 import { Anchor as MantineAnchor } from "@mantine/core";
 
-const Anchor = ({ href, children }: React.ComponentProps<"a">) => {
+const Anchor = (props: React.ComponentProps<"a">) => {
+  const { href, ...others } = props;
   // TODO: .env等を利用して同一ドメインの場合の判定もできるように
   if (href?.startsWith("/")) {
-    return (
-      <MantineAnchor component={Link} href={href ?? ""}>
-        {children}
-      </MantineAnchor>
-    );
+    return <MantineAnchor component={Link} href={href ?? ""} {...others} />;
   } else {
     return (
       <MantineAnchor
@@ -17,9 +14,8 @@ const Anchor = ({ href, children }: React.ComponentProps<"a">) => {
         href={href ?? ""}
         target="_blank"
         rel="noreferrer noopener"
-      >
-        {children}
-      </MantineAnchor>
+        {...others}
+      />
     );
   }
 };

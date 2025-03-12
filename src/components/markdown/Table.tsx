@@ -9,26 +9,26 @@ import {
   TableTr as MantineTableTr,
 } from "@mantine/core";
 
-export const Table = ({ children }: React.ComponentProps<"table">) => {
-  return <MantineTable>{children}</MantineTable>;
+export const Table = (props: React.ComponentProps<"table">) => {
+  return <MantineTable {...props} />;
 };
 
-export const TableTr = ({ children }: React.ComponentProps<"tr">) => {
-  return <MantineTableTr>{children}</MantineTableTr>;
+export const TableTr = (props: React.ComponentProps<"tr">) => {
+  return <MantineTableTr {...props} />;
 };
 
-export const TableTd = ({ children }: React.ComponentProps<"td">) => {
-  return <MantineTableTd>{children}</MantineTableTd>;
+export const TableTd = (props: React.ComponentProps<"td">) => {
+  return <MantineTableTd {...props} />;
 };
 
-export const TableTh = ({ children }: React.ComponentProps<"th">) => {
-  return <MantineTableTh>{children}</MantineTableTh>;
+export const TableTh = (props: React.ComponentProps<"th">) => {
+  return <MantineTableTh {...props} />;
 };
 
-export const TableThead = ({ children }: React.ComponentProps<"thead">) => {
-  return <MantineTableThead>{children}</MantineTableThead>;
+export const TableThead = (props: React.ComponentProps<"thead">) => {
+  return <MantineTableThead {...props} />;
 };
 
-export const TableTbody = ({ children }: React.ComponentProps<"tbody">) => {
-  return <MantineTableTbody>{children}</MantineTableTbody>;
+export const TableTbody = (props: React.ComponentProps<"tbody">) => {
+  return <MantineTableTbody {...props} />;
 };

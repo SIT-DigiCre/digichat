@@ -2,31 +2,29 @@ import NextImage from "next/image";
 
 import { Image as MantineImage } from "@mantine/core";
 
-const Image = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
-  if (props.width && props.height && props.alt && props.src) {
-    const { width, height, src, alt, ...others } = props;
+const Image = ({ width, height, alt, src }: React.ComponentProps<"img">) => {
+  if (width && height && alt && src) {
     return (
       <MantineImage
         component={NextImage}
         width={Number(width)}
         height={Number(height)}
-        alt={alt}
         src={src}
+        alt={alt}
         maw="100%"
         w="auto"
         mah={360}
-        {...others}
       />
     );
   } else {
     return (
       <MantineImage
-        {...props}
+        src={src}
+        alt={alt ?? ""}
         display="inline-block"
         maw="100%"
         w="auto"
         mah={360}
-        alt={props.alt ?? ""}
       />
     );
   }

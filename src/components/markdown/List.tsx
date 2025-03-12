@@ -4,19 +4,19 @@ import { Checkbox, List, ListItem as MantineListItem } from "@mantine/core";
 
 import styles from "./List.module.css";
 
-export const UnorderedList = (
-  props: React.HTMLAttributes<HTMLUListElement>
-) => {
-  return <List {...props} withPadding />;
+export const UnorderedList = ({ children }: React.ComponentProps<"ul">) => {
+  return <List withPadding>{children}</List>;
 };
 
-export const OrderedList = (props: React.HTMLAttributes<HTMLOListElement>) => {
-  return <List {...props} withPadding type="ordered" />;
+export const OrderedList = ({ children }: React.ComponentProps<"ol">) => {
+  return (
+    <List withPadding type="ordered">
+      {children}
+    </List>
+  );
 };
 
-export const ListItem = (props: React.HTMLAttributes<HTMLLIElement>) => {
-  const { children, ...others } = props;
-
+export const ListItem = ({ children }: React.ComponentProps<"li">) => {
   const listedChildren = Children.toArray(children);
   if (isValidElement(listedChildren[0]) && listedChildren[0].type === "input") {
     const [inputElementRaw, ...contents] = listedChildren;
@@ -25,12 +25,12 @@ export const ListItem = (props: React.HTMLAttributes<HTMLLIElement>) => {
 
     if (inputElement.props.type === "checkbox") {
       return (
+        // module.css による指定だと正しく反映されないため
         <MantineListItem
           style={{
             position: "relative",
             paddingRight: "1.5rem",
           }}
-          {...others}
         >
           <Checkbox
             readOnly
@@ -46,11 +46,11 @@ export const ListItem = (props: React.HTMLAttributes<HTMLLIElement>) => {
   }
 
   return (
+    // module.css による指定だと正しく反映されないため
     <MantineListItem
       style={{
         paddingRight: "1.5rem",
       }}
-      {...others}
     >
       {children}
     </MantineListItem>

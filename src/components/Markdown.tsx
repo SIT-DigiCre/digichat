@@ -11,11 +11,11 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
-import Anchor from "./_markdown/Anchor";
-import Blockquote from "./_markdown/Blockquote";
-import CodeBlock from "./_markdown/CodeBlock";
-import CodeInline from "./_markdown/CodeInline";
-import Divider from "./_markdown/Divider";
+import Anchor from "./markdown/Anchor";
+import Blockquote from "./markdown/Blockquote";
+import CodeBlock from "./markdown/CodeBlock";
+import CodeInline from "./markdown/CodeInline";
+import Divider from "./markdown/Divider";
 import {
   HeadingLevel1,
   HeadingLevel2,
@@ -23,10 +23,10 @@ import {
   HeadingLevel4,
   HeadingLevel5,
   HeadingLevel6,
-} from "./_markdown/Headings";
-import Image from "./_markdown/Image";
-import { ListItem, OrderedList, UnorderedList } from "./_markdown/List";
-import Paragraph from "./_markdown/Paragraph";
+} from "./markdown/Headings";
+import Image from "./markdown/Image";
+import { ListItem, OrderedList, UnorderedList } from "./markdown/List";
+import Paragraph from "./markdown/Paragraph";
 import {
   Table,
   TableTbody,
@@ -34,7 +34,7 @@ import {
   TableTh,
   TableThead,
   TableTr,
-} from "./_markdown/Table";
+} from "./markdown/Table";
 
 type MarkdownProps = {
   content: string;

@@ -6,9 +6,7 @@ import styles from "./CodeBlock.module.css";
 
 const languageClassPattern = /^language-(.+)/;
 
-const CodeBlock = (props: React.HTMLAttributes<HTMLPreElement>) => {
-  const { children, ...others } = props;
-
+const CodeBlock = ({ children }: React.ComponentProps<"pre">) => {
   const listedChildren = Children.toArray(children);
   if (isValidElement(listedChildren[0])) {
     const codeElement = listedChildren[0] as React.ReactElement<HTMLElement>;
@@ -27,7 +25,7 @@ const CodeBlock = (props: React.HTMLAttributes<HTMLPreElement>) => {
     );
   }
 
-  return <pre {...others}>{children}</pre>;
+  return <pre>{children}</pre>;
 };
 
 export default CodeBlock;

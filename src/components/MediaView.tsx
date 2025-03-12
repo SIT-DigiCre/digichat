@@ -5,7 +5,7 @@ const MediaView = (props: {
   assets: Pick<Asset, "id" | "type" | "url">[];
   className?: string;
 }) => {
-  if (props.assets.length === 0) return <></>;
+  if (props.assets.length === 0) return null;
   if (props.assets.length > 1) {
     return (
       <Flex dir="row" wrap="wrap" gap="md" className={props.className}>

@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 
 import { prisma } from "./prisma";
 
+import type { Asset, MessageType } from "@prisma/client";
+
 type SearchChannelsProps = {
   keyword: string;
 };
@@ -50,6 +52,53 @@ export async function joinChannel(channelId: string, userId: string) {
       channelId: channel.id,
       userId: user.id,
       role: "MEMBER",
+    },
+  });
+
+  revalidatePath(`/channels/${channel.id}`);
+}
+
+type SendMessageProps = {
+  channelId: string;
+  userId: string;
+  type: MessageType;
+  content: string;
+  assets?: Pick<Asset, "url" | "type">[];
+};
+
+/**
+ * @description メッセージを送信します。
+ * @param props.channelId チャンネルID
+ * @param props.userId ユーザーID
+ * @param props.type メッセージタイプ
+ * @param props.content メッセージ内容
+ */
+export async function sendMessage(props: SendMessageProps) {
+  const { assets, ...messageProps } = props;
+  const channel = await prisma.channel.findUnique({
+    where: { id: props.channelId },
+  });
+
+  if (!channel) {
+    throw new Error("Channel not found");
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: props.userId },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  await prisma.message.create({
+    data: {
+      ...messageProps,
+      channelId: channel.id,
+      userId: user.id,
+      assets: {
+        create: assets,
+      },
     },
   });
 

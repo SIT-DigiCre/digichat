@@ -8,6 +8,8 @@ import {
   Title,
 } from "@mantine/core";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
 import LinkCard from "./LinkCard";
 import Markdown from "./Markdown";
@@ -20,6 +22,9 @@ import type {
   Message as MessageModel,
   User,
 } from "@prisma/client";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 // FIXME: LinkCardがMessageLinkに対応していないため暫定対応としてIDとURLのみ渡す
 export type MessageProps = {

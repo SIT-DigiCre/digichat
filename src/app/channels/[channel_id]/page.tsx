@@ -28,6 +28,8 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
     },
     include: {
       user: true,
+      links: true,
+      assets: true,
     },
   });
 
@@ -41,7 +43,13 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
     <Box className={styles["root"]}>
       <Box className={styles["message-area"]}>
         {messages.map((message) => (
-          <Message key={message.id} message={message} user={message.user} />
+          <Message
+            key={message.id}
+            message={message}
+            user={message.user}
+            links={message.links}
+            assets={message.assets}
+          />
         ))}
       </Box>
       <ChannelFooter

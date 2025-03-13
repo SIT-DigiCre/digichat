@@ -1,0 +1,6 @@
+.checkbox {
+  position: absolute;
+  top: 0.125rem;
+  left: -0.5rem;
+  display: inline-block;
+}

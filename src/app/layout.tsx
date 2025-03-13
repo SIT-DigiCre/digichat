@@ -6,6 +6,7 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { SessionProvider } from "next-auth/react";
 
+import "@mantine/code-highlight/styles.css";
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";
 import "./globals.css";
@@ -25,6 +26,14 @@ type RootRayoutProps = {
 export default function RootLayout({ children }: RootRayoutProps) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+          integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <SessionProvider>
           <MantineProvider>

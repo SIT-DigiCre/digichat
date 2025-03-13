@@ -1,7 +1,13 @@
 "use client";
 
-import Message from "#/components/Message";
+import { useLayoutEffect, useRef } from "react";
+
 import { Box } from "@mantine/core";
+
+import ChannelFooter from "../ChannelFooter/ChannelFooter";
+
+import styles from "./Channel.module.css";
+
 import type {
   Asset,
   MessageLink,
@@ -9,9 +15,9 @@ import type {
   User,
 } from "@prisma/client";
 import type { Session } from "next-auth";
-import { useLayoutEffect, useRef } from "react";
-import ChannelFooter from "../ChannelFooter/ChannelFooter";
-import styles from "./Channel.module.css";
+
+
+import Message from "#/components/Message";
 
 type ChannelProps = {
   session: Session;

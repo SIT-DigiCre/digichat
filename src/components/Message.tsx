@@ -47,7 +47,7 @@ const Message: React.FC<MessageProps> = (props) => {
         </Flex>
         <Container className={styles["container"]}>
           <Box>
-            <Markdown content={props.message.content} />
+            <Markdown content="<p>hello</p>" />
           </Box>
           {props.assets.length > 0 && (
             <MediaView assets={props.assets} className={styles["media"]} />

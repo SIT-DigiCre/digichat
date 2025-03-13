@@ -1,13 +1,15 @@
+"use client";
+
 import { createElement } from "react";
 
 import * as prod from "react/jsx-runtime";
 import rehypeKatex from "rehype-katex";
+import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
@@ -40,9 +42,11 @@ type MarkdownProps = {
   content: string;
 };
 
-const Markdown = (props: MarkdownProps) => {
-  return unified()
-    .use(remarkParse)
+const Markdown: React.FC<MarkdownProps> = ({ content }) => {
+  const result = unified()
+    .use(rehypeParse, {
+      fragment: true,
+    })
     .use(remarkBreaks)
     .use(remarkMath)
     .use(remarkGfm)
@@ -85,7 +89,9 @@ const Markdown = (props: MarkdownProps) => {
       },
       createElement,
     })
-    .processSync(props.content).result;
+    .processSync(content).result;
+  console.log(result);
+  return result;
 };
 
 export default Markdown;

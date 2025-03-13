@@ -8,6 +8,8 @@ import {
   Title,
 } from "@mantine/core";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
 import LinkCard from "./LinkCard";
 import Markdown from "./Markdown";
@@ -20,6 +22,9 @@ import type {
   Message as MessageModel,
   User,
 } from "@prisma/client";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 // FIXME: LinkCardがMessageLinkに対応していないため暫定対応としてIDとURLのみ渡す
 export type MessageProps = {
@@ -47,7 +52,7 @@ const Message: React.FC<MessageProps> = (props) => {
         </Flex>
         <Container className={styles["container"]}>
           <Box>
-            <Markdown content="<p>hello</p>" />
+            <Markdown content={props.message.content} />
           </Box>
           {props.assets.length > 0 && (
             <MediaView assets={props.assets} className={styles["media"]} />

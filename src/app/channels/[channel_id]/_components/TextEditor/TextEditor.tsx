@@ -48,6 +48,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
       });
       editor?.commands.clearContent();
       setAssets([]);
+      setValue("");
     });
   };
 

@@ -1,11 +1,6 @@
-import { Box } from "@mantine/core";
-
-import styles from "./ChannelIDPage.module.css";
-import ChannelFooter from "./_components/ChannelFooter/ChannelFooter";
-
-import Message from "#/components/Message";
 import { auth } from "#/libs/auth";
 import { prisma } from "#/libs/prisma";
+import Channel from "./_components/Channel/Channel";
 
 type ChannelIDPageProps = {
   params: Promise<{ channel_id: string }>;
@@ -40,24 +35,12 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
   );
 
   return (
-    <Box className={styles["root"]}>
-      <Box className={styles["message-area"]}>
-        {messages.map((message) => (
-          <Message
-            key={message.id}
-            message={message}
-            user={message.user}
-            links={message.links}
-            assets={message.assets}
-          />
-        ))}
-      </Box>
-      <ChannelFooter
-        user_id={session.user.id!}
-        channel_id={channel_id}
-        is_joined={is_joined}
-      />
-    </Box>
+    <Channel
+      session={session}
+      channel_id={channel_id}
+      messages={messages}
+      is_joined={is_joined}
+    />
   );
 }
 

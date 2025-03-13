@@ -2,11 +2,11 @@
 
 import React, { useState, useTransition } from "react";
 
-import { ActionIcon } from "@mantine/core";
+import { ActionIcon, Image } from "@mantine/core";
 import { Link, RichTextEditor } from "@mantine/tiptap";
 import { Asset } from "@prisma/client";
-import { IconSend2 } from "@tabler/icons-react";
-import Image from "@tiptap/extension-image";
+import { IconSend2, IconTrash } from "@tabler/icons-react";
+import { default as TipTapImage } from "@tiptap/extension-image";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
@@ -27,7 +27,7 @@ type TextEditorProps = {
 const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
   const [value, setValue] = useState("");
   const editor = useEditor({
-    extensions: [StarterKit, Link, Image],
+    extensions: [StarterKit, Link, TipTapImage],
     content: value,
     onUpdate: ({ editor }) => {
       setValue(editor.getHTML());
@@ -47,6 +47,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
         assets,
       });
       editor?.commands.clearContent();
+      setAssets([]);
     });
   };
 
@@ -59,11 +60,9 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
         method: "POST",
         body: formData,
       });
-      console.log(res);
       if (res.status === 200) {
         const body = await res.json();
         setAssets([...assets, { url: body.url, type: "IMAGE" }]);
-        editor?.commands.setImage({ src: body.url });
       }
     });
   };
@@ -85,13 +84,38 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
         </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
       <RichTextEditor.Content className={styles["content"]} />
+      {assets.length > 0 && (
+        <div className={styles["assets-area"]}>
+          {assets.map((asset, index) => (
+            // TODO: assets tableにwidth, height, altカラムを追加する
+            <div key={asset.url} className={styles["asset-wrapper"]}>
+              <Image
+                className={styles.asset}
+                key={index}
+                src={asset.url}
+                alt=""
+              />
+              <ActionIcon
+                variant="white"
+                color="gray"
+                className={styles["asset-delete"]}
+                onClick={() => {
+                  setAssets(assets.filter((_, i) => i !== index));
+                }}
+              >
+                <IconTrash />
+              </ActionIcon>
+            </div>
+          ))}
+        </div>
+      )}
       <RichTextEditor.Toolbar className={styles["toolbar"]}>
         <RichTextEditor.ControlsGroup>
           <FileUploadControl onUpload={handleUpload} disabled={isPending} />
         </RichTextEditor.ControlsGroup>
         <ActionIcon
           w="3rem"
-          disabled={value.trim() === "" || isPending}
+          disabled={(value.trim() === "" && assets.length === 0) || isPending}
           onClick={handleClick}
         >
           <IconSend2 />

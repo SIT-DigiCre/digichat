@@ -25,3 +25,38 @@
   padding: 0.5rem;
   border: none;
 }
+
+.assets-area {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  border: none;
+}
+
+.asset-wrapper {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  border: 2px solid var(--mantine-color-gray-3);
+  border-radius: 0.5rem;
+}
+
+.asset {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.asset-delete {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1rem;
+  color: var(--mantine-color-white);
+  background-color: var(--mantine-color-gray-3);
+  border: none;
+  border-radius: 0.5rem;
+}

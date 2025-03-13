@@ -2,6 +2,7 @@ import { Stack } from "@mantine/core";
 
 import styles from "./ChannelIDPage.module.css";
 import ChannelFooter from "./_components/ChannelFooter/ChannelFooter";
+import ChannelHeader from "./_components/ChannelHeader/ChannelHeader";
 
 import Message from "#/components/Message";
 import { prisma } from "#/libs/prisma";
@@ -22,9 +23,15 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
       assets: true,
     },
   });
+  const channel = await prisma.channel.findFirst({
+    where: {
+      id: channel_id,
+    },
+  });
 
   return (
     <Stack className={styles["root"]} justify="space-between">
+      <ChannelHeader channelName={channel?.name || ""} />
       {messages.map((message) => (
         <Message
           key={message.id}

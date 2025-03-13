@@ -1,9 +1,14 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import React from "react";
 
-import { Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { Box, Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
+import {
+  readLocalStorageValue,
+  useDisclosure,
+  useDocumentTitle,
+} from "@mantine/hooks";
 
 import styles from "./AppShell.module.css";
 import Sidebar from "./Sidebar";
@@ -14,6 +19,20 @@ type AppShellProps = {
 
 const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [opened, { toggle }] = useDisclosure();
+
+  /**
+   * channelName を取得し，タイトルに表示する
+   *
+   * @see {@link src/app/channels/[channel_id]/_components/ChannelHeader/ChannelHeader.tsx}
+   */
+  const subtitle = readLocalStorageValue({
+    key: usePathname(),
+    defaultValue: "",
+  });
+  const title = subtitle !== "" ? `${subtitle} | Digichat` : "Digichat";
+
+  // ページタイトルを更新する
+  useDocumentTitle(title);
 
   return (
     <MantineAppShell
@@ -30,7 +49,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
       <MantineAppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          digichat
+          <Box>{subtitle}</Box>
         </Group>
       </MantineAppShell.Header>
       <Sidebar />

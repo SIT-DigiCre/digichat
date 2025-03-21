@@ -14,30 +14,26 @@ import type {
   Message as MessageModel,
   User,
 } from "@prisma/client";
-import type { Session } from "next-auth";
-
 
 import Message from "#/components/Message";
+import { useSession } from "next-auth/react";
 
 type ChannelProps = {
-  session: Session;
   channel_id: string;
+  user_id: string;
   messages: (MessageModel & {
     user: User;
     links: MessageLink[];
     assets: Asset[];
   })[];
-  is_joined: boolean;
 };
 
-const Channel: React.FC<ChannelProps> = ({
-  session,
-  channel_id,
-  messages,
-  is_joined,
-}) => {
+const Channel: React.FC<ChannelProps> = ({ channel_id, messages, user_id }) => {
+  const session = useSession();
   // TODO: onloadの自動スクロールがうまくいかないため無限スクロールを実装するタイミングで検証します
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  const is_joined = messages.some((message) => message.user.id === user_id);
 
   useLayoutEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
@@ -58,7 +54,7 @@ const Channel: React.FC<ChannelProps> = ({
         <div ref={messagesEndRef} />
       </Box>
       <ChannelFooter
-        user_id={session.user.id!}
+        user_id={user_id}
         channel_id={channel_id}
         is_joined={is_joined}
       />

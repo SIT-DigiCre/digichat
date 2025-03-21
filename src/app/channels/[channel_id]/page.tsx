@@ -2,6 +2,7 @@ import Channel from "./_components/Channel/Channel";
 
 import { auth } from "#/libs/auth";
 import { prisma } from "#/libs/prisma";
+import { redirect } from "next/navigation";
 
 type ChannelIDPageProps = {
   params: Promise<{ channel_id: string }>;
@@ -31,17 +32,15 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
 
   if (!session || !channel) return null;
 
-  const is_joined = channel.members.some(
-    (member) => member.userId === session?.user.id
-  );
+  if (!session.user.id) {
+    // 認証されていない場合はログインページにリダイレクト
+    redirect("/login");
+  }
+
+  const user_id = session.user.id;
 
   return (
-    <Channel
-      session={session}
-      channel_id={channel_id}
-      messages={messages}
-      is_joined={is_joined}
-    />
+    <Channel channel_id={channel_id} messages={messages} user_id={user_id} />
   );
 }
 

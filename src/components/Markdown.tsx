@@ -4,12 +4,12 @@ import { createElement } from "react";
 
 import * as prod from "react/jsx-runtime";
 import rehypeKatex from "rehype-katex";
-import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
@@ -44,9 +44,7 @@ type MarkdownProps = {
 
 const Markdown: React.FC<MarkdownProps> = ({ content }) => {
   const result = unified()
-    .use(rehypeParse, {
-      fragment: true,
-    })
+    .use(remarkParse)
     .use(remarkBreaks)
     .use(remarkMath)
     .use(remarkGfm)
@@ -90,7 +88,6 @@ const Markdown: React.FC<MarkdownProps> = ({ content }) => {
       createElement,
     })
     .processSync(content).result;
-  console.log(result);
   return result;
 };
 

@@ -16,7 +16,6 @@ import type {
 } from "@prisma/client";
 
 import Message from "#/components/Message";
-import { useSession } from "next-auth/react";
 
 type ChannelProps = {
   channel_id: string;
@@ -29,7 +28,6 @@ type ChannelProps = {
 };
 
 const Channel: React.FC<ChannelProps> = ({ channel_id, messages, user_id }) => {
-  const session = useSession();
   // TODO: onloadの自動スクロールがうまくいかないため無限スクロールを実装するタイミングで検証します
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 

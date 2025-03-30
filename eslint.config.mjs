@@ -14,6 +14,7 @@ const eslintConfig = [
   eslintConfigPrettier,
   {
     rules: {
+      "no-console": "warn",
       "import/order": [
         "error",
         {

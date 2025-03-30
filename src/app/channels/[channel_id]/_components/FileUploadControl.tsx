@@ -18,7 +18,6 @@ const FileUploadControl = ({ onUpload, disabled }: FileUploadControlProps) => {
   const resetRef = useRef<() => void>(null);
 
   const handleClick = (payload: File[]) => {
-    console.log(payload);
     onUpload(payload);
     resetRef.current?.();
   };

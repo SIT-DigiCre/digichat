@@ -1,8 +1,9 @@
+import { redirect } from "next/navigation";
+
 import Channel from "./_components/Channel/Channel";
 
 import { auth } from "#/libs/auth";
 import { prisma } from "#/libs/prisma";
-import { redirect } from "next/navigation";
 
 type ChannelIDPageProps = {
   params: Promise<{ channel_id: string }>;

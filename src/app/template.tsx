@@ -6,7 +6,6 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 
 import "@mantine/core/styles.css";
-import AppShell from "./_components/AppShell";
 import "./globals.css";
 
 dayjs.extend(utc);
@@ -25,9 +24,7 @@ export default function RootLayout({ children }: RootRayoutProps) {
   return (
     <html lang="en">
       <body>
-        <MantineProvider>
-          <AppShell>{children}</AppShell>
-        </MantineProvider>
+        <MantineProvider>{children}</MantineProvider>
       </body>
     </html>
   );

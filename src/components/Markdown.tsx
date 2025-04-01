@@ -1,3 +1,5 @@
+"use client";
+
 import { createElement } from "react";
 
 import * as prod from "react/jsx-runtime";
@@ -40,8 +42,8 @@ type MarkdownProps = {
   content: string;
 };
 
-const Markdown = (props: MarkdownProps) => {
-  return unified()
+const Markdown: React.FC<MarkdownProps> = ({ content }) => {
+  const result = unified()
     .use(remarkParse)
     .use(remarkBreaks)
     .use(remarkMath)
@@ -85,7 +87,8 @@ const Markdown = (props: MarkdownProps) => {
       },
       createElement,
     })
-    .processSync(props.content).result;
+    .processSync(content).result;
+  return result;
 };
 
 export default Markdown;

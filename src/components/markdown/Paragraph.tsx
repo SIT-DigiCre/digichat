@@ -5,6 +5,7 @@ import styles from "./Paragraph.module.css";
 
 const Paragraph = (props: React.ComponentProps<"p">) => {
   const { className, ...others } = props;
+
   return (
     <Text
       size="md"

@@ -1,9 +1,8 @@
-import { Stack } from "@mantine/core";
+import { redirect } from "next/navigation";
 
-import styles from "./ChannelIDPage.module.css";
-import ChannelFooter from "./_components/ChannelFooter/ChannelFooter";
+import Channel from "./_components/Channel/Channel";
 
-import Message from "#/components/Message";
+import { auth } from "#/libs/auth";
 import { prisma } from "#/libs/prisma";
 
 type ChannelIDPageProps = {
@@ -11,7 +10,16 @@ type ChannelIDPageProps = {
 };
 
 async function ChannelIDPage({ params }: ChannelIDPageProps) {
+  const session = await auth();
   const { channel_id } = await params;
+  const channel = await prisma.channel.findUnique({
+    where: {
+      id: channel_id,
+    },
+    include: {
+      members: true,
+    },
+  });
   const messages = await prisma.message.findMany({
     where: {
       channelId: channel_id,
@@ -23,19 +31,17 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
     },
   });
 
+  if (!session || !channel) return null;
+
+  if (!session.user.id) {
+    // 認証されていない場合はログインページにリダイレクト
+    redirect("/login");
+  }
+
+  const user_id = session.user.id;
+
   return (
-    <Stack className={styles["root"]} justify="space-between">
-      {messages.map((message) => (
-        <Message
-          key={message.id}
-          message={message}
-          user={message.user}
-          links={message.links}
-          assets={message.assets}
-        />
-      ))}
-      <ChannelFooter user_id="test" is_joined={false} />
-    </Stack>
+    <Channel channel_id={channel_id} messages={messages} user_id={user_id} />
   );
 }
 

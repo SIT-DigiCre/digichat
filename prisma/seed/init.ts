@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 async function main() {
   const workspace = await prisma.workspace.create({
     data: {
-      name: "Test",
-      description: "A workspace for development",
+      name: "Digichart for Insider",
+      description: "テスト用のワークスペースです",
     },
   });
   const adminRole = await prisma.userRole.create({

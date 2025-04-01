@@ -9,7 +9,7 @@
     "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
     "lint": "eslint",
     "stylelint": "stylelint \"./src/**/*.css\" --fix",
-    "seed": "npx tsx ./prisma/seed/init.ts"
+    "seed": "npx prisma migrate reset --force & npx tsx ./prisma/seed/init.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",

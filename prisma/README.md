@@ -1,6 +1,20 @@
 # Prisma
 
-TODO: 他のPRで`ts-node`が追加されるので、マージされ次第`package.json`の`seed`scriptコマンドを`node`から`ts-node`に変更し、`seed/init.mjs`を`seed/init.ts`にリネームする
+## データベースに初期データを入れるとき
+
+同時にデータベースのリセットが行われます。
+
+```bash
+pnpm seed
+```
+
+## データベースの状態を確認するとき
+
+Web UIでデータベースに投入されているデータを確認することができます。
+
+```bash
+npx prisma studio
+```
 
 ## スキーマに変更を加えるとき
 
@@ -17,16 +31,4 @@ TODO: 他のPRで`ts-node`が追加されるので、マージされ次第`packa
 
 ```bash
 npx prisma migrate reset
-```
-
-## データベースに初期データを入れるとき
-
-```bash
-pnpm run seed
-```
-
-## データベースの状態を確認するとき
-
-```bash
-npx prisma studio
 ```

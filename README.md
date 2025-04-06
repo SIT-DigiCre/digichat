@@ -28,7 +28,7 @@ cp .env.sample .env
 画面左下の青いところをクリック。
 ![](docs/images/readme-1.png)
 
-その後、`コンテナーで開く`を選択。しばらく待つとDevContainerが自動で立ち上がる。
+その後、`コンテナーで開く`を選択。しばらく待つとDevContainerが自動で立ち上がる。以降、コマンドはDevContainer内で実行すること。
 
 ### 依存関係のインストール
 

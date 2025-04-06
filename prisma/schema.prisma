@@ -227,7 +227,7 @@ model Asset {
   messageId String    @db.Uuid
   message   Message   @relation(fields: [messageId], references: [id])
   // アセットの代替テキスト。画像の場合はalt属性に相当
-  alt       String
+  alt       String?
   type      AssetType
   url       String
   createdAt DateTime  @default(now())

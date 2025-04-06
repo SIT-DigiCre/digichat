@@ -113,7 +113,7 @@ erDiagram
 "Asset" {
   String id PK
   String messageId FK
-  String alt
+  String alt "nullable"
   AssetType type
   String url
   DateTime createdAt

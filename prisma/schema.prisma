@@ -287,3 +287,9 @@ enum AssetType {
   IMAGE
   VIDEO
 }
+
+generator markdown {
+  provider = "prisma-markdown"
+  output   = "./ERD.md"
+  title    = "TITLE"
+}

@@ -81,7 +81,8 @@ CREATE TABLE "UserRole" (
 
 -- CreateTable
 CREATE TABLE "Workspace" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL,
+    "slug" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -94,7 +95,7 @@ CREATE TABLE "Workspace" (
 CREATE TABLE "WorkspaceMember" (
     "id" UUID NOT NULL,
     "userId" UUID NOT NULL,
-    "workspaceId" TEXT NOT NULL,
+    "workspaceId" UUID NOT NULL,
     "role" TEXT NOT NULL,
     "joinedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "leavedAt" TIMESTAMP(3),
@@ -106,8 +107,7 @@ CREATE TABLE "WorkspaceMember" (
 CREATE TABLE "Channel" (
     "id" UUID NOT NULL,
     "slug" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "workspaceId" TEXT NOT NULL,
+    "workspaceId" UUID NOT NULL,
     "creatorId" UUID,
     "description" TEXT,
     "type" "ChannelType" NOT NULL,
@@ -218,7 +218,7 @@ CREATE TABLE "Mention" (
 -- CreateTable
 CREATE TABLE "CustomEmoji" (
     "id" UUID NOT NULL,
-    "workspaceId" TEXT NOT NULL,
+    "workspaceId" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -251,6 +251,9 @@ CREATE UNIQUE INDEX "User_slug_key" ON "User"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Workspace_slug_key" ON "Workspace"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Channel_slug_key" ON "Channel"("slug");

@@ -9,7 +9,7 @@ async function main() {
   // ワークスペース作成
   const workspace = await prisma.workspace.create({
     data: {
-      id: "digichat-insider",
+      slug: "digichat-insider",
       name: "Digichat for Insider",
       description: "テスト用のワークスペースです",
     },
@@ -84,7 +84,6 @@ async function main() {
   const generalChannel = await prisma.channel.create({
     data: {
       slug: "general",
-      name: "general",
       workspaceId: workspace.id,
       type: "PUBLIC",
       creatorId: adminUser.id,
@@ -95,7 +94,6 @@ async function main() {
   const randomChannel = await prisma.channel.create({
     data: {
       slug: "random",
-      name: "random",
       workspaceId: workspace.id,
       type: "PUBLIC",
       creatorId: modUser.id,
@@ -106,7 +104,6 @@ async function main() {
   const privateChannel = await prisma.channel.create({
     data: {
       slug: "private",
-      name: "private",
       workspaceId: workspace.id,
       type: "PRIVATE",
       creatorId: adminUser.id,

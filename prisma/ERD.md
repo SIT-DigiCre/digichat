@@ -54,6 +54,7 @@ erDiagram
 }
 "Workspace" {
   String id PK
+  String slug UK
   String name
   String description "nullable"
   DateTime createdAt
@@ -70,7 +71,6 @@ erDiagram
 "Channel" {
   String id PK
   String slug UK
-  String name
   String workspaceId FK
   String creatorId FK "nullable"
   String description "nullable"
@@ -259,7 +259,8 @@ Digichatユーザーを管理するテーブル
 ワークスペースを管理するテーブル
 
 **Properties**
-  - `id`: ワークスペースのID。UUIDである必要はない
+  - `id`: 
+  - `slug`: 
   - `name`: 
   - `description`: 
   - `createdAt`: 
@@ -279,8 +280,7 @@ Digichatユーザーを管理するテーブル
 
 **Properties**
   - `id`: 自動生成されるID。URLにはこれを使用する
-  - `slug`: nameに統合したので非推奨
-  - `name`: ユーザーが直接目にするチャンネルの名前
+  - `slug`: ユーザーが直接目にするチャンネルの名前
   - `workspaceId`: 
   - `creatorId`: 
   - `description`: 

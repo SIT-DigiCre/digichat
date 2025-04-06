@@ -112,8 +112,8 @@ model UserRole {
 ワークスペースを管理するテーブル
 */
 model Workspace {
-  /// ワークスペースのID。UUIDである必要はない
-  id           String            @id
+  id           String           @id @default(uuid()) @db.Uuid
+  slug         String           @unique
   name         String
   description  String?
   users        WorkspaceMember[]
@@ -128,7 +128,7 @@ model WorkspaceMember {
   /// ユーザーテーブルのユーザーと紐づける。同一のユーザーが複数のワークスペースに参加できる
   userId      String    @db.Uuid
   user        User      @relation(fields: [userId], references: [id])
-  workspaceId String
+  workspaceId String    @db.Uuid
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
   role        String
   joinedAt    DateTime  @default(now())
@@ -138,11 +138,9 @@ model WorkspaceMember {
 model Channel {
   /// 自動生成されるID。URLにはこれを使用する
   id             String          @id @default(uuid()) @db.Uuid
-  /// nameに統合したので非推奨
-  slug           String          @unique
   /// ユーザーが直接目にするチャンネルの名前
-  name           String
-  workspaceId    String
+  slug           String          @unique
+  workspaceId    String          @db.Uuid
   workspace      Workspace       @relation(fields: [workspaceId], references: [id])
   creatorId      String?         @db.Uuid
   creator        User?           @relation(fields: [creatorId], references: [id])
@@ -282,7 +280,7 @@ model Mention {
 
 model CustomEmoji {
   id          String    @id @default(uuid()) @db.Uuid
-  workspaceId String
+  workspaceId String    @db.Uuid
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
   name        String
   url         String

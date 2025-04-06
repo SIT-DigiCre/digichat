@@ -9,7 +9,7 @@ async function main() {
   // ワークスペース作成
   const workspace = await prisma.workspace.create({
     data: {
-      name: "Digichart for Insider",
+      name: "Digichat for Insider",
       description: "テスト用のワークスペースです",
     },
   });

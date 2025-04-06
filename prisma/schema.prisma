@@ -47,6 +47,9 @@ model Session {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+/*
+Auth.js用
+*/
 model VerificationToken {
   identifier String
   token      String
@@ -93,12 +96,13 @@ model User {
 }
 
 /*
-ユーザーのロールを管理するテーブル
+ユーザーのロールを管理するテーブル。Discordのロールに相当する
 */
 model UserRole {
   id          String   @id @default(uuid()) @db.Uuid
   name        String
-  permissions Json
+  /// 一旦ADMIN, MODERATOR, USERのいずれかを設定する。ADMINはインフラ部員、MODERATORは幹部
+  permissions String   @default("MEMBER")
   users       User[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -108,7 +112,8 @@ model UserRole {
 ワークスペースを管理するテーブル
 */
 model Workspace {
-  id           String            @id @default(uuid()) @db.Uuid
+  /// ワークスペースのID。UUIDである必要はない
+  id           String            @unique
   name         String
   description  String?
   users        WorkspaceMember[]
@@ -123,11 +128,11 @@ model WorkspaceMember {
   /// ユーザーテーブルのユーザーと紐づける。同一のユーザーが複数のワークスペースに参加できる
   userId      String    @db.Uuid
   user        User      @relation(fields: [userId], references: [id])
-  workspaceId String    @db.Uuid
+  workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
   role        String
-  joinDate    DateTime  @default(now())
-  leaveDate   DateTime?
+  joinedAt    DateTime  @default(now())
+  leavedAt    DateTime?
 }
 
 model Channel {
@@ -137,7 +142,7 @@ model Channel {
   slug           String          @unique
   /// ユーザーが直接目にするチャンネルの名前
   name           String
-  workspaceId    String          @db.Uuid
+  workspaceId    String
   workspace      Workspace       @relation(fields: [workspaceId], references: [id])
   creatorId      String?         @db.Uuid
   creator        User?           @relation(fields: [creatorId], references: [id])
@@ -162,8 +167,8 @@ model Thread {
   message         Message        @relation(name: "startWith", fields: [messageId], references: [id])
   /// スレッドのタイトル。デフォルトは最初のメッセージとし、あとから変更可能
   title           String
-  /// スレッドの説明。デフォルトは空文字とし、あとから変更可能
-  description     String
+  /// スレッドの説明。デフォルトはnullとし、あとから変更可能
+  description     String?
   members         ThreadMember[]
   messages        Message[]      @relation(name: "contains")
   createdAt       DateTime       @default(now())
@@ -189,7 +194,7 @@ model ChannelMember {
   channelId      String            @db.Uuid
   channel        Channel           @relation(fields: [channelId], references: [id])
   role           ChannelMemberRole
-  joinDate       DateTime          @default(now())
+  joinedAt       DateTime          @default(now())
   /// チャンネルに最後にアクセスした日時。既読の管理に使用
   lastAccessedAt DateTime          @default(now())
 
@@ -221,6 +226,8 @@ model Asset {
   id        String    @id @default(uuid()) @db.Uuid
   messageId String    @db.Uuid
   message   Message   @relation(fields: [messageId], references: [id])
+  // アセットの代替テキスト。画像の場合はalt属性に相当
+  alt       String
   type      AssetType
   url       String
   createdAt DateTime  @default(now())
@@ -231,6 +238,7 @@ model Reaction {
   message   Message  @relation(fields: [messageId], references: [id])
   userId    String   @db.Uuid
   user      User     @relation(fields: [userId], references: [id])
+  /// 絵文字の名前。例えば:smile:や:heart:など。Unicodeの絵文字とカスタム絵文字で管理方法が異なるため、relationはつけない
   emoji     String
   createdAt DateTime @default(now())
 
@@ -274,7 +282,7 @@ model Mention {
 
 model CustomEmoji {
   id          String    @id @default(uuid()) @db.Uuid
-  workspaceId String    @db.Uuid
+  workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
   name        String
   url         String

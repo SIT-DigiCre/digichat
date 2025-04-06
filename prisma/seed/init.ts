@@ -9,6 +9,7 @@ async function main() {
   // ワークスペース作成
   const workspace = await prisma.workspace.create({
     data: {
+      id: "digichat-insider",
       name: "Digichat for Insider",
       description: "テスト用のワークスペースです",
     },
@@ -18,34 +19,19 @@ async function main() {
   const adminRole = await prisma.userRole.create({
     data: {
       name: "admin",
-      permissions: {
-        create: true,
-        read: true,
-        update: true,
-        delete: true,
-      },
+      permissions: "ADMIN",
     },
   });
   const moderatorRole = await prisma.userRole.create({
     data: {
       name: "moderator",
-      permissions: {
-        create: true,
-        read: true,
-        update: true,
-        delete: false,
-      },
+      permissions: "MODERATOR",
     },
   });
   const memberRole = await prisma.userRole.create({
     data: {
       name: "member",
-      permissions: {
-        create: false,
-        read: true,
-        update: false,
-        delete: false,
-      },
+      permissions: "MEMBER",
     },
   });
 

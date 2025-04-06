@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Generate Prisma schema
-        run: pnpm dlx prisma generate
+        run: npx prisma generate
       - name: TypeScript Compile Check
         run: pnpm tsc --noEmit
       - name: Run ESLint

@@ -2,7 +2,7 @@
 
 芝浦工業大学デジクリのサークル内SNS「digichat」
 
-## 環境設定の手順
+## 環境構築の手順
 
 ### .envの用意
 
@@ -34,6 +34,7 @@ pnpm install
 ```bash
 pnpm prisma migrate dev
 ```
+
 ### seedデータの適用
 
 マイグレーションが終わったらseedデータを適用する。

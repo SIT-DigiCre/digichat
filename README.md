@@ -2,6 +2,17 @@
 
 芝浦工業大学デジクリのサークル内SNS「digichat」
 
+## ドキュメント
+
+|                    |                                              |
+| ------------------ | -------------------------------------------- |
+| 環境構築           | [docs/README.md](docs/README.md)             |
+| 開発ルール         | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) |
+| 認証のセットアップ | [docs/AUTH_SETUP.md](docs/AUTH_SETUP.md)     |
+| ADR                | [docs/ADR.md](docs/ADR.md)                   |
+| Prismaの操作方法   | [prisma/README.md](prisma/README.md)         |
+| データベース設計   | [prisma/ERD.md](prisma/ERD.md)               |
+
 ## 環境構築の手順
 
 ### .envの用意

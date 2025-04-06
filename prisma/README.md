@@ -27,6 +27,10 @@ npx prisma studio
 # 例: add_user_table
 ```
 
+### ER図の生成
+
+`prisma generate`を実行することで、ER図を生成することができます。
+
 ## データベースをリセットするとき
 
 ```bash

@@ -6,7 +6,7 @@
 
 |                    |                                              |
 | ------------------ | -------------------------------------------- |
-| 環境構築           | [docs/README.md](docs/README.md)             |
+| 環境構築           | [README.md](README.md)                       |
 | 開発ルール         | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) |
 | 認証のセットアップ | [docs/AUTH_SETUP.md](docs/AUTH_SETUP.md)     |
 | ADR                | [docs/ADR.md](docs/ADR.md)                   |

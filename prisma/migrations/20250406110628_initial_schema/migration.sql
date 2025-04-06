@@ -169,7 +169,7 @@ CREATE TABLE "Message" (
 CREATE TABLE "Asset" (
     "id" UUID NOT NULL,
     "messageId" UUID NOT NULL,
-    "alt" TEXT NOT NULL,
+    "alt" TEXT,
     "type" "AssetType" NOT NULL,
     "url" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

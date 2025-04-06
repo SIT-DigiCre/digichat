@@ -113,7 +113,7 @@ model UserRole {
 */
 model Workspace {
   /// ワークスペースのID。UUIDである必要はない
-  id           String            @unique
+  id           String            @id
   name         String
   description  String?
   users        WorkspaceMember[]

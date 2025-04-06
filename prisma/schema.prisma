@@ -13,6 +13,9 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
+/*
+Google OAuthのアカウントを管理するテーブル。Auth.js用
+*/
 model Account {
   id                String  @id @default(uuid()) @db.Uuid
   userId            String  @map("user_id") @db.Uuid
@@ -32,6 +35,9 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+/*
+ログインユーザーのセッションを管理するテーブル。Auth.js用
+*/
 model Session {
   id           String   @id @default(uuid()) @db.Uuid
   sessionToken String   @unique @map("session_token")
@@ -49,16 +55,25 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
+/*
+Digichatユーザーを管理するテーブル
+*/
 model User {
   id              String            @id @default(uuid()) @db.Uuid
+  /// ユーザーが自由に設定できる一意なID
   slug            String            @unique
+  /// 表示名
   name            String
+  /// 大学のGmailアカウント。sicなし
   email           String            @unique
   emailVerified   DateTime?         @map("email_verified")
   accounts        Account[]
   sessions        Session[]
+  /// アイコン画像のURL
   image           String?
+  /// オンライン状態
   status          UserStatus
+  /// 自己紹介
   description     String?
   role            UserRole          @relation(fields: [roleId], references: [id])
   roleId          String            @db.Uuid
@@ -77,6 +92,9 @@ model User {
   updatedAt       DateTime          @updatedAt
 }
 
+/*
+ユーザーのロールを管理するテーブル
+*/
 model UserRole {
   id          String   @id @default(uuid()) @db.Uuid
   name        String
@@ -86,6 +104,9 @@ model UserRole {
   updatedAt   DateTime @updatedAt
 }
 
+/*
+ワークスペースを管理するテーブル
+*/
 model Workspace {
   id           String            @id @default(uuid()) @db.Uuid
   name         String
@@ -99,6 +120,7 @@ model Workspace {
 
 model WorkspaceMember {
   id          String    @id @default(uuid()) @db.Uuid
+  /// ユーザーテーブルのユーザーと紐づける。同一のユーザーが複数のワークスペースに参加できる
   userId      String    @db.Uuid
   user        User      @relation(fields: [userId], references: [id])
   workspaceId String    @db.Uuid
@@ -109,8 +131,11 @@ model WorkspaceMember {
 }
 
 model Channel {
+  /// 自動生成されるID。URLにはこれを使用する
   id             String          @id @default(uuid()) @db.Uuid
+  /// nameに統合したので非推奨
   slug           String          @unique
+  /// ユーザーが直接目にするチャンネルの名前
   name           String
   workspaceId    String          @db.Uuid
   workspace      Workspace       @relation(fields: [workspaceId], references: [id])
@@ -132,9 +157,12 @@ model Thread {
   parentChannel   Channel        @relation(fields: [parentChannelId], references: [id])
   creatorId       String         @db.Uuid
   creator         User           @relation(fields: [creatorId], references: [id])
+  /// スレッドの最初のメッセージ
   messageId       String         @db.Uuid
   message         Message        @relation(name: "startWith", fields: [messageId], references: [id])
+  /// スレッドのタイトル。デフォルトは最初のメッセージとし、あとから変更可能
   title           String
+  /// スレッドの説明。デフォルトは空文字とし、あとから変更可能
   description     String
   members         ThreadMember[]
   messages        Message[]      @relation(name: "contains")
@@ -142,6 +170,9 @@ model Thread {
   updatedAt       DateTime       @updatedAt
 }
 
+/*
+スレッドをフォロー中のユーザーを管理するテーブル。通知を送信する対象
+*/
 model ThreadMember {
   threadId  String   @db.Uuid
   thread    Thread   @relation(fields: [threadId], references: [id])
@@ -159,6 +190,7 @@ model ChannelMember {
   channel        Channel           @relation(fields: [channelId], references: [id])
   role           ChannelMemberRole
   joinDate       DateTime          @default(now())
+  /// チャンネルに最後にアクセスした日時。既読の管理に使用
   lastAccessedAt DateTime          @default(now())
 
   @@id([channelId, userId])
@@ -217,6 +249,9 @@ model PinnedMessage {
   @@id([channelId, messageId, pinnedBy])
 }
 
+/*
+ユーザーが個人的にメッセージを保存しておくためのブックマーク機能に使用するテーブル
+*/
 model Bookmark {
   userId    String   @db.Uuid
   user      User     @relation(fields: [userId], references: [id])
@@ -291,5 +326,5 @@ enum AssetType {
 generator markdown {
   provider = "prisma-markdown"
   output   = "./ERD.md"
-  title    = "TITLE"
+  title    = "ER Diagram"
 }

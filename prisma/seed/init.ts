@@ -9,6 +9,7 @@ async function main() {
   // ワークスペース作成
   const workspace = await prisma.workspace.create({
     data: {
+      slug: "digichat-insider",
       name: "Digichat for Insider",
       description: "テスト用のワークスペースです",
     },
@@ -18,34 +19,19 @@ async function main() {
   const adminRole = await prisma.userRole.create({
     data: {
       name: "admin",
-      permissions: {
-        create: true,
-        read: true,
-        update: true,
-        delete: true,
-      },
+      permissions: "ADMIN",
     },
   });
   const moderatorRole = await prisma.userRole.create({
     data: {
       name: "moderator",
-      permissions: {
-        create: true,
-        read: true,
-        update: true,
-        delete: false,
-      },
+      permissions: "MODERATOR",
     },
   });
   const memberRole = await prisma.userRole.create({
     data: {
       name: "member",
-      permissions: {
-        create: false,
-        read: true,
-        update: false,
-        delete: false,
-      },
+      permissions: "MEMBER",
     },
   });
 
@@ -98,7 +84,6 @@ async function main() {
   const generalChannel = await prisma.channel.create({
     data: {
       slug: "general",
-      name: "general",
       workspaceId: workspace.id,
       type: "PUBLIC",
       creatorId: adminUser.id,
@@ -109,7 +94,6 @@ async function main() {
   const randomChannel = await prisma.channel.create({
     data: {
       slug: "random",
-      name: "random",
       workspaceId: workspace.id,
       type: "PUBLIC",
       creatorId: modUser.id,
@@ -120,7 +104,6 @@ async function main() {
   const privateChannel = await prisma.channel.create({
     data: {
       slug: "private",
-      name: "private",
       workspaceId: workspace.id,
       type: "PRIVATE",
       creatorId: adminUser.id,

@@ -1,40 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Accordion as MantineAccordion } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
-import { useSession } from "next-auth/react";
 
 import styles from "./Accordion.module.css";
-import AccordionItem, { AccordionItemProps } from "./AccordionItem";
-
-import { getChannelAccordionItems } from "#/libs/actions";
+import AccordionItem from "./AccordionItem";
+import { useChannelsAccordion } from "./ChannelsAccordionProvider";
 
 const Accordion = () => {
-  const [accordionItems, setAccordionItems] = useState<AccordionItemProps[]>(
-    []
-  );
-
-  const { data: session } = useSession();
+  const { accordionItems, refreshChannelList } = useChannelsAccordion();
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      if (!session || !session.user.id) return;
-
-      try {
-        const result = await getChannelAccordionItems(session.user.id);
-
-        if (!result) throw new Error("チャンネル一覧の取得に失敗しました");
-
-        setAccordionItems(result);
-      } catch {
-        setAccordionItems([]);
-      }
-    };
-
-    void fetchCategories();
-  }, [session]);
+    refreshChannelList();
+  }, [refreshChannelList]);
 
   return (
     <MantineAccordion

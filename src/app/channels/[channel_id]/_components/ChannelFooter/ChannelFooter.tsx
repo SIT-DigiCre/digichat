@@ -8,6 +8,7 @@ import TextEditor from "../TextEditor/TextEditor";
 
 import styles from "./ChannelFooter.module.css";
 
+import { useChannelsAccordion } from "#/app/_components/ChannelsAccordionProvider";
 import { joinChannel } from "#/libs/actions";
 
 type ChannelFooterProps = {
@@ -22,11 +23,13 @@ const ChannelFooter: React.FC<ChannelFooterProps> = ({
   is_joined,
 }) => {
   const [isPending, startTransition] = useTransition();
+  const { refreshChannelList } = useChannelsAccordion();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     startTransition(async () => {
       await joinChannel(channel_id, user_id);
+      refreshChannelList(); // 参加処理後、メニュー上の参加中チャンネル一覧を更新する
     });
   };
 

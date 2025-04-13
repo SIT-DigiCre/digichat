@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Loader, Accordion as MantineAccordion } from "@mantine/core";
+import { Accordion as MantineAccordion } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 
@@ -15,7 +15,6 @@ const Accordion = () => {
   const [accordionItems, setAccordionItems] = useState<AccordionItemProps[]>(
     []
   );
-  const [isLoading, setIsLoading] = useState(true);
 
   const { data: session } = useSession();
 
@@ -23,7 +22,6 @@ const Accordion = () => {
     const fetchCategories = async () => {
       if (!session || !session.user.id) return;
 
-      setIsLoading(true);
       try {
         const result = await getChannelAccordionItems(session.user.id);
 
@@ -32,15 +30,11 @@ const Accordion = () => {
         setAccordionItems(result);
       } catch {
         setAccordionItems([]);
-      } finally {
-        setIsLoading(false);
       }
     };
 
     void fetchCategories();
   }, [session]);
-
-  if (isLoading) return <Loader color="#FFFA" size="sm" m="auto" />;
 
   return (
     <MantineAccordion

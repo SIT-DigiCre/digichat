@@ -54,6 +54,7 @@ export async function joinChannel(channelId: string, userId: string) {
   const lastChannelMember = await prisma.channelMember.findFirst({
     where: {
       userId,
+      categoryId: null, // Ensure we only fetch members from the default category
     },
     orderBy: {
       displayOrder: "desc",

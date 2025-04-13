@@ -97,8 +97,18 @@ erDiagram
   String userId FK
   String channelId FK
   ChannelMemberRole role
+  String categoryId FK "nullable"
+  Int displayOrder
   DateTime joinedAt
   DateTime lastAccessedAt
+}
+"ChannelCategory" {
+  String id PK
+  String name
+  String userId FK
+  String workspaceId FK
+  DateTime createdAt
+  DateTime updatedAt
 }
 "Message" {
   String id PK
@@ -175,6 +185,9 @@ erDiagram
 "ThreadMember" }o--|| "User" : user
 "ChannelMember" }o--|| "User" : user
 "ChannelMember" }o--|| "Channel" : channel
+"ChannelMember" }o--o| "ChannelCategory" : category
+"ChannelCategory" }o--|| "User" : user
+"ChannelCategory" }o--|| "Workspace" : workspace
 "Message" }o--|| "Channel" : channel
 "Message" }o--o| "Thread" : thread
 "Message" }o--|| "User" : user
@@ -195,7 +208,8 @@ erDiagram
 ```
 
 ### `Account`
-Google OAuthのアカウントを管理するテーブル。Auth.js用
+*
+ * Google OAuthのアカウントを管理するテーブル。Auth.js用
 
 **Properties**
   - `id`: 
@@ -212,7 +226,8 @@ Google OAuthのアカウントを管理するテーブル。Auth.js用
   - `session_state`: 
 
 ### `Session`
-ログインユーザーのセッションを管理するテーブル。Auth.js用
+*
+ * ログインユーザーのセッションを管理するテーブル。Auth.js用
 
 **Properties**
   - `id`: 
@@ -221,7 +236,8 @@ Google OAuthのアカウントを管理するテーブル。Auth.js用
   - `expires`: 
 
 ### `VerificationToken`
-Auth.js用
+*
+ * Auth.js用
 
 **Properties**
   - `identifier`: 
@@ -229,7 +245,8 @@ Auth.js用
   - `expires`: 
 
 ### `User`
-Digichatユーザーを管理するテーブル
+*
+ * Digichatユーザーを管理するテーブル
 
 **Properties**
   - `id`: 
@@ -246,7 +263,8 @@ Digichatユーザーを管理するテーブル
   - `updatedAt`: 
 
 ### `UserRole`
-ユーザーのロールを管理するテーブル。Discordのロールに相当する
+*
+ * ユーザーのロールを管理するテーブル。Discordのロールに相当する
 
 **Properties**
   - `id`: 
@@ -256,7 +274,8 @@ Digichatユーザーを管理するテーブル
   - `updatedAt`: 
 
 ### `Workspace`
-ワークスペースを管理するテーブル
+*
+ * ワークスペースを管理するテーブル
 
 **Properties**
   - `id`: 
@@ -301,7 +320,8 @@ Digichatユーザーを管理するテーブル
   - `updatedAt`: 
 
 ### `ThreadMember`
-スレッドをフォロー中のユーザーを管理するテーブル。通知を送信する対象
+*
+ * スレッドをフォロー中のユーザーを管理するテーブル。通知を送信する対象
 
 **Properties**
   - `threadId`: 
@@ -314,8 +334,22 @@ Digichatユーザーを管理するテーブル
   - `userId`: 
   - `channelId`: 
   - `role`: 
+  - `categoryId`: 
+  - `displayOrder`: フォルダ内の表示順。同じフォルダ内で並び順の入れ替えが発生したときに更新する
   - `joinedAt`: 
   - `lastAccessedAt`: チャンネルに最後にアクセスした日時。既読の管理に使用
+
+### `ChannelCategory`
+*
+ * ユーザーが作成したフォルダを管理するテーブル
+
+**Properties**
+  - `id`: 
+  - `name`: 
+  - `userId`: 
+  - `workspaceId`: 
+  - `createdAt`: 
+  - `updatedAt`: 
 
 ### `Message`
 
@@ -334,7 +368,7 @@ Digichatユーザーを管理するテーブル
 **Properties**
   - `id`: 
   - `messageId`: 
-  - `alt`: 
+  - `alt`: アセットの代替テキスト。画像の場合はalt属性に相当
   - `type`: 
   - `url`: 
   - `createdAt`: 
@@ -356,7 +390,8 @@ Digichatユーザーを管理するテーブル
   - `pinnedAt`: 
 
 ### `Bookmark`
-ユーザーが個人的にメッセージを保存しておくためのブックマーク機能に使用するテーブル
+*
+ * ユーザーが個人的にメッセージを保存しておくためのブックマーク機能に使用するテーブル
 
 **Properties**
   - `userId`: 

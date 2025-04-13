@@ -1,53 +1,52 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import { Accordion as MantineAccordion } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
 
 import styles from "./Accordion.module.css";
 import AccordionItem, { AccordionItemProps } from "./AccordionItem";
 
-const categories: AccordionItemProps[] = [
-  {
-    categoryName: "General",
-    channels: [
-      { title: "announcements", id: "1" },
-      { title: "random", id: "2" },
-      { title: "welcome", id: "3" },
-    ],
-  },
-  {
-    categoryName: "Development",
-    channels: [
-      { title: "frontend", id: "4" },
-      { title: "backend", id: "5" },
-      { title: "devops", id: "6" },
-    ],
-  },
-  {
-    categoryName: "Design",
-    channels: [
-      { title: "ui", id: "7" },
-      { title: "ux", id: "8" },
-      { title: "branding", id: "9" },
-    ],
-  },
-  {
-    categoryName: "Marketing",
-    channels: [
-      { title: "seo", id: "10" },
-      { title: "social media", id: "11" },
-      { title: "content", id: "12" },
-    ],
-  },
-  {
-    categoryName: "Support",
-    channels: [
-      { title: "help", id: "13" },
-      { title: "questions", id: "14" },
-      { title: "feedback", id: "15" },
-    ],
-  },
-];
+import { getCategories } from "#/libs/actions";
 
 const Accordion = () => {
+  const [accordionItems, setAccordionItems] = useState<AccordionItemProps[]>(
+    []
+  );
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      if (!session || !session.user.id) return;
+
+      try {
+        const result = await getCategories(session.user.id);
+
+        if (!result) throw new Error("チャンネル一覧の取得に失敗しました");
+
+        setAccordionItems([
+          {
+            name: "チャンネル",
+            channelMembers: result.uncategorizedChannelMembers,
+          },
+          ...result.categories.map((category) => {
+            return {
+              name: category.name,
+              channelMembers: category.channelMembers,
+            } satisfies AccordionItemProps;
+          }),
+        ]);
+      } catch {
+        setAccordionItems([]);
+      }
+    };
+
+    void fetchCategories();
+  }, [session]);
+
   return (
     <MantineAccordion
       multiple
@@ -63,11 +62,11 @@ const Accordion = () => {
       }}
       chevron={<IconChevronRight size={20} />}
     >
-      {categories.map((category) => (
+      {accordionItems.map((category) => (
         <AccordionItem
-          key={category.categoryName}
-          channels={category.channels}
-          categoryName={category.categoryName}
+          key={category.name}
+          channelMembers={category.channelMembers}
+          name={category.name}
         />
       ))}
     </MantineAccordion>

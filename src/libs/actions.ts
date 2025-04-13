@@ -6,6 +6,9 @@ import { prisma } from "./prisma";
 
 import type { Asset, MessageType } from "@prisma/client";
 
+import { getCategoriesWithChannelMembersWithChannel } from "#/repositories/channelCategory";
+import { getUncategorizedChannelMembersWithChannel } from "#/repositories/channelMember";
+
 type SearchChannelsProps = {
   keyword: string;
 };
@@ -47,11 +50,22 @@ export async function joinChannel(channelId: string, userId: string) {
     throw new Error("User not found");
   }
 
+  const lastChannelMember = await prisma.channelMember.findFirst({
+    where: {
+      userId,
+    },
+    orderBy: {
+      displayOrder: "desc",
+    },
+  });
+
+  // デフォルトカテゴリの最後尾に追加
   await prisma.channelMember.create({
     data: {
       channelId: channel.id,
       userId: user.id,
       role: "MEMBER",
+      displayOrder: lastChannelMember ? lastChannelMember.displayOrder + 1 : 0,
     },
   });
 
@@ -103,4 +117,28 @@ export async function sendMessage(props: SendMessageProps) {
   });
 
   revalidatePath(`/channels/${channel.id}`);
+}
+
+export async function getCategories(userId: string) {
+  const workspace = await prisma.workspace.findFirst({
+    where: {
+      users: {
+        some: {
+          userId,
+        },
+      },
+    },
+  });
+
+  if (!workspace) return null;
+
+  const [uncategorizedChannelMembers, categories] = await Promise.all([
+    getUncategorizedChannelMembersWithChannel(userId, workspace.id),
+    getCategoriesWithChannelMembersWithChannel(userId, workspace.id),
+  ]);
+
+  return {
+    uncategorizedChannelMembers,
+    categories,
+  };
 }

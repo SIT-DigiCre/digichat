@@ -243,13 +243,29 @@ async function main() {
   // general チャンネル
   await prisma.channelMember.createMany({
     data: [
-      { channelId: generalChannel.id, userId: adminUser.id, role: "ADMIN" },
-      { channelId: generalChannel.id, userId: modUser.id, role: "MEMBER" },
-      { channelId: generalChannel.id, userId: memberUser.id, role: "MEMBER" },
+      {
+        channelId: generalChannel.id,
+        userId: adminUser.id,
+        role: "ADMIN",
+        displayOrder: 0,
+      },
+      {
+        channelId: generalChannel.id,
+        userId: modUser.id,
+        role: "MEMBER",
+        displayOrder: 0,
+      },
+      {
+        channelId: generalChannel.id,
+        userId: memberUser.id,
+        role: "MEMBER",
+        displayOrder: 0,
+      },
       {
         channelId: generalChannel.id,
         userId: anotherMemberUser.id,
         role: "MEMBER",
+        displayOrder: 0,
       },
     ],
   });
@@ -257,16 +273,36 @@ async function main() {
   // random チャンネル
   await prisma.channelMember.createMany({
     data: [
-      { channelId: randomChannel.id, userId: modUser.id, role: "MEMBER" },
-      { channelId: randomChannel.id, userId: memberUser.id, role: "MEMBER" },
+      {
+        channelId: randomChannel.id,
+        userId: modUser.id,
+        role: "MEMBER",
+        displayOrder: 1,
+      },
+      {
+        channelId: randomChannel.id,
+        userId: memberUser.id,
+        role: "MEMBER",
+        displayOrder: 1,
+      },
     ],
   });
 
   // private チャンネル
   await prisma.channelMember.createMany({
     data: [
-      { channelId: privateChannel.id, userId: adminUser.id, role: "ADMIN" },
-      { channelId: privateChannel.id, userId: modUser.id, role: "MEMBER" },
+      {
+        channelId: privateChannel.id,
+        userId: adminUser.id,
+        role: "ADMIN",
+        displayOrder: 2,
+      },
+      {
+        channelId: privateChannel.id,
+        userId: modUser.id,
+        role: "MEMBER",
+        displayOrder: 2,
+      },
     ],
   });
 }

@@ -9,6 +9,7 @@ import { SessionProvider } from "next-auth/react";
 import "@mantine/code-highlight/styles.css";
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";
+import ChannelsAccordionProvider from "./_components/ChannelsAccordionProvider";
 import "./globals.css";
 
 dayjs.extend(utc);
@@ -37,7 +38,9 @@ export default function RootLayout({ children }: RootRayoutProps) {
       <body>
         <SessionProvider>
           <MantineProvider>
-            <AppShell>{children}</AppShell>
+            <ChannelsAccordionProvider>
+              <AppShell>{children}</AppShell>
+            </ChannelsAccordionProvider>
           </MantineProvider>
         </SessionProvider>
       </body>

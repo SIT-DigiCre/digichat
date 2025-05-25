@@ -28,7 +28,11 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
   });
 
   return (
-    <Stack className={styles["root"]} justify="space-between">
+    <Stack
+      className={styles["root"]}
+      justify="space-between"
+      pt={{ base: "3rem", sm: "6rem" }}
+    >
       <ChannelHeader channelName={channel?.name || ""} />
       {messages.map((message) => (
         <Message key={message.id} message={message} user={message.user} />

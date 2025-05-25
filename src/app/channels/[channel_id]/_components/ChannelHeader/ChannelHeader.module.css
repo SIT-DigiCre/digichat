@@ -1,0 +1,8 @@
+.root {
+  position: absolute;
+  top: 3rem;
+  width: 100%;
+  height: 3rem;
+  padding-inline: 1rem;
+  border-bottom: 1px solid var(--mantine-color-gray-3);
+}

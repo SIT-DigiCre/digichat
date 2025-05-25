@@ -4,7 +4,6 @@ import styles from "./ChannelIDPage.module.css";
 import ChannelFooter from "./_components/ChannelFooter/ChannelFooter";
 import ChannelHeader from "./_components/ChannelHeader/ChannelHeader";
 
-import AppShell from "#/components/AppShell";
 import Message from "#/components/Message";
 import { prisma } from "#/libs/prisma";
 
@@ -29,15 +28,13 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
   });
 
   return (
-    <AppShell>
-      <Stack className={styles["root"]} justify="space-between">
-        <ChannelHeader channelName={channel?.name || ""} />
-        {messages.map((message) => (
-          <Message key={message.id} message={message} user={message.user} />
-        ))}
-        <ChannelFooter user_id="test" is_joined={false} />
-      </Stack>
-    </AppShell>
+    <Stack className={styles["root"]} justify="space-between">
+      <ChannelHeader channelName={channel?.name || ""} />
+      {messages.map((message) => (
+        <Message key={message.id} message={message} user={message.user} />
+      ))}
+      <ChannelFooter user_id="test" is_joined={false} />
+    </Stack>
   );
 }
 

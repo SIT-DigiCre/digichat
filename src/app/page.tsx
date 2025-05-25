@@ -1,11 +1,5 @@
-import AppShell from "#/components/AppShell";
-
 async function HomePage() {
-  return (
-    <AppShell>
-      <div>digichat</div>
-    </AppShell>
-  );
+  return <div>digichat</div>;
 }
 
 export default HomePage;

@@ -20,7 +20,8 @@
     ],
     "paths": {
       "#/*": ["./src/*"]
-    }
+    },
+    "types": ["@types/jest", "@quramy/jest-prisma"]
   },
   "include": ["next-env.d.ts", "src/**/*", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

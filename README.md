@@ -1,20 +1,72 @@
 # digichat
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+芝浦工業大学デジクリのサークル内SNS「digichat」
 
-## Getting Started
+## ドキュメント
 
-First, run the development server:
+|                    |                                              |
+| ------------------ | -------------------------------------------- |
+| 環境構築           | [README.md](README.md)                       |
+| 開発ルール         | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) |
+| 認証のセットアップ | [docs/AUTH_SETUP.md](docs/AUTH_SETUP.md)     |
+| ADR                | [docs/ADR.md](docs/ADR.md)                   |
+| Prismaの操作方法   | [prisma/README.md](prisma/README.md)         |
+| データベース設計   | [prisma/ERD.md](prisma/ERD.md)               |
+
+## 環境構築の手順
+
+### .envの用意
+
+`.env.example`をベースに`.env`を用意する。
+
+```bash
+cp .env.sample .env
+```
+
+### VSCodeでDevContainerを使用する場合
+
+画面左下の青いところをクリック。
+![](docs/images/readme-1.png)
+
+その後、`コンテナーで開く`を選択。しばらく待つとDevContainerが自動で立ち上がる。以降、コマンドはDevContainer内で実行すること。
+
+### 依存関係のインストール
+
+pnpmでインストールをする
+
+```bash
+pnpm install
+```
+
+### マイグレーション
+
+データベースのマイグレーションを行う
+
+```bash
+pnpm prisma migrate dev
+```
+
+### seedデータの適用
+
+マイグレーションが終わったらseedデータを適用する。
+
+```bash
+pnpm seed
+```
+
+詳細は `prisma/README.md` を参照。
+
+### 開発サーバーの起動
+
+devを実行することでサイトが表示される。
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+実行後、`localhost:3000`で開発サーバーが起動する。`0.0.0.0:3000`だとGoogleのOAuth認証ができないので注意。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-## frontend dependencies
+## 使用しているライブラリ
 
 - TypeScript
 - Next.js App Router

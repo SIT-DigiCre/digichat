@@ -10,35 +10,32 @@ import { IconWorld } from "@tabler/icons-react";
 
 import styles from "./AccordionItem.module.css";
 
-export type AccordionItemType = {
-  title: string;
-  id: string;
-};
+import { ChannelMemberWithChannel } from "#/types/prisma";
 
 export type AccordionItemProps = {
-  categoryName: string;
-  channels: AccordionItemType[];
+  name: string;
+  channelMembers: ChannelMemberWithChannel[];
 };
 
 const AccordionItem: React.FC<AccordionItemProps> = ({
-  categoryName,
-  channels,
+  name,
+  channelMembers,
 }) => {
   return (
-    <MantineAccordionItem value={categoryName}>
-      <AccordionControl>{categoryName}</AccordionControl>
+    <MantineAccordionItem value={name}>
+      <AccordionControl>{name}</AccordionControl>
       <AccordionPanel>
         <ul className={styles.List}>
-          {channels.map((item) => (
-            <li key={item.id}>
+          {channelMembers.map((item) => (
+            <li key={item.channelId}>
               <Button
                 radius={0}
                 className={styles.Channel}
                 component={Link}
-                href={`/channels/${item.id}`}
+                href={`/channels/${item.channelId}`}
                 leftSection={<IconWorld size={20} />}
               >
-                {item.title}
+                {item.channel.slug}
               </Button>
             </li>
           ))}

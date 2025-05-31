@@ -1,7 +1,27 @@
 .message {
+  width: 100%;
   padding: 0.5rem;
 
   &:hover {
     background-color: var(--mantine-color-gray-1);
   }
+}
+
+.contents-stack {
+  gap: 0;
+  min-width: 0;
+  margin-right: 0.5rem;
+}
+
+.container {
+  padding-inline: 0;
+  margin-inline: 0;
+}
+
+.media {
+  margin-top: 0.5rem;
+}
+
+.linkcard-container {
+  margin-top: 0.5rem;
 }

@@ -12,7 +12,7 @@ async function ChannelsPage() {
       {channels.map((channel) => (
         <ListItem key={channel.id}>
           <Anchor component={Link} href={`/channels/${channel.id}`}>
-            {channel.name}
+            {channel.slug}
           </Anchor>
         </ListItem>
       ))}

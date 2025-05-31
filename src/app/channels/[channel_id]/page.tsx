@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import Channel from "./_components/Channel/Channel";
+import ChannelWithMembers from "./_components/ChannelWithMembers/ChannelWithMembers";
 
 import { auth } from "#/libs/auth";
 import { prisma } from "#/libs/prisma";
@@ -17,7 +17,11 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
       id: channel_id,
     },
     include: {
-      members: true,
+      members: {
+        include: {
+          user: true,
+        },
+      },
     },
   });
   const messages = await prisma.message.findMany({
@@ -41,7 +45,12 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
   const user_id = session.user.id;
 
   return (
-    <Channel channel_id={channel_id} messages={messages} user_id={user_id} />
+    <ChannelWithMembers 
+      channel_id={channel_id} 
+      messages={messages} 
+      user_id={user_id} 
+      members={channel.members} 
+    />
   );
 }
 

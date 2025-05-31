@@ -12,3 +12,7 @@ export type EditableUserParams = Pick<
 export type ChannelMemberWithChannel = ChannelMember & {
   channel: Channel;
 };
+
+export type ChannelMemberWithUser = ChannelMember & {
+  user: User;
+};

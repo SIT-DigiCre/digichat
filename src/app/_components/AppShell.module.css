@@ -4,3 +4,19 @@
   padding-top: 0;
   padding-bottom: var(--app-shell-footer-offset, 0);
 }
+
+.resizeHandle {
+  width: 4px;
+  background: var(--mantine-color-gray-3);
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  transition: background-color 0.2s ease;
+}
+
+.resizeHandle:hover {
+  background: var(--mantine-color-blue-5);
+}

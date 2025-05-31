@@ -10,7 +10,6 @@ import styles from "./Channel.module.css";
 
 import type {
   Asset,
-  ChannelMember,
   MessageLink,
   Message as MessageModel,
   User,
@@ -21,7 +20,6 @@ import Message from "#/components/Message";
 type ChannelProps = {
   channel_id: string;
   user_id: string;
-  members: (ChannelMember & { user: User })[];
   messages: (MessageModel & {
     user: User;
     links: MessageLink[];

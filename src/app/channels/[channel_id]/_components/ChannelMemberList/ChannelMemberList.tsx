@@ -13,7 +13,7 @@ const ChannelMemberList: React.FC<ChannelMemberListProps> = ({ members }) => {
     <Stack gap="sm" p="md">
       <Text size="sm" fw={500}>メンバー ({members.length})</Text>
       {members.map((member) => (
-        <Group key={member.id} gap="sm">
+        <Group key={member.userId} gap="sm">
           <Avatar src={member.user.image} alt={member.user.name} size="sm" radius="xl" />
           <Text size="sm">{member.user.name}</Text>
         </Group>

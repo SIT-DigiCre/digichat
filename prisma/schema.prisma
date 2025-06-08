@@ -13,66 +13,135 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-model User {
-  id              String            @id @default(uuid()) @db.Uuid
-  slug            String            @unique
-  name            String
-  email           String            @unique
-  password        String
-  iconUrl         String?
-  status          UserStatus
-  description     String?
-  role            UserRole          @relation(fields: [roleId], references: [id])
-  roleId          String            @db.Uuid
-  workspaces      WorkspaceMember[]
-  createdChannels Channel[]
-  createdThreads  Thread[]
-  threads         ThreadMember[]
-  channels        ChannelMember[]
-  messages        Message[]
-  reactions       Reaction[]
-  pinnedMessages  PinnedMessage[]
-  bookmarks       Bookmark[]
-  mentions        Mention[]
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+/**
+ * Google OAuthのアカウントを管理するテーブル。Auth.js用
+ */
+model Account {
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @map("user_id") @db.Uuid
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
+/**
+ * ログインユーザーのセッションを管理するテーブル。Auth.js用
+ */
+model Session {
+  id           String   @id @default(uuid()) @db.Uuid
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id") @db.Uuid
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/**
+ * Auth.js用
+ */
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+/**
+ * Digichatユーザーを管理するテーブル
+ */
+model User {
+  id                String            @id @default(uuid()) @db.Uuid
+  /// ユーザーが自由に設定できる一意なID
+  slug              String            @unique
+  /// 表示名
+  name              String
+  /// 大学のGmailアカウント。sicなし
+  email             String            @unique
+  emailVerified     DateTime?         @map("email_verified")
+  accounts          Account[]
+  sessions          Session[]
+  /// アイコン画像のURL
+  image             String?
+  /// オンライン状態
+  status            UserStatus
+  /// 自己紹介
+  description       String?
+  role              UserRole          @relation(fields: [roleId], references: [id])
+  roleId            String            @db.Uuid
+  verifiedAt        DateTime?
+  workspaces        WorkspaceMember[]
+  createdChannels   Channel[]
+  createdThreads    Thread[]
+  threads           ThreadMember[]
+  channels          ChannelMember[]
+  channelCategories ChannelCategory[]
+  messages          Message[]
+  reactions         Reaction[]
+  pinnedMessages    PinnedMessage[]
+  bookmarks         Bookmark[]
+  mentions          Mention[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}
+
+/**
+ * ユーザーのロールを管理するテーブル。Discordのロールに相当する
+ */
 model UserRole {
   id          String   @id @default(uuid()) @db.Uuid
   name        String
-  permissions Json
+  /// 一旦ADMIN, MODERATOR, USERのいずれかを設定する。ADMINはインフラ部員、MODERATORは幹部
+  permissions String   @default("MEMBER")
   users       User[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
+/**
+ * ワークスペースを管理するテーブル
+ */
 model Workspace {
   id           String            @id @default(uuid()) @db.Uuid
+  slug         String            @unique
   name         String
   description  String?
   users        WorkspaceMember[]
   channels     Channel[]
   customEmojis CustomEmoji[]
+  categories   ChannelCategory[]
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
 }
 
 model WorkspaceMember {
   id          String    @id @default(uuid()) @db.Uuid
+  /// ユーザーテーブルのユーザーと紐づける。同一のユーザーが複数のワークスペースに参加できる
   userId      String    @db.Uuid
   user        User      @relation(fields: [userId], references: [id])
   workspaceId String    @db.Uuid
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
   role        String
-  joinDate    DateTime  @default(now())
-  leaveDate   DateTime?
+  joinedAt    DateTime  @default(now())
+  leavedAt    DateTime?
 }
 
 model Channel {
+  /// 自動生成されるID。URLにはこれを使用する
   id             String          @id @default(uuid()) @db.Uuid
+  /// ユーザーが直接目にするチャンネルの名前
   slug           String          @unique
-  name           String
   workspaceId    String          @db.Uuid
   workspace      Workspace       @relation(fields: [workspaceId], references: [id])
   creatorId      String?         @db.Uuid
@@ -93,23 +162,28 @@ model Thread {
   parentChannel   Channel        @relation(fields: [parentChannelId], references: [id])
   creatorId       String         @db.Uuid
   creator         User           @relation(fields: [creatorId], references: [id])
+  /// スレッドの最初のメッセージ
   messageId       String         @db.Uuid
   message         Message        @relation(name: "startWith", fields: [messageId], references: [id])
+  /// スレッドのタイトル。デフォルトは最初のメッセージとし、あとから変更可能
   title           String
-  description     String
+  /// スレッドの説明。デフォルトはnullとし、あとから変更可能
+  description     String?
   members         ThreadMember[]
   messages        Message[]      @relation(name: "contains")
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 }
 
+/**
+ * スレッドをフォロー中のユーザーを管理するテーブル。通知を送信する対象
+ */
 model ThreadMember {
   threadId  String   @db.Uuid
   thread    Thread   @relation(fields: [threadId], references: [id])
   userId    String   @db.Uuid
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@id([threadId, userId])
 }
@@ -120,10 +194,31 @@ model ChannelMember {
   channelId      String            @db.Uuid
   channel        Channel           @relation(fields: [channelId], references: [id])
   role           ChannelMemberRole
-  joinDate       DateTime          @default(now())
+  /// 格納されているフォルダ。nullの場合はデフォルトフォルダに格納されていることとする
+  category       ChannelCategory?  @relation(fields: [categoryId], references: [id])
+  categoryId     String?           @db.Uuid
+  /// フォルダ内の表示順。同じフォルダ内で並び順の入れ替えが発生したときに更新する
+  displayOrder   Int
+  joinedAt       DateTime          @default(now())
+  /// チャンネルに最後にアクセスした日時。既読の管理に使用
   lastAccessedAt DateTime          @default(now())
 
   @@id([channelId, userId])
+}
+
+/**
+ * ユーザーが作成したフォルダを管理するテーブル
+ */
+model ChannelCategory {
+  id             String          @id @default(uuid()) @db.Uuid
+  name           String
+  userId         String          @db.Uuid
+  user           User            @relation(fields: [userId], references: [id])
+  workspaceId    String          @db.Uuid
+  workspace      Workspace       @relation(fields: [workspaceId], references: [id])
+  channelMembers ChannelMember[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
 model Message {
@@ -142,13 +237,17 @@ model Message {
   pinnedMessages PinnedMessage[]
   bookmarks      Bookmark[]
   mentions       Mention[]
+  links          MessageLink[]
   createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
 model Asset {
   id        String    @id @default(uuid()) @db.Uuid
   messageId String    @db.Uuid
   message   Message   @relation(fields: [messageId], references: [id])
+  /// アセットの代替テキスト。画像の場合はalt属性に相当
+  alt       String?
   type      AssetType
   url       String
   createdAt DateTime  @default(now())
@@ -159,6 +258,7 @@ model Reaction {
   message   Message  @relation(fields: [messageId], references: [id])
   userId    String   @db.Uuid
   user      User     @relation(fields: [userId], references: [id])
+  /// 絵文字の名前。例えば:smile:や:heart:など。Unicodeの絵文字とカスタム絵文字で管理方法が異なるため、relationはつけない
   emoji     String
   createdAt DateTime @default(now())
 
@@ -177,6 +277,9 @@ model PinnedMessage {
   @@id([channelId, messageId, pinnedBy])
 }
 
+/**
+ * ユーザーが個人的にメッセージを保存しておくためのブックマーク機能に使用するテーブル
+ */
 model Bookmark {
   userId    String   @db.Uuid
   user      User     @relation(fields: [userId], references: [id])
@@ -204,6 +307,18 @@ model CustomEmoji {
   name        String
   url         String
   createdAt   DateTime  @default(now())
+}
+
+model MessageLink {
+  id          String   @id @default(uuid()) @db.Uuid
+  messageId   String   @db.Uuid
+  message     Message  @relation(fields: [messageId], references: [id])
+  url         String
+  title       String?
+  description String?
+  ogImageUrl  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum UserStatus {
@@ -234,4 +349,10 @@ enum MessageType {
 enum AssetType {
   IMAGE
   VIDEO
+}
+
+generator markdown {
+  provider = "prisma-markdown"
+  output   = "./ERD.md"
+  title    = "ER Diagram"
 }

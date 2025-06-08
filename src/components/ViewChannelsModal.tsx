@@ -90,7 +90,7 @@ const ViewChannelsModal: React.FC<ViewChannelsModalProps> = ({
           href={`/channels/${channel.id}`}
           key={channel.id}
           label={channel.slug}
-          description={channel.name}
+          description={channel.slug}
           rightSection={
             <IconChevronRight stroke={1.5} className="mantine-rotate-rtl" />
           }

@@ -17,7 +17,7 @@ export async function GET(request: Request) {
   try {
     new URL(url);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return NextResponse.json(
       {
         status: "error",
@@ -52,7 +52,7 @@ export async function GET(request: Request) {
       html,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (signal.aborted) {
       return NextResponse.json(
         {

@@ -4,10 +4,13 @@ import { MantineProvider } from "@mantine/core";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { SessionProvider } from "next-auth/react";
 
 import { CurrentChannelProvider } from "#/contexts/CurrentChannelContext";
+import "@mantine/code-highlight/styles.css";
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";
+import ChannelsAccordionProvider from "./_components/ChannelsAccordionProvider";
 import "./globals.css";
 
 dayjs.extend(utc);
@@ -25,12 +28,24 @@ type RootRayoutProps = {
 export default function RootLayout({ children }: RootRayoutProps) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+          integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
-        <MantineProvider>
-          <CurrentChannelProvider>
-            <AppShell>{children}</AppShell>
-          </CurrentChannelProvider>
-        </MantineProvider>
+        <SessionProvider>
+          <MantineProvider>
+            <CurrentChannelProvider>
+              <ChannelsAccordionProvider>
+                <AppShell>{children}</AppShell>
+              </ChannelsAccordionProvider>
+            </CurrentChannelProvider>
+          </MantineProvider>
+        </SessionProvider>
       </body>
     </html>
   );

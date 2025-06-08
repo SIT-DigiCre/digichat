@@ -1,0 +1,8 @@
+.code-block {
+  margin-block: 0.5rem;
+  background-color: var(--mantine-color-body);
+  border-color: var(--mantine-color-default-border);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: var(--mantine-radius-sm);
+}

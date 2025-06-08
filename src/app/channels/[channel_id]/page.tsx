@@ -6,6 +6,7 @@ import ChannelHeader from "./_components/ChannelHeader/ChannelHeader";
 
 import Message from "#/components/Message";
 import { prisma } from "#/libs/prisma";
+import CurrentChannelController from "./_components/CurrentChannelController";
 
 type ChannelIDPageProps = {
   params: Promise<{ channel_id: string }>;
@@ -28,17 +29,20 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
   });
 
   return (
-    <Stack
-      className={styles["root"]}
-      justify="space-between"
-      pt={{ base: "3rem", sm: "6rem" }}
-    >
-      <ChannelHeader channelName={channel?.name || ""} />
-      {messages.map((message) => (
-        <Message key={message.id} message={message} user={message.user} />
-      ))}
-      <ChannelFooter user_id="test" is_joined={false} />
-    </Stack>
+    <>
+      <Stack
+        className={styles["root"]}
+        justify="space-between"
+        pt={{ base: "3rem", sm: "6rem" }}
+      >
+        <ChannelHeader channelName={channel?.name || ""} />
+        {messages.map((message) => (
+          <Message key={message.id} message={message} user={message.user} />
+        ))}
+        <ChannelFooter user_id="test" is_joined={false} />
+      </Stack>
+      <CurrentChannelController channel={channel} />
+    </>
   );
 }
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { Group } from "@mantine/core";
-import { useDocumentTitle } from "@mantine/hooks";
 
 import styles from "./ChannelHeader.module.css";
 
@@ -10,8 +9,6 @@ type ChannelHeaderProps = {
 };
 
 const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channelName }) => {
-  useDocumentTitle(`${channelName} | Digichat`);
-
   return (
     <Group className={styles["root"]} visibleFrom="sm">
       {channelName}

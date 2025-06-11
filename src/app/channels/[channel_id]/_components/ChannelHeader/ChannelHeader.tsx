@@ -4,14 +4,14 @@ import { Group } from "@mantine/core";
 
 import styles from "./ChannelHeader.module.css";
 
-type ChannelHeaderProps = {
-  channelName: string;
-};
+import { useCurrentChannel } from "#/hooks/useCurrentChannel";
 
-const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channelName }) => {
+const ChannelHeader: React.FC = () => {
+  const { currentChannel } = useCurrentChannel();
+
   return (
     <Group className={styles["root"]} visibleFrom="sm">
-      {channelName}
+      {currentChannel && currentChannel.slug}
     </Group>
   );
 };

@@ -6,11 +6,12 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { SessionProvider } from "next-auth/react";
 
-import { CurrentChannelProvider } from "#/contexts/CurrentChannelContext";
 import "@mantine/code-highlight/styles.css";
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";
 import ChannelsAccordionProvider from "./_components/ChannelsAccordionProvider";
+
+import { CurrentChannelProvider } from "#/contexts/CurrentChannelContext";
 import "./globals.css";
 
 dayjs.extend(utc);

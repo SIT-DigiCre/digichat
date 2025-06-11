@@ -1,7 +1,8 @@
 "use client";
 
-import { Channel } from "@prisma/client";
 import { createContext, SetStateAction, useState } from "react";
+
+import { Channel } from "@prisma/client";
 
 export type CurrentChannelContextType = {
   currentChannel: Channel | null;

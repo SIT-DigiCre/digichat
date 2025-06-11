@@ -1,7 +1,8 @@
 "use client";
 
-import { CurrentChannelContext } from "#/contexts/CurrentChannelContext";
 import { useContext } from "react";
+
+import { CurrentChannelContext } from "#/contexts/CurrentChannelContext";
 
 /**
  * 現在開いているチャンネルの情報を利用する

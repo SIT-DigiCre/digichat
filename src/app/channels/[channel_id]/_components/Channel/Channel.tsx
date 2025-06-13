@@ -31,6 +31,8 @@ const Channel: React.FC<ChannelProps> = ({ channel_id, messages, user_id }) => {
   // TODO: onloadの自動スクロールがうまくいかないため無限スクロールを実装するタイミングで検証します
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
+  const is_joined = messages.some((message) => message.user.id === user_id);
+
   useLayoutEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
   }, [messages]);
@@ -52,7 +54,7 @@ const Channel: React.FC<ChannelProps> = ({ channel_id, messages, user_id }) => {
       <ChannelFooter
         user_id={user_id}
         channel_id={channel_id}
-        is_joined={true}
+        is_joined={is_joined}
       />
     </Box>
   );

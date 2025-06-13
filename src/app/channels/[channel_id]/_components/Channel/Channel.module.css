@@ -9,6 +9,6 @@
   display: flex;
   flex-direction: column;
   height: 100svh;
-  padding-top: 80svh;
+  padding-top: 10rem;
   overflow-y: scroll;
 }

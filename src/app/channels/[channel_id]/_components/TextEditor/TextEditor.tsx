@@ -1,19 +1,23 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import React, { useState, useTransition } from "react";
 
-import { ActionIcon, Box, Image, Textarea, Tooltip } from "@mantine/core";
+import { ActionIcon, Image } from "@mantine/core";
+import { Link, RichTextEditor } from "@mantine/tiptap";
 import { Asset } from "@prisma/client";
-import { IconEye, IconEyeOff, IconSend2, IconTrash } from "@tabler/icons-react";
+import { IconSend2, IconTrash } from "@tabler/icons-react";
+import { default as TipTapImage } from "@tiptap/extension-image";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
+import "@mantine/tiptap/styles.css";
+import EmojiPickerControl from "../EmojiPicker/EmojiPickerControl";
 import FileUploadControl from "../FileUploadControl";
 
+import "./TextEditor.css";
 import styles from "./TextEditor.module.css";
 
 import { sendMessage } from "#/libs/actions";
-
-const Markdown = dynamic(() => import("#/components/Markdown"), { ssr: false });
 
 type TextEditorProps = {
   user_id: string;
@@ -22,9 +26,16 @@ type TextEditorProps = {
 
 const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
   const [value, setValue] = useState("");
+  const editor = useEditor({
+    extensions: [StarterKit, Link, TipTapImage],
+    content: value,
+    onUpdate: ({ editor }) => {
+      setValue(editor.getHTML());
+    },
+    immediatelyRender: false,
+  });
   const [isPending, startTransition] = useTransition();
   const [assets, setAssets] = useState<Pick<Asset, "url" | "type">[]>([]);
-  const [showPreview, setShowPreview] = useState(false);
 
   const handleClick = () => {
     startTransition(async () => {
@@ -35,14 +46,15 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
         content: value,
         assets,
       });
+      editor?.commands.clearContent();
       setAssets([]);
       setValue("");
-      setShowPreview(false);
     });
   };
 
   const handleUpload = (file: File[]) => {
     startTransition(async () => {
+      // TODO: 複数ファイルのアップロードをサポートする
       const formData = new FormData();
       formData.append("file", file[0]);
       const res = await fetch("/api/file", {
@@ -57,79 +69,26 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
   };
 
   return (
-    <Box className={styles["editor"]}>
-      <FileUploadControl onUpload={handleUpload} disabled={isPending} />
-      <div className={styles.textareaWrapper}>
-        <Textarea
-          minRows={3}
-          maxRows={10}
-          autosize
-          value={value}
-          onChange={(e) => setValue(e.currentTarget.value)}
-          placeholder="メッセージをMarkdownで入力..."
-          disabled={isPending}
-          className={
-            styles["content"] +
-            (showPreview ? ` ${styles.hideWhenPreview}` : "")
-          }
-        />
-        {showPreview && (
-          <div className={styles.previewOverlay}>
-            <div className={styles.actionArea}>
-              <Tooltip label="プレビューを隠す">
-                <ActionIcon
-                  variant="filled"
-                  color="gray"
-                  onClick={() => setShowPreview(false)}
-                  aria-label="プレビュー切替"
-                >
-                  <IconEyeOff />
-                </ActionIcon>
-              </Tooltip>
-              <ActionIcon
-                w="3rem"
-                size="xl"
-                disabled={
-                  (value.trim() === "" && assets.length === 0) || isPending
-                }
-                onClick={handleClick}
-                aria-label="送信"
-              >
-                <IconSend2 />
-              </ActionIcon>
-            </div>
-            <Markdown content={value} />
-          </div>
-        )}
-        {!showPreview && (
-          <div className={styles.actionArea}>
-            <Tooltip label="プレビューを表示">
-              <ActionIcon
-                variant="subtle"
-                color="gray"
-                onClick={() => setShowPreview(true)}
-                aria-label="プレビュー切替"
-              >
-                <IconEye />
-              </ActionIcon>
-            </Tooltip>
-            <ActionIcon
-              w="3rem"
-              size="xl"
-              disabled={
-                (value.trim() === "" && assets.length === 0) || isPending
-              }
-              onClick={handleClick}
-              aria-label="送信"
-            >
-              <IconSend2 />
-            </ActionIcon>
-          </div>
-        )}
-      </div>
+    <RichTextEditor editor={editor} className={styles["editor"]}>
+      <RichTextEditor.Toolbar className={styles["toolbar"]}>
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.Bold />
+          <RichTextEditor.Italic />
+          <RichTextEditor.H1 />
+          <RichTextEditor.H2 />
+          <RichTextEditor.H3 />
+          <RichTextEditor.BulletList />
+          <RichTextEditor.OrderedList />
+          <RichTextEditor.Strikethrough />
+          <RichTextEditor.Code />
+          <EmojiPickerControl />
+        </RichTextEditor.ControlsGroup>
+      </RichTextEditor.Toolbar>
+      <RichTextEditor.Content className={styles["content"]} />
       {assets.length > 0 && (
         <div className={styles["assets-area"]}>
           {assets.map((asset, index) => (
+            // TODO: assets tableにwidth, height, altカラムを追加する
             <div key={asset.url} className={styles["asset-wrapper"]}>
               <Image
                 className={styles.asset}
@@ -151,7 +110,19 @@ const TextEditor: React.FC<TextEditorProps> = ({ user_id, channel_id }) => {
           ))}
         </div>
       )}
-    </Box>
+      <RichTextEditor.Toolbar className={styles["toolbar"]}>
+        <RichTextEditor.ControlsGroup>
+          <FileUploadControl onUpload={handleUpload} disabled={isPending} />
+        </RichTextEditor.ControlsGroup>
+        <ActionIcon
+          w="3rem"
+          disabled={(value.trim() === "" && assets.length === 0) || isPending}
+          onClick={handleClick}
+        >
+          <IconSend2 />
+        </ActionIcon>
+      </RichTextEditor.Toolbar>
+    </RichTextEditor>
   );
 };
 

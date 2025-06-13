@@ -9,7 +9,6 @@ RUN apt-get update -qq && \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-
 WORKDIR /digichat
 
 RUN chown -R node:node ./
@@ -25,5 +24,24 @@ RUN if git config --global --get gpg.ssh.program; then \
         git config --global --unset gpg.ssh.program; \
     fi
 
+# スクリプトの実行権限を付与
+COPY --chown=node:node scripts/create-admin-user.sh /digichat/scripts/
+RUN chmod +x /digichat/scripts/create-admin-user.sh
+
+# 起動スクリプトの作成
+RUN echo '#!/bin/bash\n\
+# アプリケーションの起動\n\
+pnpm dev &\n\
+\n\
+# アプリケーションの起動を待機\n\
+echo "Waiting for application to start..."\n\
+sleep 10\n\
+\n\
+# 管理者ユーザーの作成\n\
+/digichat/scripts/create-admin-user.sh\n\
+\n\
+# フォアグラウンドプロセスの維持\n\
+wait' > /digichat/start.sh && chmod +x /digichat/start.sh
+
 # コンテナ起動時のコマンド
-CMD ["/bin/bash"]
+CMD ["/digichat/start.sh"]

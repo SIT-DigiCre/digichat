@@ -13,7 +13,7 @@ export function useCurrentChannel() {
 
   if (!context)
     throw new Error(
-      "useCurrentChannel must be used within a <CurrentChannelProvider>"
+      "useCurrentChannel は <CurrentChannelProvider> 内で使用される必要があります"
     );
 
   return context;

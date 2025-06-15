@@ -10,6 +10,8 @@ import "@mantine/code-highlight/styles.css";
 import "@mantine/core/styles.css";
 import AppShell from "./_components/AppShell";
 import ChannelsAccordionProvider from "./_components/ChannelsAccordionProvider";
+
+import { CurrentChannelProvider } from "#/contexts/CurrentChannelContext";
 import "./globals.css";
 
 dayjs.extend(utc);
@@ -38,9 +40,11 @@ export default function RootLayout({ children }: RootRayoutProps) {
       <body>
         <SessionProvider>
           <MantineProvider>
-            <ChannelsAccordionProvider>
-              <AppShell>{children}</AppShell>
-            </ChannelsAccordionProvider>
+            <CurrentChannelProvider>
+              <ChannelsAccordionProvider>
+                <AppShell>{children}</AppShell>
+              </ChannelsAccordionProvider>
+            </CurrentChannelProvider>
           </MantineProvider>
         </SessionProvider>
       </body>

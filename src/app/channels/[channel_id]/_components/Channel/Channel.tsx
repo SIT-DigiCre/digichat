@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from "react";
 import { Box } from "@mantine/core";
 
 import ChannelFooter from "../ChannelFooter/ChannelFooter";
+import ChannelHeader from "../ChannelHeader/ChannelHeader";
 
 import styles from "./Channel.module.css";
 
@@ -38,7 +39,8 @@ const Channel: React.FC<ChannelProps> = ({ channel_id, messages, user_id }) => {
   }, [messages]);
 
   return (
-    <Box className={styles["root"]}>
+    <Box className={styles["root"]} pt={{ base: "3rem", sm: "6rem" }}>
+      <ChannelHeader />
       <Box className={styles["message-area"]}>
         {messages.map((message) => (
           <Message

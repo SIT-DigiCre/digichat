@@ -6,6 +6,7 @@ import { Burger, Group, AppShell as MantineAppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 import styles from "./AppShell.module.css";
+import MobileChannelDisplay from "./MobileChannelDisplay";
 import Sidebar from "./Sidebar";
 
 type AppShellProps = {
@@ -30,7 +31,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
       <MantineAppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          digichat
+          <MobileChannelDisplay />
         </Group>
       </MantineAppShell.Header>
       <Sidebar />

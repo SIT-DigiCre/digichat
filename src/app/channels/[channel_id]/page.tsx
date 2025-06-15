@@ -38,9 +38,6 @@ async function ChannelIDPage({ params }: ChannelIDPageProps) {
     where: {
       id: channel_id,
     },
-    include: {
-      members: true,
-    },
   });
   const messages = await prisma.message.findMany({
     where: {

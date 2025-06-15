@@ -39,7 +39,7 @@ const Channel: React.FC<ChannelProps> = ({ channel_id, messages, user_id }) => {
   }, [messages]);
 
   return (
-    <Box className={styles["root"]}>
+    <Box className={styles["root"]} pt={{ base: "3rem", sm: "6rem" }}>
       <ChannelHeader />
       <Box className={styles["message-area"]}>
         {messages.map((message) => (

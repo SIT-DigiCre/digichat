@@ -1,5 +1,5 @@
 .root {
-  position: fixed;
+  position: absolute;
   top: 3rem;
   z-index: 10;
   width: 100%;
